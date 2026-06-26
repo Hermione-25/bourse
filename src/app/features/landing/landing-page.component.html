@@ -1,0 +1,383 @@
+<nav class="bg-white sticky top-0 z-[100] shadow-[0_1px_10px_rgba(0,0,0,0.02)]">
+  <div class="w-full max-w-[1200px] mx-auto px-6 flex justify-between items-center py-4">
+    <div class="flex items-center gap-2.5">
+      <i class="fas fa-graduation-cap text-xl"></i>
+      <div>
+        <h1 class="text-[20px] font-bold text-black leading-none">BourseConnect</h1>
+        <p class="text-[10px] text-gray-text tracking-[1px]">Étudiez. Rêvez. Réalisez.</p>
+      </div>
+    </div>
+    <ul class="hidden md:flex gap-6 list-none m-0 p-0">
+      <li><a routerLink="/"
+          class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold active:text-primary active:font-semibold">Accueil</a>
+      </li>
+      <li><a routerLink="/scholarships"
+          class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold">Bourses</a>
+      </li>
+      <li><a routerLink="/"
+          class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold">pays</a></li>
+      <li><a routerLink="/"
+          class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold">Blog</a>
+      </li>
+      <li><a routerLink="/"
+          class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold">Contact</a>
+      </li>
+    </ul>
+    <button
+      class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-40 hover:-translate-y-[1px]"
+      routerLink="/auth/login">Se connecter</button>
+  </div>
+</nav>
+
+<section
+  class="relative bg-[url('/images/imlan.jpeg')]  bg-cover bg-center bg-no-repeat min-h-auto md:min-h-[600px] flex items-start py-10 md:py-0">
+  <div class="absolute inset-0 bg-black/70 z-10"></div>
+  <div class="relative z-20 flex justify-center w-full w-full max-w-[1200px] mx-auto px-6">
+    <div class="w-full max-w-[900px] pt-[50px] pb-[20px] text-center">
+
+      <h2 class="text-[32px] md:text-[48px] font-bold text-light leading-[1.2] mb-6">Découvrez tous les bourses
+        accessibles <br><span class="text-primary">aux pays africains</span></h2>
+
+        <div class="flex border-1 bg-black/20 backdrop-blur-md text-light w-auto h-20 rounded-lg border-black items-center justify-center gap-20 md:gap-30">
+          <div class="relative">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-map-marker-alt text-xl"></i>
+              <select name="destination" id=  "destination" class="bg-transparent">
+                <option value="">Destination</option>
+                <option value="">Pays</option>
+              </select>
+            </div>
+          </div>
+          <div class="h-10 border-l border-gray-400"></div>
+          <div>
+            <div class="flex items-center gap-2">
+              <i class="fas fa-book-reader text-xl"></i>
+              <select  name="niveaux" id="niveaux">
+                <option class="bg-transparent text-light" value="">Niveaux d'études</option>
+                <option class="bg-black/40 text-light" value="">Niveaux</option>
+              </select>
+            </div>
+          </div>
+          <div class="h-10 border-l border-gray-400"></div>
+          <div class="flex items-center gap-2">
+            <i class="fas fa-graduation-cap text-xl"></i>
+            <select name="domaine" id="domaine">
+              <option value="">Domaine</option>
+              <option value="">Domaine</option>
+            </select>
+          </div>
+        </div>
+
+      
+
+      <div class="flex flex-col md:flex-row items-center justify-center mt-10 gap-5 md:gap-8 flex-wrap">
+        <a routerLink="/scholarships"
+          class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-90 hover:-translate-y-[1px]">Commencer
+          ma recherche <i class="fas fa-arrow-right ml-2 text-xs"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="relative z-30 -mt-[50px] mb-10 w-full max-w-[1200px] mx-auto px-6">
+  <div
+    class="bg-primary rounded-2xl grid grid-cols-2 md:grid-cols-4 py-7 px-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.15)] text-center text-white gap-5 md:gap-0">
+    <div class="md:border-r border-white/10 last:border-r-0">
+      <i class="fas fa-graduation-cap text-2xl text-light mb-2.5"></i>
+      <div class="text-[28px] font-bold">20 000+</div>
+      <div class="text-xs text-border-color mt-1">Bourses disponibles</div>
+    </div>
+    <div class="md:border-r border-white/10 last:border-r-0">
+      <i class="fas fa-globe text-2xl text-light mb-2.5"></i>
+      <div class="text-[28px] font-bold">160+</div>
+      <div class="text-xs text-border-color mt-1">Pays couverts</div>
+    </div>
+    <div class="md:border-r border-white/10 last:border-r-0">
+      <i class="fas fa-university text-2xl text-light mb-2.5"></i>
+      <div class="text-[28px] font-bold">200+</div>
+      <div class="text-xs text-border-color mt-1">Universités </div>
+    </div>
+    <div class="md:border-r border-white/10 last:border-r-0">
+      <i class="fas fa-shield-alt text-2xl text-light mb-2.5"></i>
+      <div class="text-[28px] font-bold">100+</div>
+      <div class="text-xs text-border-color mt-1">Opportunités offerts</div>
+    </div>
+  </div>
+</div>
+
+<section class="bg-white py-20">
+  <div class="w-full max-w-[1200px] mx-auto px-6">
+    <div class="text-center mb-12">
+      <span class="text-primary text-xs font-bold uppercase tracking-[2px] block mb-2.5">Explorer les
+        opportunités</span>
+      <h2 class="text-[32px] text-dark font-bold">Des bourses d'études partout dans le monde</h2>
+      <p class="text-gray-text text-sm max-w-[500px] mt-2.5 mx-auto">Explorez des bourses par pays et trouvez celles qui
+        correspondent à votre profil et vos objectifs.</p>
+    </div>
+
+    <div class="flex justify-between items-center text-lg text-dark font-bold mb-5">
+      <h3>Pays populaires</h3>
+      <a routerLink="/scholarships" class="text-primary text-[13px] no-underline font-semibold hover:underline">Voir
+        tout</a>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-14">
+      <div class="relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-[3px] hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)] group h-36">
+        <img src="images/usa.jpg" alt="États-Unis" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+        <div class="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-300"></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+          <span class="text-[28px] mb-1 drop-shadow-md">🇺🇸</span>
+          <span class="text-[13px] font-bold text-white tracking-wide drop-shadow-md">États-Unis</span>
+        </div>
+      </div>
+
+      <div class="relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-[3px] hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)] group h-36">
+        <img src="images/uk.jpg" alt="Royaume-Uni" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+        <div class="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-300"></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+          <span class="text-[28px] mb-1 drop-shadow-md">🇬🇧</span>
+          <span class="text-[13px] font-bold text-white tracking-wide drop-shadow-md">Royaume-Uni</span>
+        </div>
+      </div>
+
+      <div class="relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-[3px] hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)] group h-36">
+        <img src="images/canada.jpg" alt="Canada" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+        <div class="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-300"></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+          <span class="text-[28px] mb-1 drop-shadow-md">🇨🇦</span>
+          <span class="text-[13px] font-bold text-white tracking-wide drop-shadow-md">Canada</span>
+        </div>
+      </div>
+
+      <div class="relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-[3px] hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)] group h-36">
+        <img src="images/germany.jpg" alt="Allemagne" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+        <div class="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-300"></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+          <span class="text-[28px] mb-1 drop-shadow-md">🇩🇪</span>
+          <span class="text-[13px] font-bold text-white tracking-wide drop-shadow-md">Allemagne</span>
+        </div>
+      </div>
+
+      <div class="relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-[3px] hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)] group h-36">
+        <img src="images/france.jpg" alt="France" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+        <div class="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-300"></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+          <span class="text-[28px] mb-1 drop-shadow-md">🇫🇷</span>
+          <span class="text-[13px] font-bold text-white tracking-wide drop-shadow-md">France</span>
+        </div>
+      </div>
+
+      <div class="relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-[3px] hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)] group h-36">
+        <img src="images/australia.jpg" alt="Australie" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+        <div class="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-300"></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+          <span class="text-[28px] mb-1 drop-shadow-md">🇦🇺</span>
+          <span class="text-[13px] font-bold text-white tracking-wide drop-shadow-md">Australie</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center text-lg text-dark font-bold mb-5">
+      <h3>Bourses récentes</h3>
+      <a routerLink="/scholarships" class="text-primary text-[13px] no-underline font-semibold hover:underline">Voir
+        tout</a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+      @for (scholarship of recentScholarships; track scholarship.id) {
+      <div
+        class="bg-light border border-border-color rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-[0_10px_25px_rgba(0,0,0,0.06)] hover:bg-white hover:-translate-y-0.5 group">
+        <div>
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-[30px]">{{ scholarship.country_emoji || '🎓' }}</span>
+          </div>
+          <h4 class="text-base text-dark font-bold leading-[1.3] mb-4 min-h-[42px]">{{ scholarship.title }}</h4>
+          <ul class="list-none mb-6 p-0">
+            <li class="text-xs text-gray-text mb-2 flex items-center gap-2"><i
+                class="fas fa-map-marker-alt text-primary w-3.5 text-center"></i> {{ scholarship.country }}</li>
+            <li class="text-xs text-gray-text mb-2 flex items-center gap-2"><i
+                class="fas fa-graduation-cap text-primary w-3.5 text-center"></i> {{ scholarship.study_level || 'Universitaire' }}</li>
+            <li class="text-xs text-gray-text mb-2 flex items-center gap-2"><i
+                class="fas fa-wallet text-primary w-3.5 text-center"></i> {{ scholarship.funding_type || 'Financée' }}</li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-[11px] text-gray-text mb-3.5"><i class="far fa-clock"></i> Date limite : {{ scholarship.deadline | date:'dd MMM yyyy' }}</div>
+          <button
+            class="inline-flex items-center justify-center rounded-lg font-semibold cursor-pointer transition-all duration-300 no-underline w-full text-xs px-4 py-2 border border-border-color bg-white text-primary group-hover:bg-primary group-hover:text-white group-hover:border-transparent"
+            [routerLink]="['/scholarships', scholarship.id || '']">Voir les détails </button>
+        </div>
+      </div>
+      } @empty {
+        <div class="col-span-1 md:col-span-2 lg:col-span-4 text-center text-gray-text py-10">
+          Chargement des bourses récentes...
+        </div>
+      }
+    </div>
+
+    <div class="text-center mt-10">
+      <button
+        class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-90 hover:-translate-y-[1px] !px-[30px] !py-[12px]"
+        routerLink="/scholarships">Explorer toutes les bourses <i class="fas fa-search ml-2 text-[11px]"></i></button>
+    </div>
+  </div>
+</section>
+
+<section class="py-20 border-y border-border-color">
+  <div class="w-full max-w-[1200px] mx-auto px-6">
+    <div class="text-center mb-12">
+      <span class="text-primary text-xs font-bold uppercase tracking-[2px] block mb-2.5">Comment ça marche</span>
+      <h2 class="text-[32px] text-black font-bold">4 étapes simples pour atteindre vos objectifs</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+      <div class="bg-white border border-border-color rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+        <div
+          class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-[13px] mb-4 bg-border-color text-primary">
+          01</div>
+        <div class="flex items-center gap-2 mb-3">
+          <i class="fas fa-search text-sm text-primary"></i>
+          <h4 class="text-base font-bold text-dark">Recherchez</h4>
+        </div>
+        <p class="text-xs text-gray-text leading-relaxed">Utilisez nos filtres avancés pour trouver des bourses adaptées à
+          votre profil et à vos objectifs.</p>
+      </div>
+      <div class="bg-white border border-border-color rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+        <div
+          class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-[13px] mb-4 bg-border-color text-primary">
+          02</div>
+        <div class="flex items-center gap-2 mb-3">
+          <i class="fas fa-file-alt text-sm text-primary"></i>
+          <h4 class="text-base font-bold text-dark">Découvrez</h4>
+        </div>
+        <p class="text-xs text-gray-text leading-relaxed">Consultez les détails des bourses, les critères d'éligibilité et
+          les documents requis.</p>
+      </div>
+
+      <div class="bg-white border border-border-color rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+        <div
+          class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-[13px] mb-4 bg-border-color text-primary">
+          03</div>
+        <div class="flex items-center gap-2 mb-3">
+          <i class="fas fa-file-alt text-sm text-primary"></i>
+          <h4 class="text-base font-bold text-dark">Générez un CV</h4>
+        </div>
+          <p class="text-xs text-gray-text leading-relaxed">Faites-vous générer un CV prêt à être utilisé.</p>
+        </div>
+
+      <div class="bg-white border border-border-color rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+        <div
+          class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-[13px] mb-4 bg-border-color text-primary">
+          04</div>
+        <div class="flex items-center gap-2 mb-3">
+          <i class="fas fa-paper-plane text-sm text-primary"></i>
+          <h4 class="text-base font-bold text-dark">Postulez</h4>
+        </div>
+        <p class="text-xs text-gray-text leading-relaxed">Préparez votre candidature et postulez directement via les liens
+          officiels vérifiés.</p>
+      </div>
+      <div class="bg-white border border-border-color rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+        <div
+          class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-[13px] mb-4 bg-border-color text-primary">
+          05</div>
+        <div class="flex items-center gap-2 mb-3">
+          <i class="fas fa-trophy text-sm text-primary"></i>
+          <h4 class="text-base font-bold text-dark">Réalisez vos rêves</h4>
+        </div>
+        <p class="text-xs text-gray-text leading-relaxed">Obtenez la bourse convoitée et concentrez-vous sereinement sur
+          vos études et votre avenir.</p>
+      </div>
+    </div>
+
+    
+  </div>
+</section>
+
+<footer class="bg-white pt-20">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12 w-full max-w-[1200px] mx-auto px-6">
+    <div>
+      <div class="flex items-center gap-2.5">
+        <i class="fas fa-graduation-cap text-black text-2xl"></i>
+        <h1 class="text-[20px] font-bold text-black">BourseConnect</h1>
+      </div>
+      <p class="text-xs text-gray-text mt-4 mb-5">Nous connectons efficacement les étudiants aux meilleures opportunités de
+        bourses universitaires mondiales. Votre avenir commence ici.</p>
+      <div class="flex gap-3">
+        <a routerLink="/"
+          class="w-8 h-8 border border-border-color rounded-full flex items-center justify-center text-gray-text no-underline text-sm transition-all duration-300 hover:text-primary hover:border-primary"><i
+            class="fab fa-instagram"></i></a>
+        <a routerLink="/"
+          class="w-8 h-8 border border-border-color rounded-full flex items-center justify-center text-gray-text no-underline text-sm transition-all duration-300 hover:text-primary hover:border-primary"><i
+            class="fab fa-facebook-f"></i></a>
+        <a routerLink="/"
+          class="w-8 h-8 border border-border-color rounded-full flex items-center justify-center text-gray-text no-underline text-sm transition-all duration-300 hover:text-primary hover:border-primary"><i
+            class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+    <div>
+      <h4 class="text-[13px] font-bold uppercase tracking-[1px] text-dark mb-5">Navigation</h4>
+      <ul class="list-none p-0">
+        <li class="mb-3"><a routerLink="/"
+            class="text-xs text-gray-text no-underline transition-all duration-300 hover:text-primary">Accueil</a></li>
+        <li class="mb-3"><a routerLink="/scholarships"
+            class="text-xs text-gray-text no-underline transition-all duration-300 hover:text-primary">Bourses d'études</a>
+        </li>
+        <li class="mb-3"><a routerLink="/"
+            class="text-xs text-gray-text no-underline transition-all duration-300 hover:text-primary">À propos de nous</a>
+        </li>
+        <li class="mb-3"><a routerLink="/"
+            class="text-xs text-gray-text no-underline transition-all duration-300 hover:text-primary">Blog
+            d'actualités</a></li>
+        <li class="mb-3"><a routerLink="/"
+            class="text-xs text-gray-text no-underline transition-all duration-300 hover:text-primary">Contactez-nous</a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-[13px] font-bold uppercase tracking-[1px] text-dark mb-5">Ressources</h4>
+      <ul class="list-none p-0">
+        <li class="mb-3"><a routerLink="/"
+            class="text-xs text-gray-text no-underline transition-all duration-300 hover:text-primary">Guides pratiques</a>
+        </li>
+        <li class="mb-3"><a routerLink="/"
+            class="text-xs text-gray-text no-underline transition-all duration-300 hover:text-primary">Conseils
+            d'écriture</a></li>
+        <li class="mb-3"><a routerLink="/"
+            class="text-xs text-gray-text no-underline transition-all duration-300 hover:text-primary">Foire aux questions
+            (FAQ)</a></li>
+        <li class="mb-3"><a routerLink="/"
+            class="text-xs text-gray-text no-underline transition-all duration-300 hover:text-primary">Universités
+            membres</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-[13px] font-bold uppercase tracking-[1px] text-dark mb-5">Restez informé</h4>
+      <p class="text-xs text-gray-text mb-4">Abonnez-vous à notre newsletter pour recevoir en priorité les alertes bourses.
+      </p>
+      <div class="bg-light border border-border-color rounded-xl p-1 flex">
+        <input type="email" placeholder="Votre adresse email"
+          class="bg-transparent border-none outline-none px-3 text-xs w-full text-dark">
+        <button
+          class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-90 hover:-translate-y-[1px] !px-4 !py-2 whitespace-nowrap">S'abonner</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-primary text-white/60 text-[11px] py-6 border-t border-dark">
+    <div
+      class="w-full max-w-[1200px] mx-auto px-6 flex flex-col sm:flex-row justify-between items-center flex-wrap gap-2.5 text-center sm:text-left">
+      <p>© 2024 BourseConnect. Tous droits réservés.</p>
+      <div>
+        <a routerLink="/"
+          class="text-white/60 no-underline ml-0 sm:ml-4 mx-2 sm:mx-0 transition-all duration-300 hover:text-white">Mentions
+          légales</a>
+        <a routerLink="/"
+          class="text-white/60 no-underline ml-0 sm:ml-4 mx-2 sm:mx-0 transition-all duration-300 hover:text-white">Conditions</a>
+        <a routerLink="/"
+          class="text-white/60 no-underline ml-0 sm:ml-4 mx-2 sm:mx-0 transition-all duration-300 hover:text-white">Confidentialité</a>
+      </div>
+    </div>
+  </div>
+</footer>

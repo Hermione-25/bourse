@@ -1,0 +1,12 @@
+<button
+  [type]="type"
+  [disabled]="disabled"
+  class="rounded px-4 py-2 font-medium transition enabled:hover:opacity-90"
+  [ngClass]="{
+    'bg-blue-600 text-white': variant === 'primary',
+    'bg-slate-100 text-slate-900 border border-slate-300': variant === 'secondary',
+    'bg-transparent text-blue-600': variant === 'ghost'
+  }"
+>
+  {{ label }}
+</button>

@@ -1,0 +1,30 @@
+<div>
+  <h1 class="text-2xl font-bold text-dark mb-6 text-center">Connexion</h1>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-5">
+    <div >
+      <label class="block text-xs font-bold uppercase tracking-[1px] text-dark mb-2" for="email">Email</label>
+      <input id="email" type="email" formControlName="email" [class.border-red-500]="form.get('email')?.invalid && form.get('email')?.touched" class="w-full rounded-lg border border-border-color px-4 py-2.5 text-sm text-dark focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors bg-light/50" placeholder="votre@email.com" />
+    </div>
+
+    <div>
+      <label class="block text-xs font-bold uppercase tracking-[1px] text-dark mb-2" for="password">Mot de passe</label>
+      <input id="password" type="password" formControlName="password" [class.border-red-500]="form.get('password')?.invalid && form.get('password')?.touched" class="w-full rounded-lg border border-border-color px-4 py-2.5 text-sm text-dark focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors bg-light/50" placeholder="••••••••" />
+    </div>
+
+    <div *ngIf="errorMessage" class="text-xs text-red-600 bg-red-50 p-3 rounded-lg border border-red-100">{{ errorMessage }}</div>
+
+    <button type="submit" class="w-full inline-flex items-center justify-center px-5 py-3 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-90 hover:-translate-y-[1px]" [disabled]="submitting">
+      {{ submitting ? 'Connexion en cours...' : 'Se connecter' }}
+    </button>
+  </form>
+  
+  <p class="text-center text-xs text-light mt-6">
+    Vous n'avez pas de compte ? 
+    <a routerLink="/auth/register" class="text-primary font-semibold no-underline hover:underline">Inscrivez-vous</a>
+  </p>
+
+  <div class="mt-6 text-center">
+    <a routerLink="/auth/forgot-password" class="text-primary font-semibold no-underline hover:underline">Mot de passe oublié ?</a>
+  </div>
+</div>
