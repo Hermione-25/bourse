@@ -14,7 +14,8 @@ export class ForgotPasswordPageComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
 
-  form = this.fb.group({
+ 
+  form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
   });
 
@@ -23,25 +24,22 @@ export class ForgotPasswordPageComponent {
   errorMessage: string | null = null;
 
   submit(): void {
-    if (this.form.invalid) {
-      return;
-    }
+    if (this.form.invalid || this.submitting) return;
 
     this.submitting = true;
-    this.errorMessage = null;
     this.successMessage = null;
+    this.errorMessage = null;
 
-    const value = this.form.value as { email: string };
-    this.authService.forgotPassword(value).subscribe({
+    const { email } = this.form.getRawValue();
+    this.authService.forgotPassword({ email }).subscribe({
       next: () => {
-        this.successMessage = 'Si cet email existe, un lien de réinitialisation a été envoyé.';
+        this.successMessage =
+          'Si cet email existe, un lien de réinitialisation a été envoyé.';
         this.submitting = false;
       },
-      error: (error: unknown) => {
-        const errorMsg = typeof error === 'object' && error !== null && 'message' in error
-          ? String((error as Record<string, unknown>)['message'])
-          : 'Échec de la demande de mot de passe.';
-        this.errorMessage = errorMsg;
+      error: () => {
+        this.errorMessage =
+          'Impossible de traiter la demande pour le moment.';
         this.submitting = false;
       },
     });
