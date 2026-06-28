@@ -6,8 +6,8 @@ import { AuthService } from '../../core/auth/auth.service';
   selector: 'app-dashboard-layout',
   standalone: true,
   imports: [RouterOutlet, RouterLink],
-  templateUrl: './dashboard-layout.component.html',
-  styleUrls: ['./dashboard-layout.component.css'],
+  templateUrl: './user-layout.component.html',
+  styleUrls: ['./user-layout.component.css'],
 })
 export class DashboardLayoutComponent {
   private authService = inject(AuthService);
