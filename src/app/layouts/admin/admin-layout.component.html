@@ -6,19 +6,19 @@
         <button 
           type="button"
           (click)="logout()"
-          class="rounded px-4 py-2 text-sm font-medium bg-light text-primary hover:bg-black">
+          class="rounded px-4 py-2 text-sm font-medium bg-light text-primary hover:bg-black/60">
           Déconnexion
         </button>
       </div>
     </header>
-    
+    <div class="border-t-2 border-light"></div>
     <div class="flex flex-3">
       <aside class="w-50 shadow-md bg-primary p-4">
         <div class="text-xl font-semibold mb-6">Admin</div>
-        <nav class="space-y-3 text-sm">
-          <a routerLink="/admin/users" class="block text-light hover:text-slate-900 font-medium hover:bg-light"><i></i> Utilisateurs</a>
-          <a routerLink="/" class="block text-light hover:text-slate-900 hover:bg-light"><i></i> Accueil</a>
-          <a routerLink="/" class="block text-light hover:text-slate-900 hover:bg-light"><i></i>Profil</a>
+        <nav class="space-y-10 text-sm">
+          <a routerLink="/admin/liste-user" class="block text-light hover:text-slate-900 active:bg-light/40 active:rounded-sm w-full h-10 "><i class="fas fa-user"></i> Utilisateurs</a>
+          <a routerLink="/admin/liste-scholarite" class="block text-light hover:text-slate-900 active:bg-light/40 active:rounded-sm w-full h-10 "><i class="fas fa-home"></i>Bourses</a>
+          <a routerLink="/admin/profil" class="block text-light hover:text-slate-900 active:bg-light/40 active:rounded-sm w-full h-10 "><i class="fas fa-user"></i>Profil</a>
         </nav>
       </aside>
 

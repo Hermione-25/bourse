@@ -66,9 +66,21 @@ export const routes: Routes = [
     canActivate: [],
     children: [
       {
+        path: 'liste-user',
+        loadComponent: () => import('./features/administrateur/liste-user/liste-user.component').then((m) => m.ListeUserComponent),
+      },
+      {
+        path: 'liste-scholarite',
+        loadComponent: () => import('./features/administrateur/liste-scholariships/liste-scholariships.component').then((m) => m.ListeScholarishipsComponent),
+      },
+      {
+        path: 'profil',
+        loadComponent: () => import('./features/administrateur/profil/profil.component').then((m) => m.ProfilComponent),
+      },
+      {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'users',
+        redirectTo: 'liste-user',
       },
     ],
   },
