@@ -40,6 +40,7 @@ function handle401Error(
 ): Observable<HttpEvent<unknown>> {
   return refreshTokenService.requestRefreshToken().pipe(
     switchMap((newToken) => {
+      tokenService.setAccessToken(newToken);
       const newReq = req.clone({
         setHeaders: { Authorization: `Bearer ${newToken}` },
       });

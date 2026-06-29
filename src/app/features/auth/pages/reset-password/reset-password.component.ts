@@ -8,7 +8,7 @@ import { AuthService } from '../../../../core/auth/auth.service';
   selector: 'app-reset-password',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './reset-password.html',
+  templateUrl: './reset-password.component.html',
 })
 export class ResetPasswordComponent {
   private route = inject(ActivatedRoute);
@@ -22,14 +22,14 @@ export class ResetPasswordComponent {
   errorMessage: string | null = null;
 
   form = this.fb.nonNullable.group({
-    password: ['', [Validators.required, Validators.minLength(6)]],
+    password: ['', [Validators.required]],
     password_confirmation: ['', [Validators.required]],
   });
 
   ngOnInit() {
-    this.token = this.route.snapshot.queryParamMap.get('token') || '';
-  }
-
+  console.log('RESET PASSWORD LOADED');
+  this.token = this.route.snapshot.queryParamMap.get('token') || '';
+}
   submit() {
     if (this.form.invalid || !this.token) return;
 

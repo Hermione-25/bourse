@@ -79,7 +79,7 @@ export class RegisterPageComponent {
     email: ['', [Validators.required, Validators.email]],
     country:['', Validators.required],
     password: ['', [Validators.required, Validators.minLength(8)]],
-    passwordConfirmation: ['', Validators.required],
+    password_confirmation: ['', Validators.required],
   });
 
   submitting = false;
@@ -92,7 +92,7 @@ export class RegisterPageComponent {
       return;
     }
 
-    if (this.form.value.password !== this.form.value.passwordConfirmation) {
+    if (this.form.value.password !== this.form.value.password_confirmation) {
       this.errorMessage = 'Les mots de passe ne correspondent pas.';
       return;
     }
@@ -100,7 +100,7 @@ export class RegisterPageComponent {
     this.submitting = true;
     this.errorMessage = null;
 
-    const value = this.form.value as { first_name: string; last_name: string; country: string; email: string; password: string; passwordConfirmation: string };
+    const value = this.form.value as { first_name: string; last_name: string; country: string; email: string; password: string; password_confirmation: string };
     this.authService.register(value).subscribe({
       next: () => {
         this.submitting = false;

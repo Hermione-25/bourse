@@ -5,7 +5,6 @@ export interface AuthToken {
   tokenType?: string;
   user?: {
     id: string;
-    name: string;
     email: string;
   };
   roles?: string[];
@@ -23,11 +22,17 @@ export interface RegisterDto {
   country?: string;
   email: string;
   password: string;
-  passwordConfirmation: string;
+  password_confirmation: string;
 }
 
 export interface ForgotPasswordDto {
   email: string;
+}
+
+export interface ResetPasswordDto {
+  token: string;
+  password: string;
+  password_confirmation: string;
 }
 
 export interface RefreshTokenResponse {
