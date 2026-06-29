@@ -16,6 +16,7 @@ export class ResetPasswordComponent {
   private authService = inject(AuthService);
 
   token = '';
+  email =''
 
   submitting = false;
   successMessage: string | null = null;
@@ -27,8 +28,9 @@ export class ResetPasswordComponent {
   });
 
   ngOnInit() {
-  console.log('RESET PASSWORD LOADED');
-  this.token = this.route.snapshot.queryParamMap.get('token') || '';
+  
+  this.token = this.route.snapshot.paramMap.get('token') || '';
+
 }
   submit() {
     if (this.form.invalid || !this.token) return;
