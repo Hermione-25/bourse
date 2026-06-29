@@ -63,7 +63,7 @@ export const routes: Routes = [
   {
     path: 'admin',
     loadComponent: () => import('./layouts/admin/admin-layout.component').then((m) => m.AdminLayoutComponent),
-    canActivate: [authGuard],
+    canActivate: [],
     children: [
       {
         path: '',
