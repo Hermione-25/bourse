@@ -53,12 +53,13 @@ export class AuthService {
     return this.apiService.post<void>('forgot-password', dto);
   }
 
-  resetPassword(data: {
-    token: string;
-    password: string;
-    password_confirmation: string;
-  }): Observable<void> {
-    return this.apiService.post<void>('reset-password', data);
+  resetPassword(email: string, token: string, password: string, passwordConfirmation: string): Observable<void> {
+    return this.apiService.post<void>('reset-password', {
+      email,
+      token,
+      password,
+      password_confirmation: passwordConfirmation,
+    });
   }
 
   logout(): void {

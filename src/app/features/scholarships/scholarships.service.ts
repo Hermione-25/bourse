@@ -31,4 +31,13 @@ export class ScholarshipsService {
       .post<ApiResponse<Scholarship>>('scholarships', dto)
       .pipe(map((response) => response.data));
   }
+  delete(id: string): Observable<void> {
+    return this.apiService.delete<void>(`scholarships/${id}`);
+  }
+
+  update(id: string, dto: ScholarshipDto): Observable<Scholarship> {
+    return this.apiService
+      .put<ApiResponse<Scholarship>>(`scholarships/${id}`, dto)
+      .pipe(map((response) => response.data));
+  }
 }

@@ -16,6 +16,7 @@ export class LandingPageComponent implements OnInit {
 
   recentScholarships: any[] = [];
   isSelectFocused = false;
+  isMenuOpen = false;
 
   ngOnInit(): void {
     this.scholarshipService.getAllScholarships().subscribe({
@@ -29,5 +30,13 @@ export class LandingPageComponent implements OnInit {
 
   navigateTo(path: string): void {
     this.router.navigate([path]);
+  }
+
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu(): void {
+    this.isMenuOpen = false;
   }
 }

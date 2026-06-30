@@ -3,10 +3,16 @@ export interface AuthToken {
   refreshToken?: string;
   expiresIn?: number;
   tokenType?: string;
+
   user?: {
     id: string;
     email: string;
+    first_name?: string;
+    last_name?: string;
+    role?: string;
+    country?: string;
   };
+  
   roles?: string[];
   permissions?: string[];
 }

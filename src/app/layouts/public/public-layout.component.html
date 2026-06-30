@@ -1,16 +1,36 @@
 <div class="min-h-screen bg-light text-dark">
   <header class="border-b border-border-color bg-white shadow-[0_1px_10px_rgba(0,0,0,0.02)]">
     <div class="mx-auto flex max-w-6xl items-center justify-between p-4">
-      <a routerLink="/" class="font-semibold text-lg flex items-center gap-2">
+      <a routerLink="/" class="font-semibold text-lg flex items-center gap-2" (click)="closeMenu()">
         <i class="fas fa-graduation-cap text-dark"></i> BourseConnect
       </a>
-      <nav class="space-x-4">
-        <a routerLink="/" class="text-sm text-gray-text hover:text-primary font-medium transition-colors">Accueil</a>
-        <a routerLink="/scholarships" class="text-sm text-gray-text hover:text-primary font-medium transition-colors">Bourses</a>
-        <a routerLink="/auth/login" class="text-sm text-gray-text hover:text-primary font-medium transition-colors">Connexion</a>
-        <a routerLink="/auth/register" class="text-sm bg-primary text-white rounded-lg px-4 py-2 hover:opacity-90 font-semibold shadow-[0_4px_12px] shadow-primary/20 transition-all hover:-translate-y-[1px]">Inscription</a>
+
+      <button type="button" class="rounded-lg border border-gray-200 p-2 text-gray-600 lg:hidden" (click)="toggleMenu()" aria-label="Ouvrir le menu">
+        <i class="fas" [class.fa-bars]="!isMenuOpen" [class.fa-times]="isMenuOpen"></i>
+      </button>
+
+      <nav class="hidden space-x-4 lg:flex">
+        <a routerLink="/" routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }" class="text-sm text-gray-text hover:text-primary font-medium transition-colors" (click)="closeMenu()">Accueil</a>
+        <a routerLink="/scholarships" routerLinkActive="text-primary" class="text-sm text-gray-text hover:text-primary font-medium transition-colors" (click)="closeMenu()">Bourses</a>
+        <a routerLink="/auth/propos" routerLinkActive="text-primary" class="text-sm text-gray-text hover:text-primary font-medium transition-colors" (click)="closeMenu()">Pays</a>
+        <a routerLink="/auth/blog" routerLinkActive="text-primary" class="text-sm text-gray-text hover:text-primary font-medium transition-colors" (click)="closeMenu()">Blog</a>
+        <a routerLink="/auth/contact" routerLinkActive="text-primary" class="text-sm text-gray-text hover:text-primary font-medium transition-colors" (click)="closeMenu()">Contact</a>
+        <a routerLink="/auth/login" class="text-sm bg-primary text-white rounded-lg px-4 py-2 hover:opacity-90 font-semibold shadow-[0_4px_12px] shadow-primary/20 transition-all hover:-translate-y-[1px] text-center" (click)="closeMenu()">Connexion</a>
       </nav>
     </div>
+
+    @if (isMenuOpen) {
+      <div class="border-t border-border-color bg-white px-4 py-4 shadow-sm lg:hidden">
+        <nav class="flex flex-col gap-3">
+          <a routerLink="/" routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }" class="text-sm text-gray-text hover:text-primary font-medium transition-colors" (click)="closeMenu()">Accueil</a>
+          <a routerLink="/scholarships" routerLinkActive="text-primary" class="text-sm text-gray-text hover:text-primary font-medium transition-colors" (click)="closeMenu()">Bourses</a>
+          <a routerLink="/auth/propos" routerLinkActive="text-primary" class="text-sm text-gray-text hover:text-primary font-medium transition-colors" (click)="closeMenu()">Pays</a>
+          <a routerLink="/auth/blog" routerLinkActive="text-primary" class="text-sm text-gray-text hover:text-primary font-medium transition-colors" (click)="closeMenu()">Blog</a>
+          <a routerLink="/auth/contact" routerLinkActive="text-primary" class="text-sm text-gray-text hover:text-primary font-medium transition-colors" (click)="closeMenu()">Contact</a>
+          <a routerLink="/auth/login" class="text-sm bg-primary text-white rounded-lg px-4 py-2 hover:opacity-90 font-semibold shadow-[0_4px_12px] shadow-primary/20 transition-all hover:-translate-y-[1px] text-center" (click)="closeMenu()">Connexion</a>
+        </nav>
+      </div>
+    }
   </header>
 
   <main class="mx-auto max-w-6xl p-4">

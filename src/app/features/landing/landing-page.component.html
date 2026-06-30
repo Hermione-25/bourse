@@ -8,6 +8,11 @@
           <p class="text-[10px] text-gray-text tracking-[1px]">Étudiez. Rêvez. Réalisez.</p>
         </div>
       </div>
+
+      <button type="button" class="inline-flex items-center justify-center rounded-lg border border-gray-200 p-2 text-gray-700 md:hidden" (click)="toggleMenu()" aria-label="Ouvrir le menu">
+        <i class="fas" [class.fa-bars]="!isMenuOpen" [class.fa-times]="isMenuOpen"></i>
+      </button>
+
       <ul class="hidden md:flex gap-6 list-none m-0 p-0">
         <li><a routerLink="/"
             class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold active:text-primary active:font-semibold">Accueil</a>
@@ -25,9 +30,22 @@
         </li>
       </ul>
       <button
-        class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-40 hover:-translate-y-[1px]"
+        class="hidden md:inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-40 hover:-translate-y-[1px]"
         routerLink="/auth/login">Se connecter</button>
     </div>
+
+    @if (isMenuOpen) {
+      <div class="border-t border-gray-200 bg-white px-6 py-4 md:hidden">
+        <ul class="flex flex-col gap-3 list-none m-0 p-0">
+          <li><a routerLink="/" class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">Accueil</a></li>
+          <li><a routerLink="/scholarships" class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">Bourses</a></li>
+          <li><a routerLink="/" class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">pays</a></li>
+          <li><a routerLink="/" class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">Blog</a></li>
+          <li><a routerLink="/" class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">Contact</a></li>
+          <li><a routerLink="/auth/login" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Se connecter</a></li>
+        </ul>
+      </div>
+    }
   </nav>
 
   <section

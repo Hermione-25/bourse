@@ -38,7 +38,7 @@ export class LoginPageComponent {
     this.authService.login(value).subscribe({
       next: () => {
         this.submitting = false;
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/user']);
       },
       error: (error: unknown) => {
         const errorMsg = typeof error === 'object' && error !== null && 'message' in error
