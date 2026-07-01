@@ -3,13 +3,13 @@ import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/rou
 import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
-  selector: 'app-dashboard-layout',
+  selector: 'app-user-layout',
   standalone: true,
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './user-layout.component.html',
   styleUrls: ['./user-layout.component.css'],
 })
-export class DashboardLayoutComponent {
+export class UserLayoutComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 

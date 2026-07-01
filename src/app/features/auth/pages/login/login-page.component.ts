@@ -2,19 +2,21 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../../core/auth/auth.service';
-import { RouterLink, Router } from '@angular/router';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule,], 
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css'],
 })
 export class LoginPageComponent {
   private fb = inject(FormBuilder);
-  private authService = inject(AuthService);
   private router = inject(Router);
+  private authService = inject(AuthService);
+
 
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -36,17 +38,28 @@ export class LoginPageComponent {
 
     const value = this.form.value as { email: string; password: string };
     this.authService.login(value).subscribe({
-      next: () => {
-        this.submitting = false;
-        this.router.navigate(['/user']);
-      },
-      error: (error: unknown) => {
-        const errorMsg = typeof error === 'object' && error !== null && 'message' in error
-          ? String((error as Record<string, unknown>)['message'])
-          : 'Échec de la connexion';
-        this.errorMessage = errorMsg;
-        this.submitting = false;
-      },
-    });
+ next: (res) => {
+  this.submitting = false;
+  const isAdmin = res.data.user?.role === 'admin';
+  this.router.navigate([isAdmin ? '/admin' : '/user']);
+},
+  error: (error: unknown) => {
+    const errorMsg =
+      typeof error === 'object' && error !== null && 'message' in error
+        ? String((error as Record<string, unknown>)['message'])
+        : 'Échec de la connexion';
+
+    this.errorMessage = errorMsg;
+    this.submitting = false;
+  },
+});
+  }
+
+  naviguerVersRegister(): void {
+    this.router.navigate(['/auth/register']);
+  }
+
+  naviguerVersForgotPassword(): void {
+    this.router.navigate(['/auth/forgot-password']);
   }
 }

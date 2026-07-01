@@ -1,5 +1,5 @@
 <!-- CONFIRMATION SUPPRESSION -->
-<div *ngIf="confirmDeleteId"
+<div *ngIf="confirmDeleteId()"
   class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
 
   <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 text-center">
@@ -29,6 +29,121 @@
 </div>
 
 
+<!-- MODALE EDITION / CREATION -->
+<div *ngIf="showForm()"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+
+  <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
+
+    <h2 class="text-lg font-bold text-gray-800 mb-6">
+      {{ editingId() ? "Modifier l'utilisateur" : "Créer un utilisateur" }}
+    </h2>
+
+    <form [formGroup]="form" (ngSubmit)="submitForm()" class="space-y-4">
+
+      <div>
+        <label class="block text-xs font-medium text-gray-500 mb-1">Prénom</label>
+        <input type="text" formControlName="first_name"
+          class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary" />
+      </div>
+
+      <div>
+        <label class="block text-xs font-medium text-gray-500 mb-1">Nom</label>
+        <input type="text" formControlName="last_name"
+          class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary" />
+      </div>
+
+      <div>
+        <label class="block text-xs font-medium text-gray-500 mb-1">Email</label>
+        <input type="email" formControlName="email"
+          class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary" />
+      </div>
+
+      <div>
+        <label class="block text-xs font-medium text-gray-500 mb-1">Pays</label>
+        <input type="text" formControlName="country"
+          class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary" />
+      </div>
+
+      <div>
+        <label class="block text-xs font-medium text-gray-500 mb-1">Mot de passe</label>
+        <input type="password" formControlName="password"
+          class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary" />
+      </div>
+
+      <div>
+        <label class="block text-xs font-medium text-gray-500 mb-1">Rôle</label>
+        <select formControlName="role"
+          class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+          <option value="student">student</option>
+          <option value="admin">admin</option>
+        </select>
+      </div>
+
+      <div class="flex gap-3 justify-end pt-2">
+        <button type="button" (click)="closeEdit()"
+          class="px-5 py-2 rounded-lg border border-gray-300 text-gray-700 text-sm font-medium hover:bg-gray-50 transition-colors">
+          Annuler
+        </button>
+
+        <button type="submit" [disabled]="form.invalid || submitting()"
+          class="px-5 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:opacity-90 transition-colors disabled:opacity-50">
+          {{ editingId() ? 'Enregistrer' : 'Créer' }}
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+
+<!-- MODALE DETAILS -->
+<div *ngIf="showDetails() && selectedUser() as user"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+
+  <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
+
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+        {{ (user.first_name || '').charAt(0) }}{{ (user.last_name || '').charAt(0) }}
+      </div>
+      <div>
+        <p class="font-semibold text-gray-800">{{ user.first_name }} {{ user.last_name }}</p>
+        <p class="text-xs text-gray-400">{{ user.email }}</p>
+      </div>
+    </div>
+
+    <div class="space-y-3 text-sm">
+      <div class="flex justify-between border-b border-gray-50 pb-2">
+        <span class="text-gray-500">Pays</span>
+        <span class="text-gray-800 font-medium">{{ user.country || '—' }}</span>
+      </div>
+      <div class="flex justify-between border-b border-gray-50 pb-2">
+        <span class="text-gray-500">Rôle</span>
+        <span class="text-gray-800 font-medium">{{ user.role || 'user' }}</span>
+      </div>
+      <div class="flex justify-between border-b border-gray-50 pb-2">
+        <span class="text-gray-500">Créé le</span>
+        <span class="text-gray-800 font-medium">{{ user.created_at ? (user.created_at | date:'dd/MM/yyyy') : '—' }}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-gray-500">Mis à jour</span>
+        <span class="text-gray-800 font-medium">{{ user.updated_at ? (user.updated_at | date:'dd/MM/yyyy') : '—' }}</span>
+      </div>
+    </div>
+
+    <div class="flex justify-end pt-6">
+      <button (click)="closeDetails()"
+        class="px-5 py-2 rounded-lg border border-gray-300 text-gray-700 text-sm font-medium hover:bg-gray-50 transition-colors">
+        Fermer
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
 <div class="space-y-6">
 
   <!-- HEADER -->
@@ -37,44 +152,47 @@
     <div>
       <h1 class="text-2xl font-bold text-gray-800">Gestion des utilisateurs</h1>
       <p class="text-sm text-gray-500 mt-1">
-        {{ filteredUsers.length }} utilisateur(s) trouvé(s)
+        {{ filteredUsers().length }} utilisateur(s) trouvé(s)
       </p>
     </div>
 
-    <div class="relative">
-      <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+    <div class="flex items-center gap-3">
 
-      <input
-        type="text"
-        placeholder="Rechercher..."
-        (input)="onSearch($event)"
-        class="pl-9 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all w-64 bg-white shadow-sm"
-      />
+      <div class="relative">
+        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+
+        <input
+          type="text"
+          placeholder="Rechercher..."
+          (input)="onSearch($event)"
+          class="pl-9 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all w-64 bg-white shadow-sm"
+        />
+      </div>
+
+      <button
+        (click)="OpenCreate()"
+        class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-white text-sm font-semibold hover:opacity-90 transition-colors shadow-sm whitespace-nowrap">
+        <i class="fas fa-plus"></i>
+        Ajouter un utilisateur
+      </button>
+
     </div>
 
   </div>
-  <button
-    (click)="OpenCreate()"
-    class="flex items-center gap-2 px-4 py-2.5 bg-primary text-white text-sm font-semibold rounded-xl hover:opacity-90 transition-opacity shadow-sm whitespace-nowrap">
-
-    <i class="fas fa-plus text-xs"></i>
-    Ajouter un étudiant
-
-  </button>
 
 
   <!-- ERROR -->
-  <div *ngIf="errorMessage"
+  <div *ngIf="errorMessage()"
     class="flex items-center gap-3 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm">
 
     <i class="fas fa-circle-exclamation text-red-500"></i>
-    {{ errorMessage }}
+    {{ errorMessage() }}
 
   </div>
 
 
   <!-- LOADING -->
-  <div *ngIf="loading" class="flex items-center justify-center py-16">
+  <div *ngIf="loading()" class="flex items-center justify-center py-16">
 
     <div class="flex flex-col items-center gap-3">
       <div class="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
@@ -85,12 +203,13 @@
 
 
   <!-- TABLE -->
-  <div *ngIf="!loading"
+  <div *ngIf="!loading()"
     class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
 
 
+
     <!-- EMPTY -->
-    <div *ngIf="filteredUsers.length === 0"
+    <div *ngIf="filteredUsers().length === 0"
       class="flex flex-col items-center justify-center py-16 text-gray-400">
 
       <i class="fas fa-users text-5xl mb-4 opacity-30"></i>
@@ -101,7 +220,7 @@
 
 
     <!-- TABLE -->
-    <div *ngIf="filteredUsers.length > 0" class="overflow-x-auto">
+    <div *ngIf="filteredUsers().length > 0" class="overflow-x-auto">
 
       <table class="w-full text-sm">
 
@@ -138,7 +257,7 @@
 
         <tbody class="divide-y divide-gray-50">
 
-          <tr *ngFor="let user of filteredUsers"
+          <tr *ngFor="let user of filteredUsers()"
             class="hover:bg-gray-50/50 transition-colors">
 
             <!-- USER -->
@@ -146,12 +265,12 @@
               <div class="flex items-center gap-3">
 
                 <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">
-                  {{ user.first_name[0] }}{{ user.last_name[0] }}
+                  {{ (user.first_name || '').charAt(0) }}{{ (user.last_name || '').charAt(0) }}
                 </div>
 
                 <div>
                   <p class="font-semibold text-gray-800">
-                    {{ user.first_name }} {{ user.last_name }}
+                    {{ (user.first_name || '').charAt(0) }}{{ (user.last_name || '').charAt(0) }}
                   </p>
                   <p class="text-xs text-gray-400">{{ user.email }}</p>
                 </div>

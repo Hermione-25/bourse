@@ -22,7 +22,7 @@
         <label class="block text-xs font-bold uppercase tracking-[1px] text-dark mb-2" for="country">Votre pays</label>
         <select name="country" id="country" formControlName="country" class="w-full rounded-lg border border-border-color px-4 py-2 text-sm text-dark focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors bg-light/50 appearance-none">
           <option >Sélectionnez</option>
-          <option *ngFor="let pays of countries" [value]="pays.id">{{ pays.name }}</option>
+          <option *ngFor="let pays of countries" [value]="pays.name">{{ pays.name }}</option>
         </select>
       </div>
     </div>

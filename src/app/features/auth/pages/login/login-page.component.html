@@ -21,10 +21,10 @@
   
   <p class="text-center text-xs text-light mt-6">
     Vous n'avez pas de compte ? 
-    <a routerLink="/auth/register" class="text-primary font-semibold no-underline hover:underline">Inscrivez-vous</a>
+    <button type="button" class="text-primary font-semibold no-underline hover:underline" (click)="naviguerVersRegister()">Inscrivez-vous</button>
   </p>
 
   <div class="mt-6 text-center">
-    <a routerLink="/auth/forgot-password" class="text-primary font-semibold no-underline hover:underline">Mot de passe oublié ?</a>
+    <button type="button" class="text-primary font-semibold no-underline hover:underline" (click)="naviguerVersForgotPassword()">Mot de passe oublié ?</button>
   </div>
 </div>

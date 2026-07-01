@@ -17,7 +17,7 @@ export class ProfilComponent implements OnInit {
     first_name: '',
     last_name: '',
     email: '',
-    role: '',
+    role: 'admin',
     country: '',
     initials: '',
   };
@@ -25,15 +25,15 @@ export class ProfilComponent implements OnInit {
   ngOnInit(): void {
     this.authService.authState$.subscribe((auth) => {
 
-      if (!auth?.user) return;
+      if (!auth?.data?.user) return;
 
-      const user = auth.user;
+      const user = auth.data.user;
 
       this.adminInfo = {
         first_name: user.first_name ?? '',
         last_name: user.last_name ?? '',
         email: user.email ?? '',
-        role: user.role ?? '',
+        role: user.role ?? 'admin',
         country: user.country ?? '',
         initials: (
           (user.first_name?.charAt(0) ?? '') +

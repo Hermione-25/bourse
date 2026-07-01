@@ -31,12 +31,12 @@ export const authGuard: CanActivateFn = () => {
 export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
   const authService = inject(AuthService);
   const router = inject(Router);
-  const expectedRoles = route.data?.['roles'] as string[] | undefined;
+  const expectedRoles = route.data?.['role'] as string[] | undefined;
 
   return authService.authState$.pipe(
     take(1),
     map((auth) => {
-      const hasRole = expectedRoles?.some((role) => auth?.roles?.includes(role));
+ const hasRole = expectedRoles?.some((role) => auth?.data?.user?.role === role);
       if (!auth || (expectedRoles && !hasRole)) {
         return router.createUrlTree(['/auth/login']);
       }
@@ -50,21 +50,3 @@ export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
  * Usage dans les routes : canActivate: [authGuard, permissionGuard], data: { permissions: ['scholarships.create'] }
  * ✅ Functional guard + take(1) + utilise AuthService directement (supprime AuthStateService)
  */
-export const permissionGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
-  const expectedPermissions = route.data?.['permissions'] as string[] | undefined;
-
-  return authService.authState$.pipe(
-    take(1),
-    map((auth) => {
-      const hasPermission = expectedPermissions?.every((permission) =>
-        auth?.permissions?.includes(permission)
-      );
-      if (!auth || (expectedPermissions && !hasPermission)) {
-        return router.createUrlTree(['/auth/login']);
-      }
-      return true;
-    })
-  );
-};

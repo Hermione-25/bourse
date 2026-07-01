@@ -1,0 +1,33 @@
+<div class="max-w-5xl mx-auto px-4 py-10">
+  <h1 class="text-2xl font-bold text-[var(--color-gray-text)] mb-1">Mes favoris</h1>
+  <p class="text-sm text-[var(--color-gray-text)]/70 mb-8">
+    Les bourses que tu as sauvegardées pour plus tard.
+  </p>
+
+
+  <div *ngIf="chargement()" class="text-sm text-[var(--color-gray-text)]/60">
+    Chargement de tes favoris...
+  </div>
+
+
+  <div
+    *ngIf="!chargement() && favoris().length === 0"
+    class="border border-dashed border-[var(--color-border-color)] rounded-2xl p-10 text-center">
+    <p class="text-[var(--color-gray-text)] font-medium mb-1">Aucun favori pour l'instant</p>
+    <p class="text-sm text-[var(--color-gray-text)]/60">
+      Ajoute des bourses à tes favoris depuis les recommandations pour les retrouver ici.
+    </p>
+  </div>
+
+
+  <div
+    *ngIf="!chargement() && favoris().length > 0"
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <app-card
+      *ngFor="let bourse of favoris()"
+      [scholarship]="bourse"
+      [estFavori]="true"
+      (toggleFavori)="onToggleFavori($event)">
+    </app-card>
+  </div>
+</div>

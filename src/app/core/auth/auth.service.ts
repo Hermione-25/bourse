@@ -15,36 +15,31 @@ export class AuthService {
 
   constructor() {
     const token = this.tokenService.getAccessToken();
-    const refreshToken = this.tokenService.getRefreshToken();
 
-    if (token) {
-      this.currentUserSubject.next({
-        accessToken: token,
-        refreshToken: refreshToken ?? undefined,
+     if (token) {
+
+      this.apiService.get<AuthToken>('me').subscribe({
+        next: (user) => this.currentUserSubject.next(user),
+        error: () => this.logout(),
       });
     }
   }
 
-  login(dto: LoginDto): Observable<AuthToken> {
-    return this.apiService.post<AuthToken>('login', dto).pipe(
-      tap((token) => {
-        this.tokenService.setAccessToken(token.accessToken);
-        if (token.refreshToken) {
-          this.tokenService.setRefreshToken(token.refreshToken);
-        }
-        this.currentUserSubject.next(token);
-      })
-    );
-  }
+login(dto: LoginDto): Observable<AuthToken> {
+  return this.apiService.post<AuthToken>('login', dto).pipe(
+    tap((res) => {
+      this.tokenService.setAccessToken(res.data.token);
+      this.currentUserSubject.next(res);
+    })
+  );
+}
 
   register(dto: RegisterDto): Observable<AuthToken> {
     return this.apiService.post<AuthToken>('register', dto).pipe(
-      tap((token) => {
-        this.tokenService.setAccessToken(token.accessToken);
-        if (token.refreshToken) {
-          this.tokenService.setRefreshToken(token.refreshToken);
-        }
-        this.currentUserSubject.next(token);
+      tap((res) => {
+        this.tokenService.setAccessToken(res.data.token);
+        
+        this.currentUserSubject.next(res);
       })
     );
   }
@@ -70,8 +65,7 @@ export class AuthService {
   refreshToken(): Observable<string> {
     const refreshToken = this.tokenService.getRefreshToken();
     if (!refreshToken) {
-      // ✅ throwError() au lieu de throw — reste dans le pipeline RxJS et
-      // peut être capturé par catchError dans RefreshTokenService
+      
       return throwError(() => new Error('Refresh token not found'));
     }
     return this.apiService.post<RefreshTokenResponse>('refresh', { refreshToken }).pipe(

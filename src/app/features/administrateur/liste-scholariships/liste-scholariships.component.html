@@ -13,8 +13,8 @@
   </div>
 </div>
 
-<!-- MODIFIER BOURSE -->
-<div *ngIf="showForm" class="fixed inset-0 z-40 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+<!-- MODIFIER / CREER BOURSE -->
+<div *ngIf="showForm" class=" inset-0 z-40 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
   <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg">
     <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
       <h2 class="text-lg font-bold text-gray-800">{{ editingId ? 'Modifier la bourse' : 'Nouvelle bourse' }}</h2>
@@ -27,7 +27,7 @@
       <div>
         <label class="text-xs font-semibold text-gray-600">Titre *</label>
         <input formControlName="title" type="text"
-          class="w-full border rounded-xl px-4 py-2 text-sm" />
+          class="w-full border-light bg-light rounded-xl px-4 py-2 text-sm" />
       </div>
 
       <div class="grid grid-cols-2 gap-4">
@@ -35,13 +35,13 @@
         <div>
           <label class="text-xs font-semibold text-gray-600">Pays *</label>
           <input formControlName="country" type="text"
-            class="w-full border rounded-xl px-4 py-2 text-sm" />
+            class="w-full border-light bg-light rounded-xl px-4 py-2 text-sm" />
         </div>
 
         <div>
           <label class="text-xs font-semibold text-gray-600">Université *</label>
           <input formControlName="university" type="text"
-            class="w-full border rounded-xl px-4 py-2 text-sm" />
+            class="w-full border-light bg-light rounded-xl px-4 py-2 text-sm" />
         </div>
 
       </div>
@@ -49,27 +49,27 @@
       <div class="grid grid-cols-2 gap-4">
 
         <input formControlName="region" placeholder="Région"
-          class="border rounded-xl px-4 py-2 text-sm" />
+          class="border-light bg-light rounded-xl px-4 py-2 text-sm" />
 
         <input formControlName="domain" placeholder="Domaine"
-          class="border rounded-xl px-4 py-2 text-sm" />
+          class="border-light bg-light rounded-xl px-4 py-2 text-sm" />
 
       </div>
 
       <div>
         <label class="text-xs font-semibold text-gray-600">Description *</label>
         <textarea formControlName="description" rows="3"
-          class="w-full border rounded-xl px-4 py-2 text-sm"></textarea>
+          class="w-full border-light bg-light shadow-lg rounded-xl px-4 py-2 text-sm"></textarea>
       </div>
 
       <div class="grid grid-cols-2 gap-4">
 
         <input formControlName="deadline" type="date"
-          class="border rounded-xl px-4 py-2 text-sm" />
+          class="border-light bg-light shadow-lg rounded-xl px-4 py-2 text-sm" />
 
         <input formControlName="amount" type="text"
           placeholder="Montant"
-          class="border rounded-xl px-4 py-2 text-sm" />
+          class="border-light bg-light shadow-lg rounded-xl px-4 py-2 text-sm" />
 
       </div>
 
@@ -79,19 +79,19 @@
       </div>
 
       <input formControlName="link" placeholder="Lien"
-        class="w-full border rounded-xl px-4 py-2 text-sm" />
+        class="w-full border-light bg-light shadow-lg rounded-xl px-4 py-2 text-sm" />
 
       <input formControlName="source" placeholder="Source"
-        class="w-full border rounded-xl px-4 py-2 text-sm" />
+        class="w-full border-light bg-light shadow-lg rounded-xl px-4 py-2 text-sm" />
 
       <input formControlName="image" placeholder="Image URL"
-        class="w-full border rounded-xl px-4 py-2 text-sm" />
+        class="w-full border-light bg-light shadow-lg rounded-xl px-4 py-2 text-sm" />
 
       <input formControlName="benefits" placeholder="Avantages"
-        class="w-full border rounded-xl px-4 py-2 text-sm" />
+        class="w-full border-light bg-light shadow-lg rounded-xl px-4 py-2 text-sm" />
 
       <input formControlName="requirement" placeholder="Conditions"
-        class="w-full border rounded-xl px-4 py-2 text-sm" />
+        class="w-full border-light bg-light shadow-lg rounded-xl px-4 py-2 text-sm" />
 
       <div *ngIf="editingId" class="text-xs text-gray-500 bg-gray-50 p-3 rounded-xl">
         Jours restants :
@@ -102,12 +102,12 @@
       <div class="flex gap-3 pt-2">
 
         <button type="button" (click)="closeForm()"
-          class="flex-1 py-2 border rounded-xl text-sm">
+          class="flex-1 py-2 bg-light shadow-lg rounded-xl text-sm">
           Annuler
         </button>
 
         <button type="submit" [disabled]="submitting"
-          class="flex-1 py-2 bg-blue-600 text-white rounded-xl text-sm">
+          class="flex-1 py-2 bg-primary text-white rounded-xl text-sm">
           {{ submitting ? 'Chargement...' : (editingId ? 'Modifier' : 'Créer') }}
         </button>
 

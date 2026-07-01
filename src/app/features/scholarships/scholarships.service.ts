@@ -9,35 +9,31 @@ import { Scholarship, ScholarshipDto } from './scholarships.models';
 export class ScholarshipsService {
   private apiService = inject(ApiService);
 
-  /**
-   * ✅ Unwrap de l'enveloppe Laravel ApiResource { data: [...] }
-   * Si votre API retourne directement un tableau (sans enveloppe), remplacez par :
-   *   return this.apiService.get<Scholarship[]>('scholarships', params);
-   */
+
   getAll(params?: Record<string, string | number | boolean>): Observable<Scholarship[]> {
     return this.apiService
-      .get<ApiResponse<Scholarship[]>>('scholarships', params)
+      .get<ApiResponse<Scholarship[]>>('admin/scholarships', params)
       .pipe(map((response) => response.data));
   }
 
   getById(id: string): Observable<Scholarship> {
     return this.apiService
-      .get<ApiResponse<Scholarship>>(`scholarships/${id}`)
+      .get<ApiResponse<Scholarship>>(`admin/scholarships/${id}`)
       .pipe(map((response) => response.data));
   }
 
   create(dto: ScholarshipDto): Observable<Scholarship> {
     return this.apiService
-      .post<ApiResponse<Scholarship>>('scholarships', dto)
+      .post<ApiResponse<Scholarship>>('admin/scholarships', dto)
       .pipe(map((response) => response.data));
   }
   delete(id: string): Observable<void> {
-    return this.apiService.delete<void>(`scholarships/${id}`);
+    return this.apiService.delete<void>(`admin/scholarships/${id}`);
   }
 
   update(id: string, dto: ScholarshipDto): Observable<Scholarship> {
     return this.apiService
-      .put<ApiResponse<Scholarship>>(`scholarships/${id}`, dto)
+      .put<ApiResponse<Scholarship>>(`admin/scholarships/${id}`, dto)
       .pipe(map((response) => response.data));
   }
 }

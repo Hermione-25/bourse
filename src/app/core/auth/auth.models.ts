@@ -1,20 +1,17 @@
 export interface AuthToken {
-  accessToken: string;
-  refreshToken?: string;
-  expiresIn?: number;
-  tokenType?: string;
-
-  user?: {
-    id: string;
-    email: string;
-    first_name?: string;
-    last_name?: string;
-    role?: string;
-    country?: string;
+  success: boolean;
+  message: string;
+  data: {
+    token: string;
+    user?: {
+      id: number;
+      email: string;
+      first_name?: string;
+      last_name?: string;
+      country?:string;
+      role?: string;
+    };
   };
-  
-  roles?: string[];
-  permissions?: string[];
 }
 
 export interface LoginDto {

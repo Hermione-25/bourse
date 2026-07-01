@@ -46,17 +46,25 @@ export const routes: Routes = [
   },
   {
     path: 'user',
-    loadComponent: () => import('./layouts/user/user-layout.component').then((m) => m.DashboardLayoutComponent),
+    loadComponent: () => import('./layouts/utilisateur/user-layout.component').then((m) => m.UserLayoutComponent),
     canActivate: [authGuard],
     children: [
       {
-        path: 'scholarships',
-        loadComponent: () => import('./features/scholarships/pages/scholarship-list/scholarship-list-page.component').then((m) => m.ScholarshipListPageComponent),
+        path: 'profil',
+        loadComponent: () => import('./features/utilisateurs/profil-user/profil-user').then((m) => m.ProfilUser),
       },
       {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'scholarships',
+        path: 'recommandation',
+        loadComponent: () => import('./features/utilisateurs/recommandation/recommandation.component').then((m) => m.RecommandationComponent),
+      },
+      {
+        path: 'favoris',
+        loadComponent: () => import('./features/utilisateurs/favoris/favoris.component').then((m) => m.FavorisComponent),
+      },
+      {
+        path: 'cv',
+        loadComponent: () => import('./features/utilisateurs/cv/cv.component').then((m) => m.CvComponent),
+        
       },
     ],
   },

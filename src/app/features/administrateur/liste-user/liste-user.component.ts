@@ -1,8 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../core/api/api.service';
 import { ApiResponse } from '../../../shared/models/interfaces/api-response.interface';
-import { User, UserDto } from '../../../features/users/user.models';
+import { User, UserDto } from '../../../shared/models/user.models';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -16,44 +16,46 @@ export class ListeUserComponent implements OnInit {
   private apiService = inject(ApiService);
   private fb = inject(FormBuilder);
 
-  users: User[] = [];
-  loading = false;
-  errorMessage: string | null = null;
-  searchTerm = '';
+  users = signal<User[]>([]);
+  loading = signal(false);
+  errorMessage = signal<string | null>(null);
+  searchTerm = signal('');
 
-  confirmDeleteId: number | null = null;
+  confirmDeleteId = signal<number | null>(null);
 
-  showForm = false;
-  editingId: number | null = null;
-  submitting = false;
+  showForm = signal(false);
+  editingId = signal<number | null>(null);
+  submitting = signal(false);
 
-  selectedUser: User | null = null;
-  showDetails = false;
+  selectedUser = signal<User | null>(null);
+  showDetails = signal(false);
 
   form = this.fb.group({
     first_name: [''],
     last_name: [''],
     email: [''],
     country: [''],
+    password: [''],
     role: [''],
+  });
+
+  filteredUsers = computed(() => {
+    const term = this.searchTerm().toLowerCase();
+    const list = this.users();
+
+    if (!term) return list;
+
+    return list.filter((u) =>
+      (u.first_name || '').toLowerCase().includes(term) ||
+      (u.last_name || '').toLowerCase().includes(term) ||
+      (u.email || '').toLowerCase().includes(term) ||
+      (u.country || '').toLowerCase().includes(term)
+    );
   });
 
   onSearch(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
-    this.searchTerm = value;
-  }
-
-  get filteredUsers(): User[] {
-    if (!this.searchTerm) return this.users;
-
-    const term = this.searchTerm.toLowerCase();
-
-    return this.users.filter((u) =>
-      u.first_name.toLowerCase().includes(term) ||
-      u.last_name.toLowerCase().includes(term) ||
-      u.email.toLowerCase().includes(term) ||
-      (u.country ?? '').toLowerCase().includes(term)
-    );
+    this.searchTerm.set(value);
   }
 
   ngOnInit(): void {
@@ -61,44 +63,45 @@ export class ListeUserComponent implements OnInit {
   }
 
   loadUsers(): void {
-    this.loading = true;
+    this.loading.set(true);
 
-    this.apiService.get<ApiResponse<User[]>>('users').subscribe({
+    this.apiService.get<ApiResponse<User[]>>('admin/users').subscribe({
       next: (res) => {
-        this.users = res.data;
-        this.loading = false;
+        this.users.set(Array.isArray(res.data) ? res.data : []);
+        this.loading.set(false);
       },
       error: (err) => {
-        this.errorMessage = err.message;
-        this.loading = false;
+        this.errorMessage.set(err.message);
+        this.loading.set(false);
       }
     });
   }
 
   OpenCreate(): void {
-    this.showForm = true;
-    this.editingId = null;
+    this.showForm.set(true);
+    this.editingId.set(null);
     this.form.reset();
   }
 
   editUser(id: number): void {
-    this.editingId = id;
-    this.showForm = true;
+    this.editingId.set(id);
+    this.showForm.set(true);
 
-    const user = this.users.find((u) => u.id === id);
+    const user = this.users().find((u) => u.id === id);
 
     this.form.patchValue({
       first_name: user?.first_name ?? '',
       last_name: user?.last_name ?? '',
       email: user?.email ?? '',
       country: user?.country ?? '',
+      password: '',
       role: user?.role ?? '',
     });
   }
 
   closeEdit(): void {
-    this.showForm = false;
-    this.editingId = null;
+    this.showForm.set(false);
+    this.editingId.set(null);
     this.form.reset();
   }
 
@@ -106,62 +109,68 @@ export class ListeUserComponent implements OnInit {
     if (this.form.invalid) return;
 
     const dto: UserDto = this.form.value as UserDto;
+    const editingId = this.editingId();
 
-    if (this.editingId) {
-      this.apiService.put<User>(`users/${this.editingId}`, dto).subscribe({
+    if (editingId) {
+      this.apiService.put<User>(`admin/users/${editingId}`, dto).subscribe({
         next: (updatedUser) => {
-          const index = this.users.findIndex((u) => u.id === this.editingId);
-          if (index !== -1) this.users[index] = updatedUser;
+          this.users.update((list) => {
+            const index = list.findIndex((u) => u.id === editingId);
+            if (index === -1) return list;
+            const copy = [...list];
+            copy[index] = updatedUser;
+            return copy;
+          });
           this.closeEdit();
         },
         error: (err) => {
-          this.errorMessage = err.message || 'Erreur update utilisateur';
+          this.errorMessage.set(err.message || 'Erreur update utilisateur');
         },
       });
 
     } else {
-      this.apiService.post<User>('users', dto).subscribe({
+      this.apiService.post<User>('admin/users', dto).subscribe({
         next: (newUser) => {
-          this.users.push(newUser);
+          this.users.update((list) => [...list, newUser]);
           this.closeEdit();
         },
         error: (err) => {
-          this.errorMessage = err.message || 'Erreur création utilisateur';
+          this.errorMessage.set(err.message || 'Erreur création utilisateur');
         },
       });
     }
   }
 
   detailUser(id: number): void {
-    this.selectedUser = this.users.find((u) => u.id === id) ?? null;
-    this.showDetails = true;
+    this.selectedUser.set(this.users().find((u) => u.id === id) ?? null);
+    this.showDetails.set(true);
   }
 
   closeDetails(): void {
-    this.selectedUser = null;
-    this.showDetails = false;
+    this.selectedUser.set(null);
+    this.showDetails.set(false);
   }
 
   askDelete(id: number): void {
-    this.confirmDeleteId = id;
+    this.confirmDeleteId.set(id);
   }
 
   cancelDelete(): void {
-    this.confirmDeleteId = null;
+    this.confirmDeleteId.set(null);
   }
 
   confirmDelete(): void {
-    if (!this.confirmDeleteId) return;
+    const id = this.confirmDeleteId();
+    if (!id) return;
 
-    const id = this.confirmDeleteId;
-    this.confirmDeleteId = null;
+    this.confirmDeleteId.set(null);
 
-    this.apiService.delete<void>(`users/${id}`).subscribe({
+    this.apiService.delete<void>(`admin/users/${id}`).subscribe({
       next: () => {
-        this.users = this.users.filter((u) => u.id !== id);
+        this.users.update((list) => list.filter((u) => u.id !== id));
       },
       error: (err) => {
-        this.errorMessage = err.message || 'Erreur suppression';
+        this.errorMessage.set(err.message || 'Erreur suppression');
       },
     });
   }
