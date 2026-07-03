@@ -13,9 +13,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    // ✅ Ordre correct : jwtInterceptor agit en premier sur la requête (ajoute le token)
-    // et en DERNIER sur la réponse — httpErrorInterceptor normalise l'erreur AVANT
-    // que jwtInterceptor ne tente un refresh, évitant la perte du type HttpErrorResponse.
     provideHttpClient(
       withInterceptors([jwtInterceptor, httpErrorInterceptor])
     ),

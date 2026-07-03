@@ -4,30 +4,35 @@
     Les bourses que tu as sauvegardées pour plus tard.
   </p>
 
+  @if (erreur()) {
+    <div class="flex items-center gap-3 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm mb-6">
+      <i class="fas fa-circle-exclamation text-red-500"></i>{{ erreur() }}
+    </div>
+  }
 
-  <div *ngIf="chargement()" class="text-sm text-[var(--color-gray-text)]/60">
-    Chargement de tes favoris...
-  </div>
-
-
-  <div
-    *ngIf="!chargement() && favoris().length === 0"
-    class="border border-dashed border-[var(--color-border-color)] rounded-2xl p-10 text-center">
-    <p class="text-[var(--color-gray-text)] font-medium mb-1">Aucun favori pour l'instant</p>
-    <p class="text-sm text-[var(--color-gray-text)]/60">
-      Ajoute des bourses à tes favoris depuis les recommandations pour les retrouver ici.
-    </p>
-  </div>
-
-
-  <div
-    *ngIf="!chargement() && favoris().length > 0"
-    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-    <app-card
-      *ngFor="let bourse of favoris()"
-      [scholarship]="bourse"
-      [estFavori]="true"
-      (toggleFavori)="onToggleFavori($event)">
-    </app-card>
-  </div>
+  @if (chargement()) {
+    <div class="flex items-center justify-center py-16">
+      <div class="flex flex-col items-center gap-3">
+        <div class="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+        <p class="text-sm text-gray-500">Chargement...</p>
+      </div>
+    </div>
+  } @else if (favoris().length === 0) {
+    <div class="border border-dashed border-[var(--color-border-color)] rounded-2xl p-10 text-center">
+      <p class="text-[var(--color-gray-text)] font-medium mb-1">Aucun favori pour l'instant</p>
+      <p class="text-sm text-[var(--color-gray-text)]/60">
+        Ajoute des bourses à tes favoris depuis les recommandations pour les retrouver ici.
+      </p>
+    </div>
+  } @else {
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      @for (bourse of favoris(); track bourse.id) {
+        <app-card
+          [scholarship]="bourse"
+          [estFavori]="true"
+          (toggleFavori)="onToggleFavori($event)">
+        </app-card>
+      }
+    </div>
+  }
 </div>

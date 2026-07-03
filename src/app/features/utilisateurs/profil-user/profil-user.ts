@@ -6,6 +6,8 @@ import { EtudiantProfile} from '../../../shared/models/profil-user.models';
 import {User} from '../../../shared/models/user.models';
 import { AuthService } from '../../../core/auth/auth.service';
 import { DestroyRef } from '@angular/core';
+import { calculerCompletionProfil } from '../../../shared/utils/profil-user-utils';
+import { ProfileService } from '../../../services/utilisateur/profil.service';
 
 type VueProfil = 'lecture' | 'formulaire-base' | 'formulaire-complet';
 
@@ -16,6 +18,7 @@ type VueProfil = 'lecture' | 'formulaire-base' | 'formulaire-complet';
   templateUrl: './profil-user.html'
 })
 export class ProfilUser implements OnInit {
+  private profileService = inject(ProfileService);
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   destroyRef = inject(DestroyRef);
@@ -39,14 +42,11 @@ export class ProfilUser implements OnInit {
   ];
 
   readonly languages = ['Français', 'Anglais', 'Espagnol', 'Portugais', 'Arabe'];
-  readonly genders = ['Homme', 'Femme'];
-
+  readonly gender = ['Homme', 'Femme'];
 
   vue = signal<VueProfil>('lecture');
 
-
-  utilisateur = signal<User>({ id:0, first_name: '', last_name: '', email: '', country:''});
-
+  utilisateur = signal<User>({ id: 0, first_name: '', last_name: '', email: '', country: '' });
 
   basicForm = this.fb.nonNullable.group({
     first_name: [''],
@@ -54,34 +54,7 @@ export class ProfilUser implements OnInit {
     country: [''],
     email: ['', [Validators.email]]
   });
-  
-ngOnInit(): void {
 
-  this.authService.authState$
-    .pipe(takeUntilDestroyed(this.destroyRef))
-    .subscribe(auth => {
-      const u = auth?.data.user;
-      if (!u) return;
-
-      this.utilisateur.set({
-        id: u.id,
-        first_name: u.first_name ?? '',
-        last_name: u.last_name ?? '',
-        email: u.email,
-        country: u.country ?? '',
-        role: u.role ?? ''
-      });
-
-      this.basicForm.patchValue({
-        first_name: u.first_name ?? '',
-        last_name: u.last_name ?? '',
-        country: u.country ?? '',
-        email: u.email
-      });
-    });
-}
-
-  
   competences = signal<string[]>([]);
   nouvelleCompetence = signal('');
   saving = signal(false);
@@ -93,29 +66,58 @@ ngOnInit(): void {
     gender: [''],
     study_level: [''],
     study_domain: [''],
+    skills: this.fb.control<string[]>([]),
     average: this.fb.control<number | null>(null, [Validators.min(0), Validators.max(20)]),
     languages: this.fb.control<string[]>([])
   });
 
   private formValue = toSignal(this.profileForm.valueChanges, { initialValue: this.profileForm.getRawValue() });
 
-  private readonly totalChamps = 8; 
-
-  completion = computed(() => {
-    const v = this.formValue();
-    let remplis = 0;
-    if (v.nationality) remplis++;
-    if (v.birth_date) remplis++;
-    if (v.gender) remplis++;
-    if (v.study_level) remplis++;
-    if (v.study_domain) remplis++;
-    if (v.average !== null && v.average !== undefined) remplis++;
-    if (v.languages && v.languages.length > 0) remplis++;
-    if (this.competences().length > 0) remplis++;
-    return Math.round((remplis / this.totalChamps) * 100);
-  });
+  completion = computed(() => calculerCompletionProfil({
+    ...this.formValue(),
+    languages: this.formValue().languages ?? [],
+    skills: this.competences()
+  } as EtudiantProfile));
 
   isComplete = computed(() => this.completion() === 100);
+
+  ngOnInit(): void {
+
+    this.authService.authState$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(auth => {
+        const u = auth?.data.user;
+        if (!u) return;
+
+        this.utilisateur.set({
+          id: u.id,
+          first_name: u.first_name ?? '',
+          last_name: u.last_name ?? '',
+          email: u.email,
+          country: u.country ?? '',
+          role: u.role ?? ''
+        });
+
+        this.basicForm.patchValue({
+          first_name: u.first_name ?? '',
+          last_name: u.last_name ?? '',
+          country: u.country ?? '',
+          email: u.email
+        });
+      });
+
+    this.profileService.getProfile()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (profile) => {
+          this.profileForm.patchValue(profile);
+          this.competences.set(profile.skills ?? []);
+        },
+        error: () => {
+          // normal si le profil n'a jamais été créé (404) — on garde le formulaire vide
+        }
+      });
+  }
 
   ouvrirModifierBase(): void {
     this.basicForm.patchValue(this.utilisateur());
@@ -129,7 +131,6 @@ ngOnInit(): void {
   retourVueLecture(): void {
     this.vue.set('lecture');
   }
-
 
   toggleLangue(langue: string): void {
     const current = this.profileForm.value.languages ?? [];
@@ -155,18 +156,24 @@ ngOnInit(): void {
     this.competences.update(list => list.filter(c => c !== competence));
   }
 
+  enregistrerBase(): void {
+    if (this.basicForm.invalid) {
+      this.basicForm.markAllAsTouched();
+      return;
+    }
+    const valeurs = this.basicForm.getRawValue();
 
-enregistrerBase(): void {
-  if (this.basicForm.invalid) {
-    this.basicForm.markAllAsTouched();
-    return;
+    this.profileService.updateUtilisateur(valeurs).subscribe({
+      next: (user) => {
+        this.utilisateur.update(u => ({ ...u, ...user }));
+        this.vue.set('lecture');
+      },
+      error: () => {
+        // gérer l'erreur (toast, message, etc.)
+      }
+    });
   }
-  const valeurs = this.basicForm.getRawValue();
 
-  console.log('Infos de base à enregistrer :', valeurs);
-  this.utilisateur.update(u => ({ ...u, ...valeurs }));
-  this.vue.set('lecture');
-}
   enregistrer(): void {
     if (this.profileForm.invalid) {
       this.profileForm.markAllAsTouched();
@@ -181,14 +188,13 @@ enregistrerBase(): void {
       skills: this.competences()
     } as EtudiantProfile;
 
-
-    console.log('Profil bourse à enregistrer :', profile);
-    setTimeout(() => {
-      this.saving.set(false);
-      this.saved.set(true);
-      this.vue.set('lecture');
-    }, 500);
+    this.profileService.updateProfile(profile).subscribe({
+      next: () => {
+        this.saving.set(false);
+        this.saved.set(true);
+        this.vue.set('lecture');
+      },
+      error: () => this.saving.set(false)
+    });
   }
-
-  
 }

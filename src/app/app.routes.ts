@@ -50,11 +50,16 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'tableau-de-bord',
+      },
+      {
         path: 'profil',
         loadComponent: () => import('./features/utilisateurs/profil-user/profil-user').then((m) => m.ProfilUser),
       },
       {
-        path: 'recommandation',
+        path: 'recommandations',
         loadComponent: () => import('./features/utilisateurs/recommandation/recommandation.component').then((m) => m.RecommandationComponent),
       },
       {
@@ -65,7 +70,10 @@ export const routes: Routes = [
         path: 'cv',
         loadComponent: () => import('./features/utilisateurs/cv/cv.component').then((m) => m.CvComponent),
         
-      },
+      },{
+        path:'tableau-de-bord',
+        loadComponent:() => import('./features/utilisateurs/tableau/tableau.component').then((m) => m.TableauComponent)
+      }
     ],
   },
   {

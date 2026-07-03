@@ -15,9 +15,9 @@
 
     <!-- Badge financée -->
     <span
-      *ngIf="scholarship().is_funded"
+      *ngIf="scholarship().funding_type && scholarship().funding_type !== FundingType.UNFUNDED"
       class="absolute top-3 left-3 text-xs font-semibold bg-[var(--color-primary)] text-white rounded-full px-3 py-1">
-      Financée
+      {{ scholarship().funding_type === FundingType.FULL ? 'Entièrement financée' : 'Partiellement financée' }}
     </span>
 
     <!-- Bouton favori -->

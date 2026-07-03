@@ -1,3 +1,9 @@
+export enum FundingType {
+  FULL = 'full',
+  PARTIAL = 'partial',
+  UNFUNDED = 'unfunded',
+}
+
 export interface Scholarship {
   id: string;
   title: string;
@@ -6,14 +12,14 @@ export interface Scholarship {
   country?: string;
   region?: string;
   domain?: string;
-  is_funded?: boolean;
-  amount?: number;
+  funding_type?: FundingType;
+  amount?: string;
   benefits?: string;
   requirement?: string;
   image?: string;
   link?: string;
   source?: string;
-  deadline?: Date;
+  deadline?: string;
   days_remaining?: number;
 }
 
@@ -25,7 +31,7 @@ export interface ScholarshipDto {
   domain: string;
   deadline: string;
   description: string;
-  is_funded: boolean;
+  funding_type: FundingType;
   amount?: string | null;
   benefits?: string;
   requirement?: string;

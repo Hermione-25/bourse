@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Scholarship } from '../../../features/scholarships/scholarships.models';
+import { FundingType, Scholarship } from '../../../features/scholarships/scholarships.models';
 
 
 @Component({
@@ -11,6 +11,8 @@ import { Scholarship } from '../../../features/scholarships/scholarships.models'
   templateUrl: './card.component.html'
 })
 export class ScholarshipCard {
+  FundingType = FundingType;
+
   scholarship = input.required<Scholarship>();
   estFavori = input(false);
 
