@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-cv',
-  standalone: true,
+  selector: 'app-cv.component',
   imports: [],
   templateUrl: './cv.component.html',
   styleUrl: './cv.component.css',

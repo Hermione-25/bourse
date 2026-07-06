@@ -9,10 +9,28 @@ import { Scholarship, ScholarshipDto } from './scholarships.models';
 export class ScholarshipsService {
   private apiService = inject(ApiService);
 
-
   getAll(params?: Record<string, string | number | boolean>): Observable<Scholarship[]> {
     return this.apiService
       .get<ApiResponse<Scholarship[]>>('admin/scholarships', params)
+      .pipe(map((response) => response.data));
+  }
+
+  // Route publique — liste des bourses visibles sans authentification
+  getPublic(): Observable<Scholarship[]> {
+    return this.apiService
+      .get<ApiResponse<Scholarship[]>>('scholarships')
+      .pipe(map((response) => response.data));
+  }
+
+  // Route publique — recherche filtrée (utilisée par la landing page et la liste)
+  search(filters: { country?: string; level?: string; domain?: string }): Observable<Scholarship[]> {
+    const params: Record<string, string> = {};
+    if (filters.country) params['country'] = filters.country;
+    if (filters.level) params['level'] = filters.level;
+    if (filters.domain) params['domain'] = filters.domain;
+
+    return this.apiService
+      .get<ApiResponse<Scholarship[]>>('scholarships/search', params)
       .pipe(map((response) => response.data));
   }
 
@@ -27,6 +45,7 @@ export class ScholarshipsService {
       .post<ApiResponse<Scholarship>>('admin/scholarships', dto)
       .pipe(map((response) => response.data));
   }
+
   delete(id: string): Observable<void> {
     return this.apiService.delete<void>(`admin/scholarships/${id}`);
   }

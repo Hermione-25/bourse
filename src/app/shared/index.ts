@@ -5,3 +5,4 @@ export * from './pipes/date-format.pipe';
 export * from './models/interfaces/api-response.interface';
 export * from './models/dto/pagination.dto';
 export * from './utils/storage';
+export * from './dropdown-select/dropdown-select.component'

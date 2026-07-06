@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ScholarshipsService } from '../../../features/scholarships/scholarships.service';
@@ -19,7 +19,7 @@ export class ListeScholarishipsComponent implements OnInit {
   FundingType = FundingType;
 
   scholarships: Scholarship[] = [];
-  loading = false;
+  loading = signal(false);
   errorMessage: string | null = null;
   searchTerm = '';
 
@@ -70,17 +70,17 @@ export class ListeScholarishipsComponent implements OnInit {
   }
 
   loadScholarships(): void {
-    this.loading = true;
+    this.loading.set(true);
     this.errorMessage = null;
     this.scholarshipsService.getAll().subscribe({
-      next: (items) => {
-        this.scholarships = items;
-        this.loading = false;
+      next: (res) => {
+        this.scholarships = (res ?? []) as Scholarship[];
+        this.loading.set(false);
       },
       error: (err) => {
         this.errorMessage = err.message || 'Erreur lors du chargement.';
-        this.loading = false;
-      },
+        this.loading.set(false);
+      }
     });
   }
 

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../core/auth/auth.service';
@@ -14,6 +14,7 @@ export class ResetPasswordComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   token = '';
   email = '';
@@ -57,10 +58,13 @@ export class ResetPasswordComponent implements OnInit {
       next: () => {
         this.successMessage = 'Mot de passe changé avec succès';
         this.submitting = false;
+        this.router.navigate(['/auth/login']);
+
       },
       error: () => {
         this.errorMessage = 'Erreur lors de la réinitialisation';
         this.submitting = false;
+        
       },
     });
   }

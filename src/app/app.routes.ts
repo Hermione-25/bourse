@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/auth/auth.guard';
 
+
 export const routes: Routes = [
   {
     path: '',
@@ -24,7 +25,7 @@ export const routes: Routes = [
         loadComponent: () => import('./features/auth/pages/forgot-password/forgot-password-page.component').then((m) => m.ForgotPasswordPageComponent),
       },
       {
-        path: 'reset-password/:token',
+        path: 'reset-password',
         loadComponent: () => import('./features/auth/pages/reset-password/reset-password.component').then((m) => m.ResetPasswordComponent),
       },
       {
@@ -40,7 +41,25 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./features/scholarships/pages/scholarship-list/scholarship-list-page.component').then((m) => m.ScholarshipListPageComponent),
+        loadComponent: () => import('./features/scholarships/pages/scholarship-list/scholarship-list-page.component').then((m) => m.ScholarshipsListComponent),
+      },
+    ],
+  }, {
+    path: 'pays',
+    loadComponent: () => import('./layouts/public/public-layout.component').then((m) => m.PublicLayoutComponent),
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/destination/destination.component').then((m) => m.DestinationComponent),
+      },
+    ],
+  },{
+    path:'contact',
+    loadComponent: () => import('./layouts/public/public-layout.component').then((m) => m.PublicLayoutComponent),
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/contact/contact.component').then((m) => m.ContactComponent),
       },
     ],
   },
@@ -69,7 +88,7 @@ export const routes: Routes = [
       {
         path: 'cv',
         loadComponent: () => import('./features/utilisateurs/cv/cv.component').then((m) => m.CvComponent),
-        
+
       },{
         path:'tableau-de-bord',
         loadComponent:() => import('./features/utilisateurs/tableau/tableau.component').then((m) => m.TableauComponent)
@@ -79,7 +98,7 @@ export const routes: Routes = [
   {
     path: 'admin',
     loadComponent: () => import('./layouts/admin/admin-layout.component').then((m) => m.AdminLayoutComponent),
-    canActivate: [],
+    canActivate: [authGuard],
     children: [
       {
         path: 'liste-user',
@@ -105,4 +124,3 @@ export const routes: Routes = [
     redirectTo: '',
   },
 ];
-

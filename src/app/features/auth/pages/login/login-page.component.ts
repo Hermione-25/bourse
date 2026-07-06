@@ -41,7 +41,7 @@ export class LoginPageComponent {
  next: (res) => {
   this.submitting = false;
   const isAdmin = res.data.user?.role === 'admin';
-  this.router.navigate([isAdmin ? '/admin' : '/user']);
+  this.router.navigate([isAdmin ? '/admin' : '/landing']);
 },
   error: (error: unknown) => {
     const errorMsg =

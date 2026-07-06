@@ -15,8 +15,8 @@ export class AuthService {
 
   constructor() {
     const token = this.tokenService.getAccessToken();
-
-     if (token) {
+     
+    if (token) {
 
       this.apiService.get<AuthToken>('me').subscribe({
         next: (user) => this.currentUserSubject.next(user),

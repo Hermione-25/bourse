@@ -1,33 +1,60 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { ActivatedRoute } from '@angular/router';
 import { ScholarshipsService } from '../../scholarships.service';
 import { Scholarship } from '../../scholarships.models';
+import { ScholarshipCard } from "../../../../shared";
+
 
 @Component({
-  selector: 'app-scholarship-list-page',
+  selector: 'app-scholarships-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,  ScholarshipCard],
   templateUrl: './scholarship-list-page.component.html',
-  styleUrls: ['./scholarship-list-page.component.css'],
 })
-export class ScholarshipListPageComponent implements OnInit {
+export class ScholarshipsListComponent implements OnInit {
+  private route = inject(ActivatedRoute);
   private scholarshipsService = inject(ScholarshipsService);
 
-  scholarships: Scholarship[] = [];
-  loading = false;
-  errorMessage: string | null = null;
+  scholarships = signal<Scholarship[]>([]);
+  chargement = signal<boolean>(true);
+  erreur = signal<string | null>(null);
+
+  filtres = { country: '', level: '', domain: '' };
 
   ngOnInit(): void {
-    this.loading = true;
-    this.scholarshipsService.getAll().subscribe({
-      next: (items) => {
-        this.scholarships = items;
-        this.loading = false;
+    this.route.queryParamMap.subscribe((params) => {
+      this.filtres = {
+        country: params.get('country') || '',
+        level: params.get('level') || '',
+        domain: params.get('domain') || '',
+      };
+      this.charger();
+    });
+  }
+
+  private charger(): void {
+    this.chargement.set(true);
+    this.erreur.set(null);
+
+    const aDesFiltres = this.filtres.country || this.filtres.level || this.filtres.domain;
+    const requete$ = aDesFiltres
+      ? this.scholarshipsService.search(this.filtres)
+      : this.scholarshipsService.getPublic();
+
+    requete$.subscribe({
+      next: (data) => {
+        this.scholarships.set(data);
+        this.chargement.set(false);
       },
-      error: (error) => {
-        this.errorMessage = error.message || 'Impossible de charger les bourses';
-        this.loading = false;
+      error: () => {
+        this.erreur.set('Impossible de charger les bourses. Réessaie plus tard.');
+        this.chargement.set(false);
       },
     });
   }
+
+
+
 }

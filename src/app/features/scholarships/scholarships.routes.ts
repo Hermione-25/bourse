@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { ScholarshipListPageComponent } from './pages/scholarship-list/scholarship-list-page.component';
+import { ScholarshipsListComponent } from './pages/scholarship-list/scholarship-list-page.component';
 
 export const scholarshipsRoutes: Route[] = [
   {
@@ -7,7 +7,7 @@ export const scholarshipsRoutes: Route[] = [
     children: [
       {
         path: '',
-        component: ScholarshipListPageComponent,
+        component: ScholarshipsListComponent,
       },
     ],
   },
