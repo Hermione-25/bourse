@@ -19,6 +19,7 @@ export class DestinationComponent implements OnInit {
   erreur = signal<string | null>(null);
 
   recherche = signal<string>('');
+   
   lettreActive = signal<string>('Tous');
 
   alphabet = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));

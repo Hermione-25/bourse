@@ -26,6 +26,7 @@ export class ScholarshipCard {
 
   get urgent(): boolean {
     const jours = this.scholarship().days_remaining;
-    return jours != null && jours <= 7;
+    return jours !== undefined && jours <= 7;
+  
   }
 }

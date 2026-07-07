@@ -7,6 +7,7 @@ import { Scholarship } from '../../features/scholarships/scholarships.models';
 import { AuthService } from '../../core/auth/auth.service';
 import { ScholarshipCard } from '../../shared';
 import { DropdownSelectComponent } from '../../shared';
+import { FavorisService } from '../../services/utilisateur/favoris.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -19,6 +20,7 @@ export class LandingPageComponent implements OnInit {
   private router = inject(Router);
   private scholarshipsService = inject(ScholarshipsService);
   authService = inject(AuthService);
+  private favorisService = inject(FavorisService)
 
   recentScholarships: Scholarship[] = [];
   loading = signal<boolean>(true);
@@ -30,9 +32,10 @@ export class LandingPageComponent implements OnInit {
   domaine = '';
 
   ngOnInit(): void {
+    
     this.scholarshipsService.getPublic().subscribe({
       next: (scholarships) => {
-        this.recentScholarships = scholarships.slice(0, 4);
+        this.recentScholarships = scholarships.slice(0, 8);
         this.loading.set(false);
       },
       error: (err) => {
@@ -40,6 +43,15 @@ export class LandingPageComponent implements OnInit {
         this.loading.set(false);
       }
     });
+
+    this.favorisService.getFavoris().subscribe({
+      next: (liste) => {
+        this.favoris.set(new Set(liste.map(s => s.id)));
+      },
+      error: () => {
+        
+      }
+    })
   }
 
   rechercher(): void {
@@ -62,4 +74,39 @@ export class LandingPageComponent implements OnInit {
   closeMenu(): void {
     this.isMenuOpen = false;
   }
+
+  erreur = signal<string | null>(null);
+  favoris = signal<Set<string>>(new Set());
+
+   isFavori(id: string): boolean {
+    return this.favoris().has(id);
+  }
+
+  onToggleFavori(id: string): void {
+    const dejaFavori = this.favoris().has(id);
+
+    // Mise à jour optimiste de l'UI
+    this.favoris.update(set => {
+      const nouveau = new Set(set);
+      dejaFavori ? nouveau.delete(id) : nouveau.add(id);
+      return nouveau;
+    });
+
+    const appel$ = dejaFavori
+      ? this.favorisService.retirerFavori(id)
+      : this.favorisService.ajouterFavori(id);
+
+    appel$.subscribe({
+      error: () => {
+        // Rollback en cas d'échec
+        this.favoris.update(set => {
+          const nouveau = new Set(set);
+          dejaFavori ? nouveau.add(id) : nouveau.delete(id);
+          return nouveau;
+        });
+        this.erreur.set('Impossible de mettre à jour tes favoris. Réessaie.');
+      }
+    });
+  }
+  
 }

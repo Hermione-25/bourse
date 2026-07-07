@@ -1,0 +1,118 @@
+<div class="max-w-3xl mx-auto px-4 py-10">
+
+  @if (chargement()) {
+    <div class="flex items-center justify-center py-16">
+      <div class="flex flex-col items-center gap-3">
+        <div class="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+        <p class="text-sm text-gray-500">Chargement...</p>
+      </div>
+    </div>
+  } @else if (erreur()) {
+    <div class="flex items-center gap-3 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm">
+      <i class="fas fa-circle-exclamation text-red-500"></i>{{ erreur() }}
+    </div>
+    <button
+      type="button"
+      (click)="onRetour()"
+      class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-primary)]">
+       Retour
+    </button>
+  } @else if (scholarship(); as bourse) {
+
+    <button
+      type="button"
+      (click)="onRetour()"
+      class="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-gray-text)] hover:text-[var(--color-primary)] transition">
+       Retour
+    </button>
+
+    <div class="bg-white border-light shadow-[0_0_20px_rgba(0,0,0,0.15)] rounded-2xl overflow-hidden shadow-lg">
+
+      @if (bourse.image) {
+        <img [src]="bourse.image" [alt]="bourse.title" class="w-full h-56 object-cover" />
+      }
+
+      <div class="p-6">
+
+       
+
+        <h1 class="text-2xl font-bold text-[var(--color-gray-text)] mb-2">
+          {{ bourse.title }}
+        </h1>
+
+        <p class="text-sm text-[var(--color-gray-text)]/70 mb-6">
+          {{ bourse.university }}
+          @if (bourse.country) { · {{ bourse.country }} }
+        
+        </p>
+         @if (bourse.funding_type && bourse.funding_type !== FundingType.UNFUNDED) {
+            <span class="inline-block text-xs font-semibold bg-[var(--color-primary)] text-white  px-3 py-1 mb-3">
+              {{ bourse.funding_type === FundingType.FULL ? 'Entièrement financée' : 'Partiellement financée' }}
+            </span>
+          }
+        <div class="grid grid-cols gap-4 text-sm mb-6">
+          @if (bourse.domain) {
+            <div>
+              <p class="text-[var(--color-gray-text)]/60">Domaine</p>
+              <p class="font-medium">{{ bourse.domain }}</p>
+            </div>
+          }
+          @if (bourse.deadline) {
+            <div>
+              <p class="text-[var(--color-gray-text)]/60">Date limite</p>
+              <p class="font-medium">{{ bourse.deadline | date: 'dd/MM/yyyy' }}</p>
+            </div>
+          }
+          @if (bourse.amount) {
+            <div>
+              <p class="text-[var(--color-gray-text)]/60">Montant</p>
+              <p class="font-medium">{{ bourse.amount }}</p>
+            </div>
+          }
+          @if (bourse.source) {
+            <div>
+              <p class="text-[var(--color-gray-text)]/60">Source</p>
+              <p class="font-medium">{{ bourse.source }}</p>
+            </div>
+          }
+        </div>
+
+        <div class="mb-6">
+          <h2 class="font-semibold text-[var(--color-gray-text)] mb-1">Description</h2>
+          <p class="text-sm text-[var(--color-gray-text)]/80 whitespace-pre-line">{{ bourse.description }}</p>
+        </div>
+
+        @if (bourse.benefits) {
+          <div class="mb-6">
+            <h2 class="font-semibold text-[var(--color-gray-text)] mb-1">Avantages</h2>
+            <p class="text-sm text-[var(--color-gray-text)]/80 whitespace-pre-line">{{ bourse.benefits }}</p>
+          </div>
+        }
+
+        @if (bourse.requirement) {
+          <div class="mb-8">
+            <h2 class="font-semibold text-[var(--color-gray-text)] mb-1">Conditions d'éligibilité</h2>
+            <p class="text-sm text-[var(--color-gray-text)]/80 whitespace-pre-line">{{ bourse.requirement }}</p>
+          </div>
+        }
+
+        <div class="flex gap-3">
+          <button
+            type="button"
+            (click)="onRetour()"
+            class="flex-1 border border-[var(--color-border-color)] text-[var(--color-gray-text)] font-semibold rounded-xl py-3 hover:bg-gray-50 transition">
+            Retour
+          </button>
+          <button
+            type="button"
+            [disabled]="!bourse.link"
+            (click)="onPostuler()"
+            class="flex-1 bg-[var(--color-primary)] text-white font-semibold rounded-xl py-3 hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed">
+            Postuler
+          </button>
+        </div>
+
+      </div>
+    </div>
+  }
+</div>

@@ -1,5 +1,5 @@
 
-  <nav class="bg-light sticky top-0 z-[100] shadow-[0_1px_10px_rgba(0,0,0,0.02)]">
+  <nav class="bg-white sticky top-0 z-[100] shadow-[0_1px_10px_rgba(0,0,0,0.02)]">
     <div class="w-full max-w-[1200px] mx-auto px-6 flex justify-between items-center py-4">
       <div class="flex items-center gap-2.5">
         <i class="fas fa-graduation-cap text-xl"></i>
@@ -15,15 +15,15 @@
 
       <ul class="hidden md:flex gap-6 list-none m-0 p-0">
         <li><a routerLink="/"
-            class="text-primary text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold active:text-primary active:font-semibold">Accueil</a>
+            class="text-primary/20 text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold active:text-primary active:font-semibold">Accueil</a>
         </li>
         <li><a routerLink="/scholarships"
             class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold">Bourses</a>
         </li>
         <li><a routerLink="/pays"
             class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold">pays</a></li>
-        <li><a routerLink="/blog"
-            class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold">Blog</a>
+        <li><a routerLink="/faq"
+            class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold">FAQ</a>
         </li>
         <li><a routerLink="/contact"
             class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold">Contact</a>
@@ -51,10 +51,10 @@
     @if (isMenuOpen) {
       <div class="border-t border-gray-200 bg-white px-6 py-4 md:hidden">
         <ul class="flex flex-col gap-3 list-none m-0 p-0">
-          <li><a routerLink="/" class="text-primary text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">Accueil</a></li>
+          <li><a routerLink="/" class="text-primary/20 text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">Accueil</a></li>
           <li><a routerLink="/scholarships" class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">Bourses</a></li>
           <li><a routerLink="/pays" class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">pays</a></li>
-          <li><a routerLink="/blog" class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">Blog</a></li>
+          <li><a routerLink="/faq" class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">FAQ</a></li>
           <li><a routerLink="/contact" class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">Contact</a></li>
           <li><a routerLink="/cv" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Générer un CV</a></li>
           @if(authService.isAuthenticated$ | async) {
@@ -70,14 +70,14 @@
 
 <section
   class="relative bg-[url('/images/imlan.jpeg')] bg-cover bg-center bg-no-repeat min-h-auto md:min-h-[600px] flex items-start py-10 md:py-0">
-  <div class="absolute inset-0 bg-black/70 z-10"></div>
+  <div class="absolute inset-0 bg-black/60 z-10"></div>
   <div class="relative z-20 flex justify-center w-full max-w-[1200px] mx-auto px-6">
     <div class="w-full max-w-[900px] pt-[50px] pb-[20px] text-center flex flex-col items-center">
 
       <h2 class="text-[20px] md:text-[48px] font-bold text-light leading-[1.2] mb-6">Découvrez tous les bourses
         accessibles <br><span class="text-primary">aux pays africains</span></h2>
 
-      <div class="flex drop-shadow-md backdrop-blur-md text-black w-auto h-20 md:h-20 md:w-230 rounded-lg border-light items-center justify-center gap-20 md:gap-25">
+      <div class="flex drop-shadow-md text-[9px] md:text-[16px] backdrop-blur-md text-black w-80 h-20 md:h-20 md:w-192 rounded-lg border-light items-center justify-center gap-2 md:gap-20">
 
         <app-dropdown-select
             icon="fa-map-marker-alt"
@@ -254,10 +254,13 @@
             Aucune bourse disponible pour le moment.
           </div>
         } @else {
-          @for (scholarship of recentScholarships; track scholarship.id) {
-            <app-card [scholarship]="scholarship"></app-card>
+               @for (scholarship of recentScholarships; track scholarship.id) {
+                <app-card [scholarship]="scholarship"
+                  [estFavori]="isFavori(scholarship.id)"
+                  (toggleFavori)="onToggleFavori($event)">
+                </app-card>
+              }
           }
-        }
       </div>
 
       <div class="text-center mt-10">
@@ -268,7 +271,7 @@
     </div>
   </section>
 
-  <section class="py-20 border-y border-border-color">
+  <section class="py-20">
     <div class="w-full max-w-[1200px] mx-auto px-6">
       <div class="text-center mb-12">
         <span class="text-primary text-xs font-bold uppercase tracking-[2px] block mb-2.5">Comment ça marche</span>
@@ -276,9 +279,9 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
-        <div class="bg-white border border-border-color rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+        <div class="bg-white shadow-md rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
           <div
-            class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-[13px] mb-4 bg-border-color text-primary">
+            class="w-9 h-9 flex items-center justify-center font-bold text-[13px] mb-4 bg-border-color text-primary">
             01</div>
           <div class="flex items-center gap-2 mb-3">
             <i class="fas fa-search text-sm text-primary"></i>
@@ -287,9 +290,9 @@
           <p class="text-xs text-gray-text leading-relaxed">Utilisez nos filtres avancés pour trouver des bourses adaptées à
             votre profil et à vos objectifs.</p>
         </div>
-        <div class="bg-white border border-border-color rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+        <div class="bg-white shadow-md rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
           <div
-            class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-[13px] mb-4 bg-border-color text-primary">
+            class="w-9 h-9 flex items-center justify-center font-bold text-[13px] mb-4 bg-border-color text-primary">
             02</div>
           <div class="flex items-center gap-2 mb-3">
             <i class="fas fa-file-alt text-sm text-primary"></i>
@@ -299,9 +302,9 @@
             les documents requis.</p>
         </div>
 
-        <div class="bg-white border border-border-color rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+        <div class="bg-white shadow-md rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
           <div
-            class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-[13px] mb-4 bg-border-color text-primary">
+            class="w-9 h-9 flex items-center justify-center font-bold text-[13px] mb-4 bg-border-color text-primary">
             03</div>
           <div class="flex items-center gap-2 mb-3">
             <i class="fas fa-file-alt text-sm text-primary"></i>
@@ -310,9 +313,9 @@
             <p class="text-xs text-gray-text leading-relaxed">Faites-vous générer un CV prêt à être utilisé.</p>
           </div>
 
-        <div class="bg-white border border-border-color rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+        <div class="bg-white shadow-md rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
           <div
-            class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-[13px] mb-4 bg-border-color text-primary">
+            class="w-9 h-9  flex items-center justify-center font-bold text-[13px] mb-4 bg-border-color text-primary">
             04</div>
           <div class="flex items-center gap-2 mb-3">
             <i class="fas fa-paper-plane text-sm text-primary"></i>
@@ -321,9 +324,9 @@
           <p class="text-xs text-gray-text leading-relaxed">Préparez votre candidature et postulez directement via les liens
             officiels vérifiés.</p>
         </div>
-        <div class="bg-white border border-border-color rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+        <div class="bg-white shadow-md rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
           <div
-            class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-[13px] mb-4 bg-border-color text-primary">
+            class="w-9 h-9  flex items-center justify-center font-bold text-[13px] mb-4 bg-border-color text-primary">
             05</div>
           <div class="flex items-center gap-2 mb-3">
             <i class="fas fa-trophy text-sm text-primary"></i>

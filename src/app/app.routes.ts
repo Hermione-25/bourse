@@ -7,6 +7,9 @@ export const routes: Routes = [
     path: '',
     pathMatch: 'full',
     loadComponent: () => import('./features/landing/landing-page.component').then((m) => m.LandingPageComponent),
+  },{
+    path:'generate',
+    loadComponent: ()=> import('./features/generate/generate.component').then((m)=>m.GenerateComponent) 
   },
   {
     path: 'auth',
@@ -34,7 +37,16 @@ export const routes: Routes = [
         redirectTo: 'login',
       },
     ],
-  },
+  },{
+  path: 'details',
+  loadComponent: () => import('./layouts/public/public-layout.component').then((m) => m.PublicLayoutComponent),
+  children: [
+    {
+      path: ':id',
+      loadComponent: () => import('./shared/components/scholariship-detail-page/scholariship-detail-page.component').then((m) => m.ScholarshipDetailComponent),
+    },
+  ],
+},
   {
     path: 'scholarships',
     loadComponent: () => import('./layouts/public/public-layout.component').then((m) => m.PublicLayoutComponent),
@@ -60,6 +72,15 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import('./features/contact/contact.component').then((m) => m.ContactComponent),
+      },
+    ],
+  },{
+    path:'faq',
+    loadComponent: () => import('./layouts/public/public-layout.component').then((m) => m.PublicLayoutComponent),
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/faq/faq.component').then((m) => m.FaqComponent),
       },
     ],
   },

@@ -1,11 +1,18 @@
-<div class="w-full bg-white max-w-[1200px] mx-auto px-6 py-12">
-  <div class="flex justify-between relative w-1/2 h-12 mb-10 border-1 border-gray-300 rounded-lg bg-white">
-    
-    <input type="search" name="search" id="search" placeholder="Rechercher une bourse, une Université">
-    <button type="submit">
-      <i class="fas fa-search "></i>
-    </button>
-  </div>
+<div class="w-full max-w-[1200px] mx-auto px-6 py-12">
+ <div class="flex gap-2">
+      <div class="flex">
+        <input
+          type="search"
+          placeholder="Rechercher ..."
+          class="border-none bg-white outline-none px-4 py-2 w-60 md:w-160 shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
+          [value]="recherche()"
+          (input)="onRechercheChange($event)"
+        />
+        <button class="border-none bg-primary p-2 px-4 text-white outline-none">
+          Rechercher
+        </button>
+      </div>
+    </div>
   <div class="mb-10">
     <h1 class="text-2xl font-bold text-dark">Toutes les bourses</h1>
     <p class="text-sm text-gray-text mt-1">
@@ -35,10 +42,13 @@
     </div>
   } @else {
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-     
-     @for (scholarship of scholarships(); track scholarship.id) {
-       <app-card [scholarship]="scholarship" class="h-full" />
-     }
+        @for (scholarship of scholarships(); track scholarship.id) {
+          <app-card
+            [scholarship]="scholarship"
+            [estFavori]="isFavori(scholarship.id)"
+            (toggleFavori)="onToggleFavori($event)">
+          </app-card>
+        }
     </div>
   }
 </div>

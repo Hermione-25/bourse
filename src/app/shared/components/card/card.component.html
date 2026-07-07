@@ -1,6 +1,6 @@
 <a
-  [routerLink]="['/scholarship', scholarship().id]"
-  class="group block bg-white border border-[var(--color-border-color)] rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
+  [routerLink]="['/details', scholarship().id]"
+  class="group block bg-white border shadow-lg border-none rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
 
   <div class="relative h-40 w-full bg-[var(--color-light)]">
     <img
@@ -9,29 +9,32 @@
       [alt]="scholarship().title"
       class="h-full w-full object-cover" />
 
-    <div *ngIf="!scholarship().image" class="h-full w-full flex items-center justify-center text-[var(--color-border-color)] text-sm">
+    <div *ngIf="!scholarship().image" class="bg-white transition-all duration-300 hover:-translate-y-[3px] hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)] group h-36 shadow-lg h-full w-full flex items-center justify-center text-[var(--color-border-color)] text-sm">
       Pas d'image
     </div>
 
     <!-- Badge financée -->
+     @if(scholarship().funding_type && scholarship().funding_type !== FundingType.UNFUNDED){
     <span
-      *ngIf="scholarship().funding_type && scholarship().funding_type !== FundingType.UNFUNDED"
-      class="absolute top-3 left-3 text-xs font-semibold bg-[var(--color-primary)] text-white rounded-full px-3 py-1">
+      class="absolute top-3 left-3 text-xs font-semibold bg-[var(--color-primary)] text-white px-3 py-1">
       {{ scholarship().funding_type === FundingType.FULL ? 'Entièrement financée' : 'Partiellement financée' }}
     </span>
-
+    }
     <!-- Bouton favori -->
     <button
       type="button"
       (click)="onToggleFavori($event)"
       [attr.aria-label]="estFavori() ? 'Retirer des favoris' : 'Ajouter aux favoris'"
-      class="absolute top-3 right-3 h-8 w-8 rounded-full bg-white/90 flex items-center justify-center hover:bg-white transition">
-      <svg *ngIf="estFavori()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="var(--color-primary)" class="h-4 w-4">
+      class="absolute top-3 right-3 h-8 w-8  flex items-center justify-center hover:bg-white transition">
+      @if(estFavori()){
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="var(--color-primary)" class="h-4 w-4">
+        <path fill="var(--color-primary)" d="M12 21s-6.7-4.35-9.33-8.36C.99 9.94 1.8 6.5 4.6 5.1c2.16-1.08 4.4-.3 5.7 1.28.4.48.7 1.02.7 1.02s.3-.54.7-1.02c1.3-1.58 3.54-2.36 5.7-1.28 2.8 1.4 3.61 4.84 1.93 7.54C18.7 16.65 12 21 12 21z"/>
+      </svg>
+      }@else{
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" class="h-4 w-4">
         <path d="M12 21s-6.7-4.35-9.33-8.36C.99 9.94 1.8 6.5 4.6 5.1c2.16-1.08 4.4-.3 5.7 1.28.4.48.7 1.02.7 1.02s.3-.54.7-1.02c1.3-1.58 3.54-2.36 5.7-1.28 2.8 1.4 3.61 4.84 1.93 7.54C18.7 16.65 12 21 12 21z"/>
       </svg>
-      <svg *ngIf="!estFavori()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" class="h-4 w-4">
-        <path d="M12 21s-6.7-4.35-9.33-8.36C.99 9.94 1.8 6.5 4.6 5.1c2.16-1.08 4.4-.3 5.7 1.28.4.48.7 1.02.7 1.02s.3-.54.7-1.02c1.3-1.58 3.54-2.36 5.7-1.28 2.8 1.4 3.61 4.84 1.93 7.54C18.7 16.65 12 21 12 21z"/>
-      </svg>
+      }
     </button>
   </div>
 
@@ -49,18 +52,25 @@
         Deadline : {{ scholarship().deadline | date: 'dd/MM/yyyy' }}
       </span>
 
-      <span
-        *ngIf="scholarship().days_remaining !== undefined"
-        class="font-semibold rounded-full px-2.5 py-1"
-        [ngClass]="urgent
-          ? 'bg-[var(--color-primary)]/10 text-[var(--color-primary)]'
-          : 'bg-[var(--color-light)] text-[var(--color-gray-text)]'">
-        {{ scholarship().days_remaining }}j restants
-      </span>
+      @if (scholarship().days_remaining !== undefined) {
+
+        @if (scholarship().days_remaining! < 0) {
+          <span class="font-semibold rounded-full px-2.5 py-1 text-red-600">
+            Bourse expirée
+          </span>
+        } @else {
+          <span
+            class="font-semibold rounded-full px-2.5 py-1"
+            [ngClass]="urgent ? 'text-red-600' : 'text-green-600'">
+            {{ scholarship().days_remaining }}j restants
+          </span>
+        }
+
+      }
     </div>
 
-    <span class="inline-block mt-3 text-xs font-semibold text-[var(--color-primary)] group-hover:underline">
-      Voir plus →
+    <span class="inline-block mt-3 text-xs font-semibold text-red-500 group-hover:underline">
+      Voir plus
     </span>
   </div>
 </a>

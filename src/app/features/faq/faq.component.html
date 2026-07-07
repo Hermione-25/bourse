@@ -1,0 +1,103 @@
+
+<div class="max-w-5xl mx-auto px-4 py-12">
+
+  <div class="text-center mb-10">
+    <h1 class="text-2xl font-bold text-[var(--color-black)] mb-2">Foire Aux Questions (FAQ)</h1>
+    <p class="text-sm text-[var(--color-gray-text)]/70">
+      Trouvez des réponses à vos questions
+    </p>
+  </div>
+
+  @if (!categorieSelectionnee()) {
+
+    <h2 class="text-center text-lg font-semibold text-[var(--color-gray-text)] mb-6">
+      Choisissez une catégorie
+    </h2>
+
+    <div class="grid grid-cols-1  md:grid-cols-1 gap-4">
+      @for (cat of categories; track cat.id) {
+        <button
+          type="button"
+          (click)="onSelectCategorie(cat.id)"
+          class="flex items-center gap-3 h-30 bg-white shadow-lg rounded-xl px-5 py-4 hover:border-[var(--color-primary)] hover:shadow-md transition text-left">
+          <i class="fas {{ cat.icon }} text-xl text-[var(--color-primary)]"></i>
+          <span class="font-medium text-[var(--color-gray-text)]">{{ cat.label }}</span>
+        </button>
+      }
+    </div>
+
+  } @else {
+
+    <div class="grid grid-cols-2 shadow-2xl h-110 md:grid-cols-4 gap-3">
+
+      <!-- Sidebar catégories -->
+      <div class="md:col-span-1">
+        <div class="bg-white shadow-lg h-110 rounded-xl p-3">
+          @for (cat of categories; track cat.id) {
+            <button
+              type="button"
+              (click)="onSelectCategorie(cat.id)"
+              class="w-full flex items-center gap-2 px-3 py-5 rounded-lg text-sm text-left transition"
+              [class.bg-[var(--color-white)]]="categorieSelectionnee() === cat.id"
+              [class.font-semibold]="categorieSelectionnee() === cat.id"
+              [class.text-[var(--color-primary)]]="categorieSelectionnee() === cat.id"
+              [class.text-[var(--color-gray-text)]]="categorieSelectionnee() !== cat.id">
+              <i class="fas {{ cat.icon }}"></i>
+              <span>{{ cat.label }}</span>
+            </button>
+          }
+
+          <button
+            type="button"
+            (click)="onRetour()"
+            class="w-full mt-2 pt-2 border-t border-[var(--color-border-color)] flex items-center gap-2 px-3 py-2 text-sm text-[var(--color-gray-text)]/70 hover:text-[var(--color-primary)] transition">
+            <i class="fas fa-arrow-left"></i>
+            <span>Retour</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Liste des questions -->
+      <div class="md:col-span-3 bg-white">
+        <h2 class="text-lg font-bold text-[var(--color-black)] mb-4">
+          {{ categorieActuelle()?.label }}
+        </h2>
+
+        <div class="space-y-3">
+          @for (item of faqsFiltrees(); track item.id) {
+            <div class="bg-white border border-[var(--color-border-color)] rounded-xl overflow-hidden">
+              <button
+                type="button"
+                (click)="onToggleQuestion(item.id)"
+                class="w-full flex items-center justify-between px-5 py-4 text-left">
+                <span class="font-medium text-sm text-[var(--color-gray-text)]">
+                  {{ item.question }}
+                </span>
+                <i
+                  class="fas text-[var(--color-primary)] text-sm shrink-0 ml-3"
+                  [class.fa-chevron-down]="questionOuverte() === item.id"
+                  [class.fa-chevron-right]="questionOuverte() !== item.id">
+                </i>
+              </button>
+
+              @if (questionOuverte() === item.id) {
+                <div class="px-5 pb-4 text-sm text-[var(--color-gray-text)]/80">
+                  {{ item.reponse }}
+                </div>
+              }
+            </div>
+          }
+
+          @if (faqsFiltrees().length === 0) {
+            <p class="text-sm text-[var(--color-gray-text)]/60 text-center py-8">
+              Aucune question dans cette catégorie pour l'instant.
+            </p>
+          }
+        </div>
+      </div>
+
+    </div>
+
+  }
+
+</div>
