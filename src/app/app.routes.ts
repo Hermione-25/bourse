@@ -9,7 +9,13 @@ export const routes: Routes = [
     loadComponent: () => import('./features/landing/landing-page.component').then((m) => m.LandingPageComponent),
   },{
     path:'generate',
-    loadComponent: ()=> import('./features/generate/generate.component').then((m)=>m.GenerateComponent) 
+    loadComponent: ()=> import('./layouts/public/public-layout.component').then((m)=>m.PublicLayoutComponent), 
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/generate/generate.component').then((m) => m.GenerateComponent),
+      },
+    ], 
   },
   {
     path: 'auth',

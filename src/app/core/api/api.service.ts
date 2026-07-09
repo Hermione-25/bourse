@@ -8,7 +8,7 @@ export class ApiService {
   private http = inject(HttpClient);
   private config = inject(API_CONFIG);
 
-  private createUrl(path: string): string {
+  createUrl(path: string): string {
     return `${this.config.baseUrl}/${path}`.replace(/([^:]\/\/)\//g, '$1');
   }
 
