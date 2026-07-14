@@ -4,11 +4,12 @@ import { RouterLink } from '@angular/router';
 import { PaysService } from './pays.service';
 import { Pays } from '../../shared/models/pays.models';
 import { PAYS_MOCK } from './pays-data';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-destination',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './destination.component.html',
 })
 export class DestinationComponent implements OnInit {
@@ -29,8 +30,8 @@ export class DestinationComponent implements OnInit {
     const lettre = this.lettreActive();
 
     return this.pays().filter((p) => {
-      const correspondRecherche = !terme || p.name.toLowerCase().includes(terme);
-      const correspondLettre = lettre === 'Tous' || p.name.toUpperCase().startsWith(lettre);
+      const correspondRecherche = !terme || p.country.toLowerCase().includes(terme);
+      const correspondLettre = lettre === 'Tous' || p.country.toUpperCase().startsWith(lettre);
       return correspondRecherche && correspondLettre;
     });
   });
@@ -46,11 +47,11 @@ export class DestinationComponent implements OnInit {
       next: (countsApi) => {
         const paysAvecCounts: Pays[] = PAYS_MOCK.map((paysMock) => {
           const correspondance = countsApi.find(
-            (c) => c.name.toLowerCase() === paysMock.name.toLowerCase()
+            (c) => c.country.toLowerCase() === paysMock.country.toLowerCase()
           );
           return {
             ...paysMock,
-            bourses_count: correspondance ? correspondance.bourses_count : 0,
+            total: correspondance ? correspondance.total : 0,
           };
         });
 

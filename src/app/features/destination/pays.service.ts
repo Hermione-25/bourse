@@ -10,7 +10,7 @@ import { ApiResponse } from '../../shared';
 })
 export class PaysService {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiUrl}/pays`;
+  private apiUrl = `${environment.apiUrl}/scholarships/countries`;
 
 
   getCounts(): Observable<PaysApi[]> {

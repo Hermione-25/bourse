@@ -1,8 +1,8 @@
-<div class="max-w-5xl mx-auto px-4 py-10">
-  <h1 class="text-2xl font-bold text-[var(--color-gray-text)] mb-6">Tableau de bord</h1>
+<div class="max-w-auto mx-auto px-4 ">
+  <h1 class="text-2xl font-bold mb-20 text-[var(--color-gray-text)] mb-6">Tableau de bord</h1>
 
   @if (chargement()) {
-    <div class="flex items-center justify-center py-16">
+  <div class="flex items-center justify-center py-16">
 
     <div class="flex flex-col items-center gap-3">
       <div class="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
@@ -12,41 +12,35 @@
   }
 
   @if (!chargement() && resume(); as r) {
-    <div class="grid grid-cols-1 m-5 gap-5 shadow-lg rounded-2xl">
-     <div class="block bg-white border border-white  p-6">
-        <p class="text-sm text-[var(--color-gray-text)]/70 mb-2">Nouvelles bourses ajoutées</p>
-        <p class="text-3xl font-bold text-[var(--color-primary)]">{{ r.nombreNouvellesBourses }}</p>
+  <div class=" w-full gap-5  mb-10">
+    <div class=" bg-white border border-white rounded-2xl p-6 shadow-lg">
+      <p class="text-sm text-[var(--color-gray-text)]/70 mb-2">Nouvelles bourses ajoutées</p>
+      <p class="text-3xl font-bold text-[var(--color-primary)]">{{ r.nombreNouvellesBourses }}</p>
+    </div>
+  </div>
+
+
+  <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <a routerLink="/user/profil" class="block bg-white border border-white rounded-2xl p-6 shadow-lg">
+      <p class="text-sm text-[var(--color-gray-text)]/70 mb-2">Profil complet à</p>
+      <p class="text-3xl font-bold text-[var(--color-primary)] mb-3">{{ r.pourcentageProfil }}%</p>
+      <div class="h-1.5 rounded-full bg-white overflow-hidden">
+        <div class="h-full bg-[var(--color-primary)] rounded-full" [style.width.%]="r.pourcentageProfil"></div>
       </div>
-    </div>
+    </a>
+
+    <a routerLink="/user/recommandations" class="block bg-white border border-white rounded-2xl p-6 shadow-lg">
+      <p class="text-sm text-[var(--color-gray-text)]/70 mb-2">Recommandations disponibles</p>
+      <p class="text-3xl font-bold text-[var(--color-primary)]">{{ r.nombreRecommandations }}</p>
+    </a>
+
+    <a routerLink="/user/favoris" class="block bg-white border border-white rounded-2xl p-6 shadow-lg">
+      <p class="text-sm text-[var(--color-gray-text)]/70 mb-2">Vous avez mis</p>
+      <p class="text-3xl font-bold text-[var(--color-primary)] mb-1">{{ r.nombreFavoris }}</p>
+      <p class="text-sm text-[var(--color-gray-text)]/70">bourse{{ r.nombreFavoris > 1 ? 's' : '' }} en favoris</p>
+    </a>
 
 
-    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      <a
-        routerLink="/user/profil"
-        class="block bg-white border border-white rounded-2xl p-6 shadow-lg">
-        <p class="text-sm text-[var(--color-gray-text)]/70 mb-2">Profil complet à</p>
-        <p class="text-3xl font-bold text-[var(--color-primary)] mb-3">{{ r.pourcentageProfil }}%</p>
-        <div class="h-1.5 rounded-full bg-white overflow-hidden">
-          <div class="h-full bg-[var(--color-primary)] rounded-full" [style.width.%]="r.pourcentageProfil"></div>
-        </div>
-      </a>
-
-      <a
-        routerLink="/user/recommandations"
-        class="block bg-white border border-white rounded-2xl p-6 shadow-lg">
-        <p class="text-sm text-[var(--color-gray-text)]/70 mb-2">Recommandations disponibles</p>
-        <p class="text-3xl font-bold text-[var(--color-primary)]">{{ r.nombreRecommandations }}</p>
-      </a>
-
-      <a
-        routerLink="/user/favoris"
-        class="block bg-white border border-white rounded-2xl p-6 shadow-lg">
-        <p class="text-sm text-[var(--color-gray-text)]/70 mb-2">Vous avez mis</p>
-        <p class="text-3xl font-bold text-[var(--color-primary)] mb-1">{{ r.nombreFavoris }}</p>
-        <p class="text-sm text-[var(--color-gray-text)]/70">bourse{{ r.nombreFavoris > 1 ? 's' : '' }} en favoris</p>
-      </a>
-
-      
-    </div>
+  </div>
   }
 </div>

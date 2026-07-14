@@ -1,11 +1,11 @@
 export interface Pays {
-    name: string;
-    bourses_count: number;
+    country: string;
+    total: number;
     url_image: string;
     
 }
 
 export interface PaysApi {
-  name: string;
-  bourses_count: number;
+  country: string;
+  total: number;
 }

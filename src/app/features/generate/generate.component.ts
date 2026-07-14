@@ -3,6 +3,10 @@ import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { GenerateService } from './generate.service';
 import { Cv, CvPayload, CvTemplate } from './generate.models';
+import { AuthService } from '../../core/auth/auth.service';
+import { take } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-generate',
@@ -13,6 +17,7 @@ export class GenerateComponent implements OnInit {
   private fb = inject(FormBuilder);
   private generateService = inject(GenerateService);
   private sanitizer = inject(DomSanitizer);
+  private authService = inject (AuthService)
 
   currentStep = signal(0);
   derniereEtape = 6;
@@ -21,10 +26,14 @@ export class GenerateComponent implements OnInit {
   templateSelectionne = signal<number | null>(null);
   chargementApercu = signal<boolean>(false);
 
-  // apercuHtmlRaw : le HTML brut (string), utilisé pour tester @if dans le template
-  // apercuHtmlSafe : la version "débridée" par Angular, seule utilisable dans [srcdoc]
+  
   apercuHtmlRaw = signal<string>('');
   apercuHtmlSafe = signal<SafeHtml>('');
+
+estConnecte = toSignal(
+  this.authService.authState$.pipe(map((auth) => !!auth)),
+  { initialValue: false }
+);
 
   formulaire = this.fb.group({
     name: [''],
@@ -57,7 +66,7 @@ export class GenerateComponent implements OnInit {
     });
   }
 
-  // ===== Getters FormArray =====
+
   get personalInfoGroup(): FormGroup {
     return this.formulaire.get('personal_info') as FormGroup;
   }
@@ -82,7 +91,7 @@ export class GenerateComponent implements OnInit {
     return this.formulaire.get('interests') as FormArray;
   }
 
-  // ===== Factories =====
+
   createFormation(): FormGroup {
     return this.fb.group({
       degree: [''],
@@ -125,7 +134,7 @@ export class GenerateComponent implements OnInit {
     });
   }
 
-  // ===== Ajouter =====
+  
   AjouterFormation() {
     this.educationsArray.push(this.createFormation());
   }
@@ -146,7 +155,7 @@ export class GenerateComponent implements OnInit {
     this.interestsArray.push(this.createInterest());
   }
 
-  // ===== Supprimer =====
+  
   SupprimerFormation(index: number) {
     if (this.educationsArray.length > 1) this.educationsArray.removeAt(index);
   }
@@ -167,20 +176,11 @@ export class GenerateComponent implements OnInit {
     if (this.interestsArray.length > 1) this.interestsArray.removeAt(index);
   }
 
-  // ===== Photo =====
-  onPhotoSelectionnee(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.personalInfoGroup.patchValue({ photo: input.files[0] });
-    }
-  }
 
-  // ===== Template =====
+  
   selectionnerTemplate(id: number) {
     this.templateSelectionne.set(id);
   }
-
-  // ===== Navigation =====
   suivant() {
     if (this.currentStep() < this.derniereEtape) {
       this.currentStep.set(this.currentStep() + 1);
@@ -193,7 +193,7 @@ export class GenerateComponent implements OnInit {
     }
   }
 
-  // ===== Payload =====
+  
   private construirePayload(): (CvPayload & { name: string }) | null {
   const templateId = this.templateSelectionne();
   if (!templateId) {
@@ -214,7 +214,7 @@ export class GenerateComponent implements OnInit {
     data: data as Cv,
   };
 }
-  // ===== Aperçu / Finalisation =====
+
   finaliser() {
     const payload = this.construirePayload();
     if (!payload) return;
@@ -239,7 +239,7 @@ export class GenerateComponent implements OnInit {
     this.apercuHtmlSafe.set('');
   }
 
-  // ===== Téléchargement =====
+  
   telecharger() {
     const payload = this.construirePayload();
     if (!payload) return;
@@ -258,4 +258,42 @@ export class GenerateComponent implements OnInit {
       },
     });
   }
+
+  photoApercu = signal<string | null>(null);
+  onPhotoSelectionnee(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result as string;
+      this.photoApercu.set(base64);
+      this.personalInfoGroup.patchValue({ photo: base64 }); // ✅ string base64, pas le File
+    };
+    reader.readAsDataURL(file);
+  }
+
+
+
+  SauvegarderCv(): void {
+    this.authService.authState$.pipe(take(1)).subscribe({
+      next: (auth) => {
+        if (!auth) {
+          console.log('Utilisateur non connecté — CV non sauvegardé');
+          return;
+        }
+
+        const payload = this.construirePayload();
+        if (!payload) return;
+
+        this.generateService.saveCv(payload).subscribe({
+          next: (response) => console.log(response),
+          error: (error) => console.error(error),
+        });
+      },
+    });
+  }
 }
+
+   

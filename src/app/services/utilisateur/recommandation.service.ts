@@ -14,4 +14,6 @@ export class RecommandationService {
       .get<ApiResponse<Scholarship[]>>('user/recommendation')
       .pipe(map((response) => response.data));
   }
+
+ 
 }

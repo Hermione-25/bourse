@@ -1,16 +1,11 @@
+import { User } from '../../shared/models/user.models';
+
 export interface AuthToken {
   success: boolean;
   message: string;
   data: {
     token: string;
-    user?: {
-      id: number;
-      email: string;
-      first_name?: string;
-      last_name?: string;
-      country?:string;
-      role?: string;
-    };
+    user:User;
   };
 }
 

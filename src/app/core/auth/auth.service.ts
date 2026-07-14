@@ -1,45 +1,63 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, tap, throwError } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap, throwError, catchError, of } from 'rxjs';
 import { ApiService } from '../api/api.service';
 import { TokenService } from './token.service';
 import { AuthToken, LoginDto, RefreshTokenResponse, RegisterDto, ForgotPasswordDto } from './auth.models';
+import { User } from '../../shared/models/user.models';
+
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private apiService = inject(ApiService);
   private tokenService = inject(TokenService);
-  private currentUserSubject = new BehaviorSubject<AuthToken | null>(null);
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
 
   readonly authState$ = this.currentUserSubject.asObservable();
   readonly isAuthenticated$ = this.authState$.pipe(map(Boolean));
 
-  constructor() {
-    const token = this.tokenService.getAccessToken();
-     
-    if (token) {
 
-      this.apiService.get<AuthToken>('me').subscribe({
-        next: (user) => this.currentUserSubject.next(user),
-        error: () => this.logout(),
-      });
+  initAuth(): Observable<AuthToken | null> {
+    const token = this.tokenService.getAccessToken();
+
+    if (!token) {
+      this.currentUserSubject.next(null);
+      return of(null);
     }
+
+    return this.apiService.get<AuthToken>('me').pipe(
+      tap((res) => this.currentUserSubject.next(res.data.user)),
+      catchError(() => {
+        this.logout();
+        return of(null);
+      })
+    );
   }
 
-login(dto: LoginDto): Observable<AuthToken> {
-  return this.apiService.post<AuthToken>('login', dto).pipe(
-    tap((res) => {
-      this.tokenService.setAccessToken(res.data.token);
-      this.currentUserSubject.next(res);
-    })
-  );
-}
+  login(dto: LoginDto): Observable<AuthToken> {
+    return this.apiService.post<AuthToken>('login', dto).pipe(
+      tap((res) => {
+        this.tokenService.setAccessToken(res.data.token);
+        this.currentUserSubject.next(res.data.user);
+      })
+    );
+  }
 
+loginWithGoogle(idToken: string) {
+  return this.apiService.post<AuthToken>('/auth/google', { id_token: idToken })
+    .pipe(    
+      tap(res => {
+        this.tokenService.setAccessToken(res.data.token);
+        this.currentUserSubject.next(res.data.user);
+      })  
+    );
+}
+  
   register(dto: RegisterDto): Observable<AuthToken> {
     return this.apiService.post<AuthToken>('register', dto).pipe(
       tap((res) => {
         this.tokenService.setAccessToken(res.data.token);
         
-        this.currentUserSubject.next(res);
+        this.currentUserSubject.next(res.data.user);
       })
     );
   }

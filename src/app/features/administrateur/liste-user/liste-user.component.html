@@ -34,9 +34,9 @@
 <!-- MODALE EDITION / CREATION -->
 @if(showForm()){
 <div 
-  class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm ">
 
-  <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
+  <div class="bg-white rounded-2xl h-140 shadow-2xl p-4 max-w-md w-full mx-4">
 
     <h2 class="text-lg font-bold text-gray-800 mb-6">
       {{ editingId() ? "Modifier l'utilisateur" : "Créer un utilisateur" }}
@@ -104,14 +104,20 @@
 @if(showDetails()){
 
   @if(selectedUser(); as user){
+    
     <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
 
       <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
 
+        <div class="flex justify-end pt-6">
+          <button (click)="closeDetails()"
+            class="px-5 py-2 rounded-xl border border-gray-300 text-gray-700 text-sm font-medium hover:bg-gray-50 transition-colors">
+           <i class="fas fa-times"></i>
+          </button>
+        </div>
+
         <div class="flex items-center gap-3 mb-6">
-          <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
-            {{ (user.first_name || '').charAt(0) }}{{ (user.last_name || '').charAt(0) }}
-          </div>
+
           <div>
             <p class="font-semibold text-gray-800">{{ user.first_name }} {{ user.last_name }}</p>
             <p class="text-xs text-gray-400">{{ user.email }}</p>
@@ -137,12 +143,7 @@
           </div>
         </div>
 
-        <div class="flex justify-end pt-6">
-          <button (click)="closeDetails()"
-            class="px-5 py-2 rounded-lg border border-gray-300 text-gray-700 text-sm font-medium hover:bg-gray-50 transition-colors">
-            Fermer
-          </button>
-        </div>
+        
 
       </div>
     </div>
@@ -176,7 +177,7 @@
 
       <button
         (click)="OpenCreate()"
-        class="flex items-center w-22 gap-2 px-4 py-2.5 rounded-xl bg-primary text-white text-sm font-semibold hover:opacity-90 transition-colors shadow-sm whitespace-nowrap">
+        class="flex items-center w-25 gap-2 px-4 py-2.5 rounded-xl bg-primary text-white text-sm font-semibold hover:opacity-90 transition-colors shadow-sm whitespace-nowrap">
         <i class="fas fa-plus"></i>
         Ajouter
       </button>

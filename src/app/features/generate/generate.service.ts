@@ -35,6 +35,11 @@ export class GenerateService {
     updateCv(id:number, cv:Cv):Observable<any>{
         return this.apiService.put(`cv/mycvs/${id}`, cv)
     }
+
+    saveCv(payload:CvPayload):Observable<Cv>{
+        return this.apiService.post<ApiResponse<Cv>>('cv/mycvs', payload)
+        .pipe(map((response) =>response.data));
+    }
     
     downloadCv(payload: CvPayload): Observable<Blob> {
         return this.http.post(`${this.apiUrl}/download`, payload ,

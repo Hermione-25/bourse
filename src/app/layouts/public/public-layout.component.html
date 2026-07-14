@@ -1,10 +1,11 @@
 
- <nav class="bg-white sticky top-0 z-[100] shadow-[0_1px_10px_rgba(0,0,0,0.02)]">
+ <nav class="bg-light sticky top-0 z-[100] shadow-[0_1px_10px_rgba(0,0,0,0.02)]">
     <div class="w-full max-w-[1200px] mx-auto px-6 flex justify-between items-center py-4">
       <div class="flex items-center gap-2.5">
-        <i class="fas fa-graduation-cap text-xl"></i>
+        <img src="next.png" class="w-10" alt="">
         <div>
-          <h1 class="text-[20px] font-bold text-black leading-none">BourseConnect</h1>
+          <h1 class="text-[20px] font-bold text-black leading-none">Next
+          </h1>
           <p class="text-[10px] text-gray-text tracking-[1px]">Étudiez. Rêvez. Réalisez.</p>
         </div>
       </div>
@@ -15,34 +16,34 @@
 
       <ul class="hidden md:flex gap-6 list-none m-0 p-0">
         <li><a routerLink="/"
-            class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold active:text-primary active:font-semibold">Accueil</a>
+            class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold active:text-primary active:font-semibold">Accueil</a>
         </li>
         <li><a routerLink="/scholarships" routerLinkActive="text-primary/20 font-semibold" [routerLinkActiveOptions]=" { exact:true } " 
-            class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold">Bourses</a>
+            class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold">Bourses</a>
         </li>
         <li><a routerLink="/pays" routerLinkActive="text-primary/20 font-semibold" 
-            class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold">pays</a></li>
+            class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold">pays</a></li>
         <li><a routerLink="/faq"  routerLinkActive="text-primary/20 font-semibold" 
-            class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold">FAQ</a>
+            class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold">FAQ</a>
         </li>
         <li><a routerLink="/contact"  routerLinkActive="text-primary/20 font-semibold" 
-            class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold">Contact</a>
+            class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold">Contact</a>
         </li>
       </ul>
-      <div class="flex items-center gap-2">
+      <div class="hidden md:flex items-center gap-2">
       <button
-            class="hidden md:inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-40 hover:-translate-y-[1px]"
+            class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-40 hover:-translate-y-[1px]"
             routerLink="/generate">Générer un CV</button>
       @if(authService.isAuthenticated$ |async){
         
           <button
-            class="hidden md:inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-40 hover:-translate-y-[1px]"
+            class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-40 hover:-translate-y-[1px]"
             routerLink="/user"><i><i class="fas fa-user"></i></i></button>
             
         
     } @else {
       <button
-        class="hidden md:inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-40 hover:-translate-y-[1px]"
+        class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-40 hover:-translate-y-[1px]"
         routerLink="/auth/login">Se connecter</button>
     }
       </div>
@@ -50,11 +51,11 @@
     @if (isMenuOpen) {
       <div class="border-t border-gray-200 bg-white px-6 py-4 md:hidden">
         <ul class="flex flex-col gap-3 list-none m-0 p-0">
-          <li><a routerLink="/" routerLinkActive="text-primary/20 font-semibold" [routerLinkActiveOptions]=" { exact:true }" class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">Accueil</a></li>
-          <li><a routerLink="/scholarships" routerLinkActive="text-primary/20 font-semibold" class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">Bourses</a></li>
-          <li><a routerLink="/pays" routerLinkActive="text-primary/20 font-semibold"  class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">pays</a></li>
-          <li><a routerLink="/faq" routerLinkActive="text-primary/20 font-semibold"  class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">FAQ</a></li>
-          <li><a routerLink="/contact" routerLinkActive="text-primary/20 font-semibold"   class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">Contact</a></li>
+          <li><a routerLink="/" routerLinkActive="text-primary/20 font-semibold" [routerLinkActiveOptions]=" { exact:true }" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">Accueil</a></li>
+          <li><a routerLink="/scholarships" routerLinkActive="text-primary/20 font-semibold" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">Bourses</a></li>
+          <li><a routerLink="/pays" routerLinkActive="text-primary/20 font-semibold"  class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">pays</a></li>
+          <li><a routerLink="/faq" routerLinkActive="text-primary/20 font-semibold"  class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">FAQ</a></li>
+          <li><a routerLink="/contact" routerLinkActive="text-primary/20 font-semibold"   class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">Contact</a></li>
           <li><a routerLink="/generate"class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Générer un CV</a></li>
           
           @if(authService.isAuthenticated$ | async) {

@@ -1,48 +1,48 @@
-
-  <nav class="bg-white sticky top-0 z-[100] shadow-[0_1px_10px_rgba(0,0,0,0.02)]">
-    <div class="w-full max-w-[1200px] mx-auto px-6 flex justify-between items-center py-4">
+<nav class="bg-light sticky top-0 z-[100] shadow-[0_1px_10px_rgba(0,0,0,0.02)]">
+    <div class="w-full max-w-[2000px] mx-auto px-6 flex justify-between items-center py-4">
       <div class="flex items-center gap-2.5">
-        <i class="fas fa-graduation-cap text-xl"></i>
+        <img src="next.png" alt="" class="w-10">
         <div>
-          <h1 class="text-[20px] font-bold text-black leading-none">BourseConnect</h1>
+          <h1 class="text-[20px] font-bold text-black leading-none">Next</h1>
           <p class="text-[10px] text-gray-text tracking-[1px]">Étudiez. Rêvez. Réalisez.</p>
         </div>
       </div>
 
-      <button type="button" class="inline-flex items-center justify-center rounded-lg border border-gray-200 p-2 text-gray-700 md:hidden" (click)="toggleMenu()" aria-label="Ouvrir le menu">
-        <i class="fas" [class.fa-bars]="!isMenuOpen" [class.fa-times]="isMenuOpen"></i>
+      <button type="button" class="flex rounded-lg border border-gray-300 p-2 text-gray-700 md:hidden" (click)="toggleMenu()" aria-label="Ouvrir le menu">
+        <i class="fas " [class.fa-bars]="!isMenuOpen" [class.fa-times]="isMenuOpen"></i>
       </button>
 
       <ul class="hidden md:flex gap-6 list-none m-0 p-0">
         <li><a routerLink="/"
-            class="text-primary/20 text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold active:text-primary active:font-semibold">Accueil</a>
+            class="relative text-primary/20 text-sm font-medium transition-all duration-300 hover:text-primary hover:z-20 hover:font-semibold active:text-primary active:font-semibold">Accueil</a>
         </li>
         <li><a routerLink="/scholarships"
-            class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold">Bourses</a>
+            class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-xl hover:text-primary hover:font-semibold">Bourses</a>
         </li>
         <li><a routerLink="/pays"
-            class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold">pays</a></li>
+            class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-xl hover:text-primary hover:font-semibold">pays</a></li>
         <li><a routerLink="/faq"
-            class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold">FAQ</a>
+            class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-xl hover:text-primary hover:font-semibold">FAQ</a>
         </li>
         <li><a routerLink="/contact"
-            class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold">Contact</a>
+            class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-xl hover:text-primary hover:font-semibold">Contact</a>
         </li>
       </ul>
-      <div class="flex items-center gap-2">
+
+      <div class="hidden md:flex items-center gap-2">
         <button
-                class="hidden md:inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-40 hover:-translate-y-[1px]"
+                class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-90 hover:-translate-y-[1px]"
                 routerLink="/generate">Générer un CV</button>
         @if(authService.isAuthenticated$ |async){
-            
+
             <button
-                class="hidden md:inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-40 hover:-translate-y-[1px]"
-                routerLink="/user"><i><i class="fas fa-user"></i></i></button>
-            
-            
+                class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-90 hover:-translate-y-[1px]"
+                routerLink="/user"><i class="fas fa-user"></i></button>
+
+
         } @else {
         <button
-            class="hidden md:inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-40 hover:-translate-y-[1px]"
+            class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-90 hover:-translate-y-[1px]"
             routerLink="/auth/login">Se connecter</button>
         }
     </div>
@@ -51,11 +51,11 @@
     @if (isMenuOpen) {
       <div class="border-t border-gray-200 bg-white px-6 py-4 md:hidden">
         <ul class="flex flex-col gap-3 list-none m-0 p-0">
-          <li><a routerLink="/" class="text-primary/20 text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">Accueil</a></li>
-          <li><a routerLink="/scholarships" class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">Bourses</a></li>
-          <li><a routerLink="/pays" class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">pays</a></li>
-          <li><a routerLink="/faq" class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">FAQ</a></li>
-          <li><a routerLink="/contact" class="text-gray-text text-sm font-medium transition-all duration-300 hover:text-primary hover:font-semibold" (click)="closeMenu()">Contact</a></li>
+          <li><a routerLink="/" class="relative text-primary/20 text-sm font-medium transition-all duration-300 hover:text-primary hover:z-20 hover:font-semibold" (click)="closeMenu()">Accueil</a></li>
+          <li><a routerLink="/scholarships" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">Bourses</a></li>
+          <li><a routerLink="/pays" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">pays</a></li>
+          <li><a routerLink="/faq" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">FAQ</a></li>
+          <li><a routerLink="/contact" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">Contact</a></li>
           <li><a routerLink="/generate" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Générer un CV</a></li>
           @if(authService.isAuthenticated$ | async) {
             <li><a routerLink="/user" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Mon Espace</a></li>
@@ -275,10 +275,10 @@
     <div class="w-full max-w-[1200px] mx-auto px-6">
       <div class="text-center mb-12">
         <span class="text-primary text-xs font-bold uppercase tracking-[2px] block mb-2.5">Comment ça marche</span>
-        <h2 class="text-[32px] text-black font-bold">4 étapes simples pour atteindre vos objectifs</h2>
+        <h2 class="text-[32px] text-black font-bold">5 étapes simples pour atteindre vos objectifs</h2>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 md:gap-6">
         <div class="bg-white shadow-md rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
           <div
             class="w-9 h-9 flex items-center justify-center font-bold text-[13px] mb-4 bg-border-color text-primary">
@@ -341,12 +341,12 @@
     </div>
   </section>
 
-  <footer class="bg-black/50 pt-20">
+  <footer class="bg-black/10 pt-20">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12 w-full max-w-[1200px] mx-auto px-6">
       <div>
         <div class="flex items-center gap-2.5">
-          <i class="fas fa-graduation-cap text-black text-2xl"></i>
-          <h1 class="text-[20px] font-bold text-black">BourseConnect</h1>
+          <img src="next.png" alt="" class="w-10">
+          <h1 class="text-[20px] font-bold text-black">Next</h1>
         </div>
         <p class="text-xs text-gray-text mt-4 mb-5">Nous connectons efficacement les étudiants aux meilleures opportunités de
           bourses universitaires mondiales. Votre avenir commence ici.</p>
@@ -401,7 +401,7 @@
         </p>
         <div class="bg-light border border-border-color rounded-xl p-1 flex">
           <input type="email" placeholder="Votre adresse email"
-            class="bg-black/50 border-none outline-none px-3 text-xs w-full text-dark">
+            class=" border-none outline-none px-3 text-xs w-full text-dark">
           <button
             class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-90 hover:-translate-y-[1px] !px-4 !py-2 whitespace-nowrap">S'abonner</button>
         </div>
@@ -411,7 +411,7 @@
     <div class="bg-primary text-white/60 text-[11px] py-6 border-t border-dark">
       <div
         class="w-full max-w-[1200px] mx-auto px-6 flex flex-col sm:flex-row justify-between items-center flex-wrap gap-2.5 text-center sm:text-left">
-        <p>© 2024 BourseConnect. Tous droits réservés.</p>
+        <p>© 2026 Next. Tous droits réservés.</p>
         <div>
           <a routerLink="/"
             class="text-white/60 no-underline ml-0 sm:ml-4 mx-2 sm:mx-0 transition-all duration-300 hover:text-white">Mentions

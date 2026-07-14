@@ -27,6 +27,13 @@ export class ScholarshipCard {
   get urgent(): boolean {
     const jours = this.scholarship().days_remaining;
     return jours !== undefined && jours <= 7;
-  
+  }
+
+  get scoreClasses(): string {
+    const score = this.scholarship().compatibility_score;
+    if (score === undefined) return '';
+    if (score >= 75) return 'bg-emerald-600 text-white';
+    if (score >= 50) return 'bg-amber-500 text-white';
+    return 'bg-[var(--color-gray-text)]/70 text-white';
   }
 }

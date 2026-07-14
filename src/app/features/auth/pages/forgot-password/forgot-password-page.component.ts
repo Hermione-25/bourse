@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../../core/auth/auth.service';
@@ -19,29 +19,25 @@ export class ForgotPasswordPageComponent {
     email: ['', [Validators.required, Validators.email]],
   });
 
-  submitting = false;
-  successMessage: string | null = null;
-  errorMessage: string | null = null;
+ submitting = signal(false);
+successMessage = signal('');
+errorMessage = signal('');
 
-  submit(): void {
-    if (this.form.invalid || this.submitting) return;
+submit() {
+  this.submitting.set(true);
+  this.successMessage.set('');
+  this.errorMessage.set('');
 
-    this.submitting = true;
-    this.successMessage = null;
-    this.errorMessage = null;
-
-    const { email } = this.form.getRawValue();
-    this.authService.forgotPassword({ email }).subscribe({
-      next: () => {
-        this.successMessage =
-          'Si cet email existe, un lien de réinitialisation a été envoyé.';
-        this.submitting = false;
-      },
-      error: () => {
-        this.errorMessage =
-          'Impossible de traiter la demande pour le moment.';
-        this.submitting = false;
-      },
-    });
-  }
+  const { email } = this.form.getRawValue();
+  this.authService.forgotPassword({ email }).subscribe({
+    next: () => {
+      this.successMessage.set('Si cet email existe, un lien de réinitialisation a été envoyé.');
+      this.submitting.set(false);
+    },
+    error: () => {
+      this.errorMessage.set('Impossible de traiter la demande pour le moment.');
+      this.submitting.set(false);
+    },
+  });
+}
 }

@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../../../main';
 
+declare const google: any;
 
 @Component({
   selector: 'app-login-page',
@@ -18,6 +20,28 @@ export class LoginPageComponent {
   private authService = inject(AuthService);
 
 
+  ngOnInit() {
+    google.accounts.id.initialize({
+      client_id: environment.googleClientId,
+      callback: (response: any) => this.handleGoogleLogin(response)
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById('google-btn'),
+      { theme: 'outline', size: 'large', width: '100%' }
+    );
+  }
+
+  handleGoogleLogin(response: any) {
+    const idToken = response.credential;
+
+    this.authService.loginWithGoogle(idToken).subscribe({
+      next: () => this.router.navigate(['/dashboard']),
+      error: (err) => console.error('Erreur connexion Google', err)
+    });
+  }
+
+  
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
@@ -41,7 +65,7 @@ export class LoginPageComponent {
  next: (res) => {
   this.submitting = false;
   const isAdmin = res.data.user?.role === 'admin';
-  this.router.navigate([isAdmin ? '/admin' : '/landing']);
+  this.router.navigate([isAdmin ? '/admin' : '/user']);
 },
   error: (error: unknown) => {
     const errorMsg =

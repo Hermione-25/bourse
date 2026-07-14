@@ -1,6 +1,5 @@
 <div class="max-w-5xl mx-auto p-6">
 
-  <!-- ===== Barre de progression ===== -->
   <div class="flex items-center gap-2 mb-10">
     @for (etape of [0,1,2,3,4,5,6]; track etape) {
       <div class="flex-1 h-1.5 rounded-full transition-colors duration-300"
@@ -13,8 +12,6 @@
     <form [formGroup]="formulaire" class="">
 
       @switch (currentStep()) {
-
-        <!-- ===== ÉTAPE 0 : Sélection du template ===== -->
         @case (0) {
           <h1 class="text-2xl font-semibold text-black mb-1">Choisissez un modèle</h1>
           <p class="text-sm text-gray-text mb-6">Ce style sera utilisé pour générer votre CV.</p>
@@ -22,7 +19,7 @@
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             @for (template of templates(); track template.id) {
               <div (click)="selectionnerTemplate(template.id)"
-                   class="relative cursor-pointer rounded-xl overflow-hidden border-2 transition-all duration-200 hover:shadow-md"
+                   class="relative cursor-pointer rounded-xl overflow-hidden border-1 transition-all duration-200 hover:shadow-md"
                    [class]="templateSelectionne() === template.id ? 'border-primary shadow-md' : 'border-transparent shadow-sm'">
 
                 @if (templateSelectionne() === template.id) {
@@ -32,8 +29,7 @@
                 }
 
                 <img [src]="'http://localhost:8000/images/cv-templates/' + template.preview_image"
-                     class="w-full h-40 object-cover" [alt]="template.name">
-                <p class="text-sm text-center py-2 text-gray-text bg-white">{{ template.name }}</p>
+                     class="w-full h-40" [alt]="template.name">
               </div>
             }
           </div>
@@ -44,19 +40,26 @@
           </div>
         }
 
-        <!-- ===== ÉTAPE 1 : Infos personnelles ===== -->
         @case (1) {
           <h1 class="text-2xl font-semibold text-black mb-6">Informations personnelles</h1>
 
           <div [formGroup]="personalInfoGroup" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-            <div class="sm:col-span-2">
-              <label class="block text-sm text-gray-text mb-1">Photo</label>
-              <label class="flex items-center justify-center gap-2 w-full border border-dashed border-border-color rounded-lg px-3 py-4 text-sm text-gray-text cursor-pointer hover:border-primary hover:text-primary transition-colors">
-                <span>Cliquez pour choisir une photo</span>
-                <input type="file" accept="image/*" (change)="onPhotoSelectionnee($event)" class="hidden">
-              </label>
-            </div>
+           <div class="sm:col-span-2">
+  <label class="block text-sm text-gray-text mb-1">Photo</label>
+
+  <label class="flex flex-col items-center justify-center gap-2 w-full border border-dashed border-border-color rounded-lg px-3 py-4 text-sm text-gray-text cursor-pointer hover:border-primary hover:text-primary transition-colors">
+
+    @if (photoApercu()) {
+      <img [src]="photoApercu()" class="w-24 h-24 rounded-full object-cover mb-2">
+      <span class="text-xs">Cliquez pour changer la photo</span>
+    } @else {
+      <span>Cliquez pour choisir une photo</span>
+    }
+
+    <input type="file" accept="image/*" (change)="onPhotoSelectionnee($event)" class="hidden">
+  </label>
+</div>
 
             <div>
               <label class="block text-sm text-gray-text mb-1">Prénom</label>
@@ -108,7 +111,7 @@
           </div>
         }
 
-        <!-- ===== ÉTAPE 2 : Formations ===== -->
+
         @case (2) {
           <h1 class="text-2xl font-semibold text-black mb-6">Formations</h1>
           <div formArrayName="educations" class="space-y-4">
@@ -161,7 +164,7 @@
           </button>
         }
 
-        <!-- ===== ÉTAPE 3 : Expériences ===== -->
+
         @case (3) {
           <h1 class="text-2xl font-semibold text-black mb-6">Expériences</h1>
           <div formArrayName="experiences" class="space-y-4">
@@ -214,7 +217,7 @@
           </button>
         }
 
-        <!-- ===== ÉTAPE 4 : Compétences ===== -->
+
         @case (4) {
           <h1 class="text-2xl font-semibold text-black mb-6">Compétences</h1>
           <div formArrayName="skills" class="space-y-3">
@@ -236,7 +239,7 @@
           </button>
         }
 
-        <!-- ===== ÉTAPE 5 : Langues ===== -->
+
         @case (5) {
           <h1 class="text-2xl font-semibold text-black mb-6">Langues</h1>
           <div formArrayName="languages" class="space-y-3">
@@ -258,7 +261,6 @@
           </button>
         }
 
-        <!-- ===== ÉTAPE 6 : Centres d'intérêt ===== -->
         @case (6) {
           <h1 class="text-2xl font-semibold text-black mb-6">Centres d'intérêt</h1>
           <div formArrayName="interests" class="space-y-3">
@@ -280,7 +282,7 @@
       }
     </form>
 
-    <!-- ===== Navigation (masquée une fois l'aperçu affiché) ===== -->
+
     <div class="flex justify-between items-center mt-6">
       <button type="button" (click)="precedent()"
               [disabled]="currentStep() === 0"
@@ -304,24 +306,33 @@
     </div>
   }
 
-  <!-- ===== Aperçu du CV généré ===== -->
   @if (apercuHtmlRaw()) {
     <div class="mt-2">
       <h2 class="text-xl font-semibold text-black mb-4">Aperçu de votre CV</h2>
 
-      <div class="border border-border-color shadow-lg rounded-xl overflow-hidden" style="height: 1200px;">
-        <iframe [srcdoc]="apercuHtmlSafe()" class="w-full h-full border-0"></iframe>
-      </div>
-
+      <div class="overflow-hidden border border-border-color shadow-lg rounded-xl h-[500px] md:h-[1000px]">
+  <iframe 
+    [srcdoc]="apercuHtmlSafe()" 
+    class="border-0 origin-top-left w-[800px] h-[1000px] scale-[0.4] md:w-full md:h-full md:scale-100"
+  ></iframe>
+</div>
       <div class="flex gap-3 mt-4">
         <button (click)="telecharger()"
-                class="px-5 py-2.5 rounded-lg bg-primary text-white hover:opacity-90 transition-opacity">
+                class="px-5 py-2.5 rounded-lg bg-primary text-white hover:opacity-90 transition-opacity text-xs">
           Télécharger le PDF
         </button>
         <button (click)="modifier()"
-                class="px-5 py-2.5 rounded-lg border border-border-color text-black hover:bg-light transition-colors">
+                class="px-5 py-2.5 rounded-lg border border-border-color text-black hover:bg-light transition-colors text-xs">
           Modifier
         </button>
+
+        @if(estConnecte()){
+        <button (click)="SauvegarderCv()"
+              
+                class="px-5 py-2.5 rounded-lg border  border-border-color text-black hover:bg-light transition-colors text-xs w-40">
+          Sauvegarder dans mon espace
+      </button>
+    }
       </div>
     </div>
   }

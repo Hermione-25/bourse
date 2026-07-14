@@ -25,9 +25,9 @@ export class ProfilComponent implements OnInit {
   ngOnInit(): void {
     this.authService.authState$.subscribe((auth) => {
 
-      if (!auth?.data?.user) return;
+      if (!auth) return;
 
-      const user = auth.data.user;
+      const user = auth;
 
       this.adminInfo = {
         first_name: user.first_name ?? '',

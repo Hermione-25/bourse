@@ -86,7 +86,7 @@ export class ProfilUser implements OnInit {
     this.authService.authState$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(auth => {
-        const u = auth?.data.user;
+        const u = auth;
         if (!u) return;
 
         this.utilisateur.set({

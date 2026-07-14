@@ -1,5 +1,4 @@
-<a
-  [routerLink]="['/details', scholarship().id]"
+<a [routerLink]="['/details', scholarship().id]"
   class="group block bg-white border shadow-lg border-none rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
 
   <div class="relative h-40 w-full bg-[var(--color-light)]">
@@ -13,13 +12,24 @@
       Pas d'image
     </div>
 
-    <!-- Badge financée -->
-     @if(scholarship().funding_type && scholarship().funding_type !== FundingType.UNFUNDED){
-    <span
-      class="absolute top-3 left-3 text-xs font-semibold bg-[var(--color-primary)] text-white px-3 py-1">
-      {{ scholarship().funding_type === FundingType.FULL ? 'Entièrement financée' : 'Partiellement financée' }}
-    </span>
-    }
+    <!-- Badges (financement + score de compatibilité) -->
+    <div class="absolute top-3 left-3 flex flex-col items-start gap-1.5">
+      @if(scholarship().funding_type && scholarship().funding_type !== FundingType.UNFUNDED){
+        <span class="text-xs font-semibold bg-[var(--color-primary)] text-white px-3 py-1">
+          {{ scholarship().funding_type === FundingType.FULL ? 'Entièrement financée' : 'Partiellement financée' }}
+        </span>
+      }
+
+      @if(scholarship().compatibility_score !== undefined){
+        <span
+          class="text-xs font-semibold rounded-full px-3 py-1 flex items-center gap-1"
+          [ngClass]="scoreClasses">
+          <i class="fas fa-bullseye text-[10px]"></i>
+          {{ scholarship().compatibility_score }}% compatible
+        </span>
+      }
+    </div>
+
     <!-- Bouton favori -->
     <button
       type="button"

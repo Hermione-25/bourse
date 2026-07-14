@@ -4,7 +4,7 @@
     (click)="toggle()"
     class="flex items-center gap-2 bg-transparent border-none text-light outline-none cursor-pointer"
     [class.text-black]="hasValue()"
-    [class.text-black/70] ="!hasValue()"
+    [class.text-black/70] = "!hasValue()"
   >
     <i class="fas {{ icon() }} text-xl"></i>
     <span class="whitespace-nowrap">{{ selectedLabel() }}</span>
@@ -26,6 +26,7 @@
             class="w-full text-left px-4 py-2 text-sm text-black hover:bg-black/60 hover:text-light transition-colors"
             [class.text-black]="option.value === value()"
             [class.font-semibold]="option.value === value()"
+            [class.text-red-600]="option.value === 'Deconnexion'"
           >
             {{ option.label }}
           </button>

@@ -8,7 +8,7 @@ export class ContactService {
     private apiService = inject(ApiService);
 
     send(dto: ContactDto): Observable<void> {
-        return this.apiService.post<void>('/messages', dto);
+        return this.apiService.post<void>('contact', dto);
     }
 
 }

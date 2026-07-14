@@ -1,29 +1,28 @@
 <div>
   <!-- En-tête + recherche (inchangé) -->
   <div class="flex justify-center flex-col items-center mb-10 p-12">
-    <h1 class="text-3xl font-bold mb-4">
+    <h1 class="text-5xl font-bold mb-4">
       Découvrez tous les <span class="text-primary">pays</span> disponibles
     </h1>
     <p class="text-gray-500 mb-4">
       Explorez toutes les bourses par pays et trouvez celle qui vous correspond
     </p>
 
-    <div class="flex gap-2">
-      <div class="flex">
+    <div class="flex justify-center m-10">
         <input
           type="search"
-          placeholder="Rechercher un pays..."
-          class="border-none bg-white outline-none px-4 py-2 w-60 md:w-160 shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
+          placeholder="Rechercher ..."
+          class="border-none bg-white outline-none px-3  py-4 w-60 md:w-160 shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
           [value]="recherche()"
           (input)="onRechercheChange($event)"
         />
         <button class="border-none bg-primary p-2 px-4 text-white outline-none">
           Rechercher
         </button>
-      </div>
+      
     </div>
 
-    <ul class="flex flex-wrap text-black/40 gap-3 mt-20 md:gap-9 justify-center">
+    <ul class="flex flex-wrap text-black/40 gap-3 md:gap-9 justify-center">
       <li>
         <button
           type="button"
@@ -62,22 +61,22 @@
   <!-- Grille des pays -->
   @if (!chargement()) {
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 px-6 md:px-12 pb-16">
-      @for (p of paysFiltres(); track p.name) {
+      @for (p of paysFiltres(); track p.country) {
         <div class="rounded-xl overflow-hidden shadow-md bg-white flex flex-col">
           <div
             class="relative h-40 bg-cover bg-center flex items-center justify-center"
             [style.background-image]="'url(' + p.url_image + ')'"
           >
             <div class="absolute inset-0 bg-black/40"></div>
-            <span class="relative text-white text-xl font-semibold">{{ p.name }}</span>
+            <span class="relative text-white text-xl font-semibold">{{ p.country }}</span>
           </div>
 
           <div class="flex items-center justify-between px-4 py-3">
             <span class="text-sm text-gray-600 flex items-center gap-2">
               <i class="fa-regular fa-envelope text-primary"></i>
-              {{ p.bourses_count }} bourses disponibles
+              {{ p.total }} bourses disponibles
             </span>
-            <a [routerLink]="['/scholarships']" [queryParams]="{ country: p.name }" class="text-gray-400 hover:text-primary">
+            <a [routerLink]="['/scholarships']" [queryParams]="{ country: p.country }" class="text-gray-400 hover:text-primary">
               <i class="fa-solid fa-chevron-right"></i>
             </a>
           </div>

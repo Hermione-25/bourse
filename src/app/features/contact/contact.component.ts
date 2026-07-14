@@ -22,7 +22,7 @@ export class ContactComponent implements OnInit {
   form = this.fb.nonNullable.group({
     first_name: ['', Validators.required],
     last_name: ['', Validators.required],
-    phoneNumber: ['', Validators.required],
+    phone_number: [0, Validators.required],
     email: ['', [Validators.required, Validators.email]],
     message: ['', Validators.required],
   });
@@ -30,7 +30,7 @@ export class ContactComponent implements OnInit {
   ngOnInit(): void {
     
     this.authService.authState$.subscribe((auth) => {
-      const user = auth?.data.user;
+      const user = auth;
       if (user) {
         this.form.patchValue({
           first_name: user.first_name,

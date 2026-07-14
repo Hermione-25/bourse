@@ -10,7 +10,7 @@ export interface Scholarship {
   description: string;
   university: string;
   country?: string;
-  region?: string;
+  region?:string;
   domain?: string;
   funding_type?: FundingType;
   amount?: string;
@@ -21,12 +21,12 @@ export interface Scholarship {
   source?: string;
   deadline?: string;
   days_remaining?: number;
+  compatibility_score?: number;
 }
 
 export interface ScholarshipDto {
   title: string;
   country: string;
-  region?: string;
   university: string;
   domain: string;
   deadline: string;
@@ -38,4 +38,5 @@ export interface ScholarshipDto {
   image?: string;
   link: string;
   source?: string;
+  
 }
