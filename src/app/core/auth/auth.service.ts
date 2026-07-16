@@ -43,7 +43,7 @@ export class AuthService {
   }
 
 loginWithGoogle(idToken: string) {
-  return this.apiService.post<AuthToken>('/auth/google', { id_token: idToken })
+  return this.apiService.post<AuthToken>('auth/login', { id_token: idToken })
     .pipe(    
       tap(res => {
         this.tokenService.setAccessToken(res.data.token);

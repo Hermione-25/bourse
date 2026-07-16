@@ -8,6 +8,7 @@ import { jwtInterceptor } from './core/api/jwt.interceptor';
 import { httpErrorInterceptor } from './core/api/http-error.interceptor';
 import { ErrorHandlerService } from './core/errors/error-handler.service';
 import { environment } from '../environments/environment';
+import { ChatService } from './features/utilisateurs/chat/chat.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,5 +27,6 @@ export const appConfig: ApplicationConfig = {
       provide: ErrorHandler,
       useClass: ErrorHandlerService,
     },
+    ChatService
   ],
 };

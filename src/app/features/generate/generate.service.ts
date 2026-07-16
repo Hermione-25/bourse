@@ -6,44 +6,45 @@ import { Cv, CvPayload, CvTemplate } from "./generate.models";
 import { HttpClient } from '@angular/common/http';
 import { environment } from "../../../main";
 
-
 @Injectable({ providedIn: 'root' })
-
 export class GenerateService {
-    private apiService = inject(ApiService)
+    private apiService = inject(ApiService);
     private http = inject(HttpClient);
     private apiUrl = `${environment.apiUrl}/cv`;
 
-    getMesCvs():Observable<Cv[]>{
+    getMesCvs(): Observable<Cv[]> {
         return this.apiService
-        .get<ApiResponse<Cv[]>>('cv/mycvs')
-        .pipe(map((response) =>response.data));
+            .get<ApiResponse<Cv[]>>('cv/mycvs')
+            .pipe(map((response) => response.data));
     }
 
-    getTemplates():Observable<CvTemplate[]>{
+    getTemplates(): Observable<CvTemplate[]> {
         return this.apiService
-        .get<ApiResponse<CvTemplate[]>>('cv/templates')
-        .pipe(map((response) =>response.data));
-    } 
+            .get<ApiResponse<CvTemplate[]>>('cv/templates')
+            .pipe(map((response) => response.data));
+    }
 
-    previewCv(payload:CvPayload):Observable<string>{
+    previewCv(payload: CvPayload): Observable<string> {
         return this.http.post(`${this.apiUrl}/preview`, payload, {
             responseType: 'text',
-        })
+        });
     }
 
-    updateCv(id:number, cv:Cv):Observable<any>{
-        return this.apiService.put(`cv/mycvs/${id}`, cv)
+    updateCv(id: number, cv: Cv): Observable<any> {
+        return this.apiService.put(`cv/mycvs/${id}`, cv);
     }
 
-    saveCv(payload:CvPayload):Observable<Cv>{
-        return this.apiService.post<ApiResponse<Cv>>('cv/mycvs', payload)
-        .pipe(map((response) =>response.data));
+
+    saveCv(payload: CvPayload): Observable<Cv> {
+        return this.apiService
+            .post<ApiResponse<Cv>>('cv/store', payload)
+            .pipe(map((response) => response.data));
     }
-    
+
     downloadCv(payload: CvPayload): Observable<Blob> {
-        return this.http.post(`${this.apiUrl}/download`, payload ,
-            { responseType: 'blob', });
+        return this.http.post(`${this.apiUrl}/download`, payload, {
+            responseType: 'blob',
+        });
     }
 
     downloadSavedCv(id: number): Observable<Blob> {
@@ -53,8 +54,7 @@ export class GenerateService {
         );
     }
 
-    deleteCv(id:number):Observable<any>{
-        return this.apiService
-        .delete(`cv/mycvs/${id}`)
+    deleteCv(id: number): Observable<any> {
+        return this.apiService.delete(`cv/mycvs/${id}`);
     }
 }

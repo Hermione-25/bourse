@@ -36,7 +36,7 @@ export class LoginPageComponent {
     const idToken = response.credential;
 
     this.authService.loginWithGoogle(idToken).subscribe({
-      next: () => this.router.navigate(['/dashboard']),
+      next: () => this.router.navigate(['/user']),
       error: (err) => console.error('Erreur connexion Google', err)
     });
   }

@@ -118,8 +118,11 @@ export const routes: Routes = [
 
       },{
         path:'tableau-de-bord',
-        loadComponent:() => import('./features/utilisateurs/tableau/tableau.component').then((m) => m.TableauComponent)
-      }
+        loadComponent:() => import('./features/utilisateurs/tableau/tableau.component').then((m) => m.TableauComponent),
+      },{
+        path: 'ChatBot',
+        loadComponent:()=>import('./features/utilisateurs/chat/chat.component').then((m)=>m.ChatComponent),
+      },
     ],
   },
   {

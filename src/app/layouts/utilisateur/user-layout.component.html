@@ -42,6 +42,15 @@
         Mes recommandations 
       </a>
 
+        <a routerLink="/user/ChatBot" routerLinkActive="bg-white/40 text-primary"
+        class="flex items-center gap-3 px-3 py-2.5 text-light/50 hover:text-primary hover:bg-white/10 transition-all text-sm font-medium group"
+        (click)="closeMenu()">
+        <div class="w-8 h-8 rounded-lg bg-white/5 group-hover:bg-white/10 flex items-center justify-center transition-colors">
+          <i class="fas fa-robot text-sm"></i>
+        </div>
+        ChatBot 
+      </a>
+
       <a routerLink="/user/cv" routerLinkActive="bg-white/40 text-primary"
         class="flex items-center gap-3 px-3 py-2.5 text-light/50 hover:text-primary hover:bg-white/10 transition-all text-sm font-medium group"
         (click)="closeMenu()">

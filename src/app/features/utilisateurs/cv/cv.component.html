@@ -1,26 +1,35 @@
-<div class="max-w-4xl mx-auto p-6">
+<div class="w-full max-w-[1200px] mx-auto px-6 py-12">
 
-  <div class="flex justify-between items-center mb-8">
-    <h1 class="text-2xl font-semibold text-[--color-black]">Mes CV</h1>
+  <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-10">
+    <div>
+      <h1 class="text-3xl font-bold text-[--color-black] tracking-tight">Mes CV Sauvegardés</h1>
+      <p class="text-sm text-[--color-gray-text]/60 mt-1">Gérez et téléchargez les versions de vos CV.</p>
+    </div>
     <a routerLink="/generate"
-       class="px-4 py-2.5 rounded-lg bg-[--color-primary] text-white text-sm font-medium hover:opacity-90">
-      + Créer un nouveau CV
+       class="btn-primary flex items-center gap-2 self-start sm:self-auto py-2.5 px-5">
+      <i class="fas fa-plus text-xs"></i>
+      Créer un nouveau CV
     </a>
   </div>
 
   <!-- Chargement -->
   @if (chargement()) {
-    <div class="text-center py-16 text-[--color-gray-text]">
-      Chargement de vos CV...
+    <div class="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border border-[--color-border-color]/20 card-shadow">
+      <div class="w-10 h-10 border-4 border-[--color-primary]/20 border-t-[--color-primary] rounded-full animate-spin mb-4"></div>
+      <p class="text-sm text-[--color-gray-text]/60 font-medium">Chargement de vos CV...</p>
     </div>
   }
 
   <!-- Aucun CV -->
   @else if (mesCvs().length === 0) {
-    <div class="text-center py-16 border border-dashed border-[--color-border-color] rounded-2xl">
-      <p class="text-[--color-gray-text] mb-4">Vous n'avez pas encore créé de CV.</p>
+    <div class="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border-2 border-dashed border-[--color-border-color]/30 card-shadow text-center px-6">
+      <div class="w-16 h-16 bg-[--color-light] rounded-full flex items-center justify-center mb-5 text-[--color-primary]">
+        <i class="fas fa-file-alt text-2xl"></i>
+      </div>
+      <h3 class="text-lg font-bold text-[--color-black] mb-2">Aucun CV trouvé</h3>
+      <p class="text-sm text-[--color-gray-text]/60 max-w-sm mb-6">Vous n'avez pas encore créé ou sauvegardé de CV sur votre compte.</p>
       <button (click)="generation()"
-         class="text-color-primary font-medium hover:underline">
+         class="btn-primary py-2.5 px-6">
         Créer mon premier CV
       </button>
     </div>
@@ -28,34 +37,59 @@
 
   <!-- Liste des CV -->
   @else {
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       @for (cv of mesCvs(); track cv.id) {
-        <div class="border border-[--color-border-color] rounded-2xl p-5 hover:shadow-sm transition-shadow">
+        <div class="bg-white border border-[--color-border-color]/20 rounded-2xl p-6 card-shadow card-shadow-hover flex flex-col justify-between">
 
-          <div class="flex justify-between items-start mb-4">
-            <div>
-              <h2 class="font-semibold text-[--color-black]">
-                {{ cv.personal_info?.first_name }} {{ cv.personal_info?.last_name }}
-              </h2>
-              <p class="text-sm text-[--color-gray-text] mt-1">
-                {{ cv.personal_info?.email }}
-              </p>
+          <div>
+            <div class="flex items-center gap-3.5 mb-5">
+              <div class="w-12 h-12 rounded-xl bg-[--color-primary]/10 flex items-center justify-center text-[--color-primary] font-bold text-lg">
+                {{ (cv.personal_info?.first_name?.charAt(0) || '') + (cv.personal_info?.last_name?.charAt(0) || '') | uppercase }}
+              </div>
+              <div class="min-w-0">
+                <h2 class="font-bold text-[--color-black] text-base truncate">
+                  {{ cv.personal_info?.first_name }} {{ cv.personal_info?.last_name }}
+                </h2>
+                <p class="text-xs text-[--color-gray-text]/60 truncate mt-0.5">
+                  <i class="fa-regular fa-envelope text-[10px] mr-1"></i>{{ cv.personal_info?.email }}
+                </p>
+              </div>
+            </div>
+
+            <!-- CV Meta Details -->
+            <div class="space-y-2 border-t border-[--color-border-color]/10 pt-4 pb-2">
+              <div class="flex justify-between items-center text-xs text-[--color-gray-text]/60">
+                <span>Modèle</span>
+                <span class="font-semibold text-[--color-black]">Template #{{ cv.template_id }}</span>
+              </div>
+              @if (cv.personal_info?.phone) {
+                <div class="flex justify-between items-center text-xs text-[--color-gray-text]/60">
+                  <span>Téléphone</span>
+                  <span class="font-medium text-[--color-black]">{{ cv.personal_info?.phone }}</span>
+                </div>
+              }
             </div>
           </div>
 
-          <div class="flex gap-2 mt-4">
+          <!-- Actions -->
+          <div class="flex gap-2.5 mt-6 pt-4 border-t border-[--color-border-color]/10">
             <button type="button" (click)="modifier(cv.id!)"
-                    class="flex-1 px-3 py-2 rounded-lg border border-[--color-border-color] text-sm text-[--color-black] hover:bg-[--color-light]">
-              Modifier
+                    class="flex-1 px-3 py-2 rounded-xl border border-[--color-border-color]/40 text-xs font-semibold text-[--color-gray-text] hover:bg-[--color-light] hover:text-[--color-primary] hover:border-[--color-primary]/40 transition-all">
+              <i class="fas fa-edit mr-1.5 text-[10px]"></i>Modifier
             </button>
             <button type="button" (click)="telecharger(cv.id!)"
-                    class="flex-1 px-3 py-2 rounded-lg border border-[--color-border-color] text-sm text-[--color-black] hover:bg-[--color-light]">
-              Télécharger
+                    class="flex-1 px-3 py-2 rounded-xl border border-[--color-border-color]/40 text-xs font-semibold text-[--color-gray-text] hover:bg-[--color-light] hover:text-[--color-primary] hover:border-[--color-primary]/40 transition-all">
+              <i class="fas fa-download mr-1.5 text-[10px]"></i>PDF
             </button>
             <button type="button" (click)="supprimer(cv.id!)"
                     [disabled]="suppressionEnCours() === cv.id"
-                    class="px-3 py-2 rounded-lg text-sm text-red-500 hover:bg-red-50 disabled:opacity-40">
-              {{ suppressionEnCours() === cv.id ? '...' : 'Supprimer' }}
+                    class="w-9 h-9 rounded-xl border border-red-100 bg-red-50 text-red-500 hover:bg-red-100 flex items-center justify-center transition-all disabled:opacity-40 flex-shrink-0"
+                    title="Supprimer">
+              @if (suppressionEnCours() === cv.id) {
+                <i class="fas fa-spinner fa-spin text-xs"></i>
+              } @else {
+                <i class="fas fa-trash text-xs"></i>
+              }
             </button>
           </div>
 

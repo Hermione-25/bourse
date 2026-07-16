@@ -68,6 +68,10 @@ export interface CvTemplate {
     description: string;
     preview_image: string;
     is_active: boolean;
+    color_slots: {
+            key:string;
+            default:string;
+    }[];
 }
 
 export interface CvPayload {

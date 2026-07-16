@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ScholarshipsService } from '../../../features/scholarships/scholarships.service';
 import { FundingType, Scholarship } from '../../../features/scholarships/scholarships.models';
 import { DatePipe } from '@angular/common';
+import { ChatService } from '../../../features/utilisateurs/chat/chat.service';
+
 
 @Component({
   selector: 'app-scholarship-detail',
@@ -14,6 +16,7 @@ export class ScholarshipDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private scholarshipsService = inject(ScholarshipsService);
+  private chatService = inject(ChatService);
 
   FundingType = FundingType;
 
@@ -52,4 +55,13 @@ export class ScholarshipDetailComponent implements OnInit {
       window.open(lien, '_blank', 'noopener,noreferrer');
     }
   }
+
+  demanderResumer() {
+  this.chatService.demanderResume(
+    Number(this.scholarship()!.id),
+    this.scholarship()!.title
+  );
 }
+
+}  
+

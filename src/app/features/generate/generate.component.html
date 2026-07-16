@@ -1,340 +1,517 @@
-<div class="max-w-5xl mx-auto p-6">
+<div class="min-h-screen bg-[var(--color-light)]/40">
+  <div class="w-full max-w-3xl mx-auto px-4 py-10">
 
-  <div class="flex items-center gap-2 mb-10">
-    @for (etape of [0,1,2,3,4,5,6]; track etape) {
-      <div class="flex-1 h-1.5 rounded-full transition-colors duration-300"
-           [class]="etape <= currentStep() ? 'bg-primary' : 'bg-border-color'">
+
+    @if (!apercuHtmlRaw()) {
+      <div class="mb-10">
+        <!-- Step labels -->
+        <div class="flex justify-between text-[10px] font-semibold text-[var(--color-gray-text)]/40 uppercase tracking-wider mb-3 px-0.5">
+          <span [class.text-[var(--color-primary)]]="currentStep() >= 0">Modèle</span>
+          <span [class.text-[var(--color-primary)]]="currentStep() >= 1">Profil</span>
+          <span [class.text-[var(--color-primary)]]="currentStep() >= 2">Formations</span>
+          <span [class.text-[var(--color-primary)]]="currentStep() >= 3">Expériences</span>
+          <span [class.text-[var(--color-primary)]]="currentStep() >= 4">Compétences</span>
+          <span [class.text-[var(--color-primary)]]="currentStep() >= 5">Langues</span>
+          <span [class.text-[var(--color-primary)]]="currentStep() >= 6">Intérêts</span>
+        </div>
+
+        <!-- Progress track -->
+        <div class="flex items-center gap-1.5">
+          @for (etape of [0,1,2,3,4,5,6]; track etape) {
+            <div class="flex-1 h-1.5 rounded-full transition-all duration-500"
+                 [class]="etape <= currentStep() ? 'bg-[var(--color-primary)]' : 'bg-gray-400/40'">
+            </div>
+          }
+        </div>
+
+        <p class="text-right text-[11px] text-[var(--color-gray-text)]/40 mt-2">
+          Étape {{ currentStep() + 1 }} / 7
+        </p>
       </div>
     }
-  </div>
 
-  @if (!apercuHtmlRaw()) {
-    <form [formGroup]="formulaire" class="">
+    <!-- ===== FORM ===== -->
+     <div class="flex items-center mb-6 gap-3 mb-1">
+                  
+        <h1 class="text-4xl font-bold text-[var(--color-black)]">Choisissez un modèle</h1>
+      </div>  
+    @if (!apercuHtmlRaw()) {
+      <div class="bg-white rounded-2xl border border-gray-400/20 shadow-[0_4px_24px_rgba(74,15,24,0.06)] overflow-hidden">
 
-      @switch (currentStep()) {
-        @case (0) {
-          <h1 class="text-2xl font-semibold text-black mb-1">Choisissez un modèle</h1>
-          <p class="text-sm text-gray-text mb-6">Ce style sera utilisé pour générer votre CV.</p>
+        <form [formGroup]="formulaire">
 
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            @for (template of templates(); track template.id) {
-              <div (click)="selectionnerTemplate(template.id)"
-                   class="relative cursor-pointer rounded-xl overflow-hidden border-1 transition-all duration-200 hover:shadow-md"
-                   [class]="templateSelectionne() === template.id ? 'border-primary shadow-md' : 'border-transparent shadow-sm'">
+          
+          @switch (currentStep()) {
 
-                @if (templateSelectionne() === template.id) {
-                  <div class="absolute top-2 right-2 w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold z-10">
-                    ✓
-                  </div>
-                }
-
-                <img [src]="'http://localhost:8000/images/cv-templates/' + template.preview_image"
-                     class="w-full h-40" [alt]="template.name">
-              </div>
-            }
-          </div>
-
-          <div class="mt-6">
-            <label class="block text-sm text-gray-text mb-1">Saississez un nom pour votre cv</label>
-              <input type="text" formControlName="name" class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-          </div>
-        }
-
-        @case (1) {
-          <h1 class="text-2xl font-semibold text-black mb-6">Informations personnelles</h1>
-
-          <div [formGroup]="personalInfoGroup" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-           <div class="sm:col-span-2">
-  <label class="block text-sm text-gray-text mb-1">Photo</label>
-
-  <label class="flex flex-col items-center justify-center gap-2 w-full border border-dashed border-border-color rounded-lg px-3 py-4 text-sm text-gray-text cursor-pointer hover:border-primary hover:text-primary transition-colors">
-
-    @if (photoApercu()) {
-      <img [src]="photoApercu()" class="w-24 h-24 rounded-full object-cover mb-2">
-      <span class="text-xs">Cliquez pour changer la photo</span>
-    } @else {
-      <span>Cliquez pour choisir une photo</span>
-    }
-
-    <input type="file" accept="image/*" (change)="onPhotoSelectionnee($event)" class="hidden">
-  </label>
-</div>
-
-            <div>
-              <label class="block text-sm text-gray-text mb-1">Prénom</label>
-              <input type="text" formControlName="first_name"
-                     class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-            </div>
-
-            <div>
-              <label class="block text-sm text-gray-text mb-1">Nom</label>
-              <input type="text" formControlName="last_name"
-                     class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-            </div>
-
-            <div>
-              <label class="block text-sm text-gray-text mb-1">Adresse e-mail</label>
-              <input type="email" formControlName="email"
-                     class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-            </div>
-
-            <div>
-              <label class="block text-sm text-gray-text mb-1">Téléphone</label>
-              <input type="text" formControlName="phone"
-                     class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-            </div>
-
-            <div class="sm:col-span-2">
-              <label class="block text-sm text-gray-text mb-1">Adresse</label>
-              <input type="text" formControlName="address"
-                     class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-            </div>
-
-            <div>
-              <label class="block text-sm text-gray-text mb-1">Date de naissance</label>
-              <input type="date" formControlName="birth_date"
-                     class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-            </div>
-
-            <div>
-              <label class="block text-sm text-gray-text mb-1">Genre</label>
-              <input type="text" formControlName="gender"
-                     class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-            </div>
-          </div>
-
-          <div class="mt-4">
-            <label class="block text-sm text-gray-text mb-1">À propos de moi</label>
-            <textarea formControlName="summary" rows="4"
-                      class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow"></textarea>
-          </div>
-        }
-
-
-        @case (2) {
-          <h1 class="text-2xl font-semibold text-black mb-6">Formations</h1>
-          <div formArrayName="educations" class="space-y-4">
-            @for (formation of educationsArray.controls; track $index; let i = $index) {
-              <div [formGroupName]="i" class="border border-border-color rounded-xl p-4 relative hover:border-primary/40 transition-colors">
-                <button type="button" (click)="SupprimerFormation(i)"
-                        class="absolute top-3 right-3 text-sm text-red-500 hover:underline">
-                  Supprimer
-                </button>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-sm text-gray-text mb-1">Diplôme</label>
-                    <input type="text" formControlName="degree"
-                           class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-                  </div>
-                  <div>
-                    <label class="block text-sm text-gray-text mb-1">École</label>
-                    <input type="text" formControlName="school"
-                           class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-                  </div>
-                  <div>
-                    <label class="block text-sm text-gray-text mb-1">Ville</label>
-                    <input type="text" formControlName="city"
-                           class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-                  </div>
-                  <div class="flex gap-3">
-                    <div class="flex-1">
-                      <label class="block text-sm text-gray-text mb-1">Début</label>
-                      <input type="date" formControlName="start_date"
-                             class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-                    </div>
-                    <div class="flex-1">
-                      <label class="block text-sm text-gray-text mb-1">Fin</label>
-                      <input type="date" formControlName="end_date"
-                             class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-                    </div>
-                  </div>
-                  <div class="sm:col-span-2">
-                    <label class="block text-sm text-gray-text mb-1">Description</label>
-                    <textarea formControlName="description" rows="3"
-                              class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow"></textarea>
-                  </div>
-                </div>
-              </div>
-            }
-          </div>
-          <button type="button" (click)="AjouterFormation()"
-                  class="mt-4 text-sm text-primary font-medium hover:underline">
-            + Ajouter une formation
-          </button>
-        }
-
-
-        @case (3) {
-          <h1 class="text-2xl font-semibold text-black mb-6">Expériences</h1>
-          <div formArrayName="experiences" class="space-y-4">
-            @for (experience of experiencesArray.controls; track $index; let i = $index) {
-              <div [formGroupName]="i" class="border border-border-color rounded-xl p-4 relative hover:border-primary/40 transition-colors">
-                <button type="button" (click)="SupprimerExperience(i)"
-                        class="absolute top-3 right-3 text-sm text-red-500 hover:underline">
-                  Supprimer
-                </button>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-sm text-gray-text mb-1">Entreprise</label>
-                    <input type="text" formControlName="company"
-                           class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-                  </div>
-                  <div>
-                    <label class="block text-sm text-gray-text mb-1">Poste</label>
-                    <input type="text" formControlName="position"
-                           class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-                  </div>
-                  <div>
-                    <label class="block text-sm text-gray-text mb-1">Ville</label>
-                    <input type="text" formControlName="city"
-                           class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-                  </div>
-                  <div class="flex gap-3">
-                    <div class="flex-1">
-                      <label class="block text-sm text-gray-text mb-1">Début</label>
-                      <input type="date" formControlName="start_date"
-                             class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-                    </div>
-                    <div class="flex-1">
-                      <label class="block text-sm text-gray-text mb-1">Fin</label>
-                      <input type="date" formControlName="end_date"
-                             class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-                    </div>
-                  </div>
-                  <div class="sm:col-span-2">
-                    <label class="block text-sm text-gray-text mb-1">Description</label>
-                    <textarea formControlName="description" rows="3"
-                              class="w-full rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow"></textarea>
-                  </div>
-                </div>
-              </div>
-            }
-          </div>
-          <button type="button" (click)="AjouterExperience()"
-                  class="mt-4 text-sm text-primary font-medium hover:underline">
-            + Ajouter une expérience
-          </button>
-        }
-
-
-        @case (4) {
-          <h1 class="text-2xl font-semibold text-black mb-6">Compétences</h1>
-          <div formArrayName="skills" class="space-y-3">
-            @for (skill of skillsArray.controls; track $index; let i = $index) {
-              <div [formGroupName]="i" class="flex gap-3 items-center">
-                <input type="text" formControlName="name" placeholder="Compétence"
-                       class="flex-1 rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-                <input type="text" formControlName="level" placeholder="Niveau"
-                       class="w-40 rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-                <button type="button" (click)="SupprimerSkill(i)" class="text-sm text-red-500 hover:underline shrink-0">
-                  Supprimer
-                </button>
-              </div>
-            }
-          </div>
-          <button type="button" (click)="AjouterSkill()"
-                  class="mt-4 text-sm text-primary font-medium hover:underline">
-            + Ajouter une compétence
-          </button>
-        }
-
-
-        @case (5) {
-          <h1 class="text-2xl font-semibold text-black mb-6">Langues</h1>
-          <div formArrayName="languages" class="space-y-3">
-            @for (langue of languagesArray.controls; track $index; let i = $index) {
-              <div [formGroupName]="i" class="flex gap-3 items-center">
-                <input type="text" formControlName="language_name" placeholder="Langue"
-                       class="flex-1 rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-                <input type="text" formControlName="language_level" placeholder="Niveau"
-                       class="w-40 rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-                <button type="button" (click)="SupprimerLanguage(i)" class="text-sm text-red-500 hover:underline shrink-0">
-                  Supprimer
-                </button>
-              </div>
-            }
-          </div>
-          <button type="button" (click)="AjouterLanguage()"
-                  class="mt-4 text-sm text-primary font-medium hover:underline">
-            + Ajouter une langue
-          </button>
-        }
-
-        @case (6) {
-          <h1 class="text-2xl font-semibold text-black mb-6">Centres d'intérêt</h1>
-          <div formArrayName="interests" class="space-y-3">
-            @for (interet of interestsArray.controls; track $index; let i = $index) {
-              <div [formGroupName]="i" class="flex gap-3 items-center">
-                <input type="text" formControlName="name" placeholder="Centre d'intérêt"
-                       class="flex-1 rounded-lg border border-border-color px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-shadow">
-                <button type="button" (click)="SupprimerInterest(i)" class="text-sm text-red-500 hover:underline shrink-0">
-                  Supprimer
-                </button>
-              </div>
-            }
-          </div>
-          <button type="button" (click)="AjouterInterest()"
-                  class="mt-4 text-sm text-primary font-medium hover:underline">
-            + Ajouter un centre d'intérêt
-          </button>
-        }
-      }
-    </form>
-
-
-    <div class="flex justify-between items-center mt-6">
-      <button type="button" (click)="precedent()"
-              [disabled]="currentStep() === 0"
-              class="px-5 py-2.5 rounded-lg border border-border-color text-gray-text disabled:opacity-40 disabled:cursor-not-allowed hover:bg-light transition-colors">
-        Précédent
-      </button>
-
-      @if (currentStep() < derniereEtape) {
-        <button type="button" (click)="suivant()"
-                [disabled]="currentStep() === 0 && templateSelectionne() === null"
-                class="px-5 py-2.5 rounded-lg bg-primary text-white disabled:opacity-40 disabled:cursor-not-allowed hover:opacity-90 transition-opacity">
-          Suivant
-        </button>
-      } @else {
-        <button type="button" (click)="finaliser()"
-                [disabled]="chargementApercu()"
-                class="px-5 py-2.5 rounded-lg bg-primary text-white disabled:opacity-40 hover:opacity-90 transition-opacity">
-          {{ chargementApercu() ? 'Génération...' : 'Finaliser' }}
-        </button>
-      }
-    </div>
-  }
-
-  @if (apercuHtmlRaw()) {
-    <div class="mt-2">
-      <h2 class="text-xl font-semibold text-black mb-4">Aperçu de votre CV</h2>
-
-      <div class="overflow-hidden border border-border-color shadow-lg rounded-xl h-[500px] md:h-[1000px]">
-  <iframe 
-    [srcdoc]="apercuHtmlSafe()" 
-    class="border-0 origin-top-left w-[800px] h-[1000px] scale-[0.4] md:w-full md:h-full md:scale-100"
-  ></iframe>
-</div>
-      <div class="flex gap-3 mt-4">
-        <button (click)="telecharger()"
-                class="px-5 py-2.5 rounded-lg bg-primary text-white hover:opacity-90 transition-opacity text-xs">
-          Télécharger le PDF
-        </button>
-        <button (click)="modifier()"
-                class="px-5 py-2.5 rounded-lg border border-border-color text-black hover:bg-light transition-colors text-xs">
-          Modifier
-        </button>
-
-        @if(estConnecte()){
-        <button (click)="SauvegarderCv()"
+            <!-- ── ÉTAPE 0 : Modèle ── -->
+             
+            @case (0) {
               
-                class="px-5 py-2.5 rounded-lg border  border-border-color text-black hover:bg-light transition-colors text-xs w-40">
-          Sauvegarder dans mon espace
-      </button>
-    }
-      </div>
-    </div>
-  }
+              <div class="px-6 pt-7 pb-3 border-b border-gray-400/15">
+                
+                <p class="text-xs text-[var(--color-gray-text)]/55 ml-11">Ce style sera utilisé pour générer votre CV.</p>
+              </div>
 
+              <div class="p-6 space-y-6">
+                <!-- Templates grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                  @for (template of templates(); track template.id) {
+                    <div (click)="selectionnerTemplate(template.id)"
+                         class="relative cursor-pointer rounded-xl overflow-hidden transition-all duration-200 hover:shadow-md border-2 bg-white"
+                         [class]="templateSelectionne() === template.id
+                           ? 'border-[var(--color-primary)] shadow-[0_4px_16px_rgba(74,15,24,0.15)]'
+                           : 'border-transparent shadow-sm hover:border-gray-400/50'">
+
+                      @if (templateSelectionne() === template.id) {
+                        <div class="absolute top-2 right-2 w-6 h-6 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center text-xs font-bold z-10 shadow-md">
+                          <i class="fas fa-check text-[9px]"></i>
+                        </div>
+                      }
+
+                      <img [src]="'http://localhost:8000/images/cv-templates/' + template.preview_image"
+                           class="w-full h-40 object-cover" [alt]="template.name">
+
+                      <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 to-transparent p-2">
+                        <p class="text-white text-[10px] font-semibold truncate">{{ template.name }}</p>
+                      </div>
+                    </div>
+                  }
+                </div>
+
+                <!-- CV Name -->
+                <div>
+                  <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-color-gray-text/45 mb-2">
+                    Nom du CV
+                  </label>
+                  <div class="relative">
+                    <i class="fas fa-tag absolute left-3.5 top-1/2 -translate-y-1/2 text-sm"></i>
+                    <input type="text" formControlName="name"
+                      placeholder="Ex : CV Master Informatique 2025"
+                      class="w-full rounded-xl border border-gray-400/40 bg-white pl-10 pr-4 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                  </div>
+                </div>
+              </div>
+            }
+
+            <!-- ── ÉTAPE 1 : Infos personnelles ── -->
+            @case (1) {
+              <div class="px-6 pt-7 pb-3 border-b border-gray-400/15">
+                <div class="flex items-center gap-3 mb-1">
+                  <h1 class="text-2xl font-bold text-[var(--color-black)]">Informations personnelles</h1>
+                </div>
+                <p class="text-xs text-[var(--color-gray-text)]/55 ml-11">Vos coordonnées et votre présentation.</p>
+              </div>
+
+              <div class="p-6">
+                <div [formGroup]="personalInfoGroup" class="space-y-5">
+
+                  <!-- Photo -->
+                  <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-color-gray-text/45 mb-2">Photo de profil</label>
+                    <label class="flex flex-col items-center justify-center gap-3 w-full border-2 border-dashed border-gray-400/40 rounded-xl px-4 py-6 text-sm text-[var(--color-gray-text)]/50 cursor-pointer hover:border-[var(--color-primary)]/50 hover:bg-[var(--color-primary)]/3 transition-all duration-200 group bg-white">
+                      @if (photoApercu()) {
+                        <img [src]="photoApercu()" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-md">
+                        <span class="text-xs text-[var(--color-primary)] font-medium">Changer la photo</span>
+                      } @else {
+                        <div class="w-14 h-14 rounded-full bg-white border-2 border-gray-400/30 flex items-center justify-center group-hover:border-[var(--color-primary)]/30 transition-colors">
+                          <i class="fas fa-camera text-gray-400 text-lg group-hover:text-[var(--color-primary)] transition-colors"></i>
+                        </div>
+                        <span class="text-xs">Cliquez pour choisir une photo</span>
+                      }
+                      <input type="file" accept="image/*" (change)="onPhotoSelectionnee($event)" class="hidden">
+                    </label>
+                  </div>
+
+                  <!-- Prénom + Nom -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Prénom</label>
+                      <input type="text" formControlName="first_name" placeholder="John"
+                        class="w-full rounded-xl border border-gray-400/40 bg-white px-4 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                    </div>
+                    <div>
+                      <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Nom</label>
+                      <input type="text" formControlName="last_name" placeholder="Doe"
+                        class="w-full rounded-xl border border-gray-400/40 bg-white px-4 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                    </div>
+                  </div>
+
+                  <!-- Email + Téléphone -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Email</label>
+                      <div class="relative">
+                        <i class="fa-regular fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                        <input type="email" formControlName="email" placeholder="vous@email.com"
+                          class="w-full rounded-xl border border-gray-400/40 bg-white pl-10 pr-4 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                      </div>
+                    </div>
+                    <div>
+                      <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Téléphone</label>
+                      <div class="relative">
+                        <i class="fas fa-phone absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                        <input type="text" formControlName="phone" placeholder="+229 ..."
+                          class="w-full rounded-xl border border-gray-400/40 bg-white pl-10 pr-4 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Adresse -->
+                  <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Adresse</label>
+                    <div class="relative">
+                      <i class="fas fa-map-marker-alt absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                      <input type="text" formControlName="address" placeholder="Ville, Pays"
+                        class="w-full rounded-xl border border-gray-400/40 bg-white pl-10 pr-4 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                    </div>
+                  </div>
+
+                  <!-- Date + Genre -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Date de naissance</label>
+                      <div class="relative">
+                        <i class="fas fa-calendar-alt absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                        <input type="date" formControlName="birth_date"
+                          class="w-full rounded-xl border border-gray-400/40 bg-white pl-10 pr-4 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                      </div>
+                    </div>
+                    <div>
+                      <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Genre</label>
+                      <div class="relative">
+                        <i class="fas fa-venus-mars absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                        <input type="text" formControlName="gender" placeholder="Homme / Femme"
+                          class="w-full rounded-xl border border-gray-400/40 bg-white pl-10 pr-4 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Résumé -->
+                  
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">À propos de moi</label>
+                    <textarea formControlName="summary" rows="4" placeholder="Décrivez-vous en quelques phrases..."
+                      class="w-full rounded-xl border border-gray-400/40 bg-white px-4 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all resize-none"></textarea>
+                  </div>
+              </div>
+            }
+
+
+            <!-- ── ÉTAPE 2 : Formations ── -->
+            @case (2) {
+              <div class="px-6 pt-7 pb-3 border-b border-gray-400/15">
+                <div class="flex items-center gap-3 mb-1">
+                  <h1 class="text-2xl font-bold text-[var(--color-black)]">Formations</h1>
+                </div>
+                <p class="text-xs text-[var(--color-gray-text)]/55 ml-11">Vos diplômes et parcours académiques.</p>
+              </div>
+
+              <div class="p-6 space-y-4">
+                <div formArrayName="educations" class="space-y-4">
+                  @for (formation of educationsArray.controls; track $index; let i = $index) {
+                    <div [formGroupName]="i" class="border border-gray-400/25 rounded-2xl p-5 relative hover:border-[var(--color-primary)]/30 transition-all duration-200 bg-white">
+                      <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold text-[var(--color-gray-text)]/40 uppercase tracking-wider">Formation {{ i + 1 }}</span>
+                        <button type="button" (click)="SupprimerFormation(i)"
+                          class="text-[11px] text-red-400 hover:text-red-600 hover:bg-red-50 px-2.5 py-1 rounded-lg transition-all duration-200 flex items-center gap-1.5">
+                          <i class="fas fa-trash text-[9px]"></i> Supprimer
+                        </button>
+                      </div>
+                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Diplôme</label>
+                          <input type="text" formControlName="degree" placeholder="Master, Licence..."
+                            class="w-full rounded-xl border border-gray-400/40 bg-white px-3 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                        </div>
+                        <div>
+                          <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">École / Université</label>
+                          <input type="text" formControlName="school" placeholder="Nom de l'établissement"
+                            class="w-full rounded-xl border border-gray-400/40 bg-white px-3 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                        </div>
+                        <div>
+                          <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Ville</label>
+                          <input type="text" formControlName="city" placeholder="Paris, Cotonou..."
+                            class="w-full rounded-xl border border-gray-400/40 bg-white px-3 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                        </div>
+                        <div class="flex gap-2">
+                          <div class="flex-1">
+                            <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Début</label>
+                            <input type="date" formControlName="start_date"
+                              class="w-full rounded-xl border border-gray-400/40 bg-white px-3 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                          </div>
+                          <div class="flex-1">
+                            <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Fin</label>
+                            <input type="date" formControlName="end_date"
+                              class="w-full rounded-xl border border-gray-400/40 bg-white px-3 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                          </div>
+                        </div>
+                        <div class="sm:col-span-2">
+                          <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Description</label>
+                          <textarea formControlName="description" rows="2" placeholder="Points clés, mention, spécialisation..."
+                            class="w-full rounded-xl border border-gray-400/40 bg-white px-3 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all resize-none"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                </div>
+                <button type="button" (click)="AjouterFormation()"
+                  class="flex items-center gap-2 text-sm text-[var(--color-primary)] font-semibold hover:bg-[var(--color-primary)]/5 px-4 py-2.5 rounded-xl transition-all duration-200 border-2 border-dashed border-[var(--color-primary)]/20 hover:border-[var(--color-primary)]/40 w-full justify-center bg-white">
+                  <i class="fas fa-plus text-xs"></i> Ajouter une formation
+                </button>
+              </div>
+            }
+
+
+            <!-- ── ÉTAPE 3 : Expériences ── -->
+            @case (3) {
+              <div class="px-6 pt-7 pb-3 border-b border-gray-400/15">
+                <div class="flex items-center gap-3 mb-1">
+                  <h1 class="text-2xl font-bold text-[var(--color-black)]">Expériences</h1>
+                </div>
+                <p class="text-xs text-[var(--color-gray-text)]/55 ml-11">Vos postes et missions professionnelles.</p>
+              </div>
+
+              <div class="p-6 space-y-4">
+                <div formArrayName="experiences" class="space-y-4">
+                  @for (experience of experiencesArray.controls; track $index; let i = $index) {
+                    <div [formGroupName]="i" class="border border-gray-400/25 rounded-2xl p-5 relative hover:border-[var(--color-primary)]/30 transition-all duration-200 bg-white">
+                      <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold text-[var(--color-gray-text)]/40 uppercase tracking-wider">Expérience {{ i + 1 }}</span>
+                        <button type="button" (click)="SupprimerExperience(i)"
+                          class="text-[11px] text-red-400 hover:text-red-600 hover:bg-red-50 px-2.5 py-1 rounded-lg transition-all duration-200 flex items-center gap-1.5">
+                          <i class="fas fa-trash text-[9px]"></i> Supprimer
+                        </button>
+                      </div>
+                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Entreprise</label>
+                          <input type="text" formControlName="company" placeholder="Nom de l'entreprise"
+                            class="w-full rounded-xl border border-gray-400/40 bg-white px-3 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                        </div>
+                        <div>
+                          <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Poste</label>
+                          <input type="text" formControlName="position" placeholder="Développeur, Stagiaire..."
+                            class="w-full rounded-xl border border-gray-400/40 bg-white px-3 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                        </div>
+                        <div>
+                          <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Ville</label>
+                          <input type="text" formControlName="city" placeholder="Ville"
+                            class="w-full rounded-xl border border-gray-400/40 bg-white px-3 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                        </div>
+                        <div class="flex gap-2">
+                          <div class="flex-1">
+                            <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Début</label>
+                            <input type="date" formControlName="start_date"
+                              class="w-full rounded-xl border border-gray-400/40 bg-white px-3 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                          </div>
+                          <div class="flex-1">
+                            <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Fin</label>
+                            <input type="date" formControlName="end_date"
+                              class="w-full rounded-xl border border-gray-400/40 bg-white px-3 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                          </div>
+                        </div>
+                        <div class="sm:col-span-2">
+                          <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Description</label>
+                          <textarea formControlName="description" rows="2" placeholder="Décrivez vos missions et réalisations..."
+                            class="w-full rounded-xl border border-gray-400/40 bg-white px-3 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all resize-none"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                </div>
+                <button type="button" (click)="AjouterExperience()"
+                  class="flex items-center gap-2 text-sm text-[var(--color-primary)] font-semibold hover:bg-[var(--color-primary)]/5 px-4 py-2.5 rounded-xl transition-all duration-200 border-2 border-dashed border-[var(--color-primary)]/20 hover:border-[var(--color-primary)]/40 w-full justify-center bg-white">
+                  <i class="fas fa-plus text-xs"></i> Ajouter une expérience
+                </button>
+              </div>
+            }
+
+
+            <!-- ── ÉTAPE 4 : Compétences ── -->
+            @case (4) {
+              <div class="px-6 pt-7 pb-3 border-b border-gray-400/15">
+                <div class="flex items-center gap-3 mb-1">
+                  <h1 class="text-2xl font-bold text-[var(--color-black)]">Compétences</h1>
+                </div>
+                <p class="text-xs text-[var(--color-gray-text)]/55 ml-11">Techniques, logiciels, savoir-faire.</p>
+              </div>
+
+              <div class="p-6 space-y-4">
+                <div formArrayName="skills" class="space-y-3">
+                  @for (skill of skillsArray.controls; track $index; let i = $index) {
+                    <div [formGroupName]="i" class="flex gap-3 items-center bg-white rounded-xl p-3 border border-gray-400/20">
+                      <div class="w-7 h-7 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center flex-shrink-0">
+                        <span class="text-[10px] font-bold text-[var(--color-primary)]">{{ i + 1 }}</span>
+                      </div>
+                      <input type="text" formControlName="name" placeholder="Compétence (ex : JavaScript)"
+                        class="flex-1 rounded-lg border border-gray-400/40 bg-white px-3 py-2 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all min-w-0">
+                      <input type="text" formControlName="level" placeholder="Niveau"
+                        class="w-32 rounded-lg border border-gray-400/40 bg-white px-3 py-2 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all flex-shrink-0">
+                      <button type="button" (click)="SupprimerSkill(i)"
+                        class="w-8 h-8 rounded-lg text-red-400 hover:text-red-600 hover:bg-red-50 flex items-center justify-center flex-shrink-0 transition-all">
+                        <i class="fas fa-times text-xs"></i>
+                      </button>
+                    </div>
+                  }
+                </div>
+                <button type="button" (click)="AjouterSkill()"
+                  class="flex items-center gap-2 text-sm text-[var(--color-primary)] font-semibold hover:bg-[var(--color-primary)]/5 px-4 py-2.5 rounded-xl transition-all duration-200 border-2 border-dashed border-[var(--color-primary)]/20 hover:border-[var(--color-primary)]/40 w-full justify-center bg-white">
+                  <i class="fas fa-plus text-xs"></i> Ajouter une compétence
+                </button>
+              </div>
+            }
+
+
+            <!-- ── ÉTAPE 5 : Langues ── -->
+            @case (5) {
+              <div class="px-6 pt-7 pb-3 border-b border-gray-400/15">
+                <div class="flex items-center gap-3 mb-1">
+                  
+                  <h1 class="text-2xl font-bold text-[var(--color-black)]">Langues</h1>
+                </div>
+                <p class="text-xs text-[var(--color-gray-text)]/55 ml-11">Les langues que vous maîtrisez.</p>
+              </div>
+
+              <div class="p-6 space-y-4">
+                <div formArrayName="languages" class="space-y-3">
+                  @for (langue of languagesArray.controls; track $index; let i = $index) {
+                    <div [formGroupName]="i" class="flex gap-3 items-center bg-white rounded-xl p-3 border border-gray-400/20">
+                      <div class="w-7 h-7 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center flex-shrink-0">
+                        <span class="text-[10px] font-bold text-[var(--color-primary)]">{{ i + 1 }}</span>
+                      </div>
+                      <input type="text" formControlName="language_name" placeholder="Langue (ex : Français)"
+                        class="flex-1 rounded-lg border border-gray-400/40 bg-white px-3 py-2 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all min-w-0">
+                      <input type="text" formControlName="language_level" placeholder="Niveau"
+                        class="w-32 rounded-lg border border-gray-400/40 bg-white px-3 py-2 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all flex-shrink-0">
+                      <button type="button" (click)="SupprimerLanguage(i)"
+                        class="w-8 h-8 rounded-lg text-red-400 hover:text-red-600 hover:bg-red-50 flex items-center justify-center flex-shrink-0 transition-all">
+                        <i class="fas fa-times text-xs"></i>
+                      </button>
+                    </div>
+                  }
+                </div>
+                <button type="button" (click)="AjouterLanguage()"
+                  class="flex items-center gap-2 text-sm text-[var(--color-primary)] font-semibold hover:bg-[var(--color-primary)]/5 px-4 py-2.5 rounded-xl transition-all duration-200 border-2 border-dashed border-[var(--color-primary)]/20 hover:border-[var(--color-primary)]/40 w-full justify-center bg-white">
+                  <i class="fas fa-plus text-xs"></i> Ajouter une langue
+                </button>
+              </div>
+            }
+
+
+            <!-- ── ÉTAPE 6 : Centres d'intérêt ── -->
+            @case (6) {
+              <div class="px-6 pt-7 pb-3 border-b border-gray-400/15">
+                <div class="flex items-center gap-3 mb-1">
+                  <h1 class="text-2xl font-bold text-[var(--color-black)]">Centres d'intérêt</h1>
+                </div>
+                <p class="text-xs text-[var(--color-gray-text)]/55 ml-11">Vos passions et activités.</p>
+              </div>
+
+              <div class="p-6 space-y-4">
+                <div formArrayName="interests" class="space-y-3">
+                  @for (interet of interestsArray.controls; track $index; let i = $index) {
+                    <div [formGroupName]="i" class="flex gap-3 items-center bg-white rounded-xl p-3 border border-gray-400/20">
+                      <div class="w-7 h-7 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center flex-shrink-0">
+                        <span class="text-[10px] font-bold text-[var(--color-primary)]">{{ i + 1 }}</span>
+                      </div>
+                      <input type="text" formControlName="name" placeholder="Centre d'intérêt (ex : Lecture, Sport...)"
+                        class="flex-1 rounded-lg border border-gray-400/40 bg-white px-3 py-2 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all min-w-0">
+                      <button type="button" (click)="SupprimerInterest(i)"
+                        class="w-8 h-8 rounded-lg text-red-400 hover:text-red-600 hover:bg-red-50 flex items-center justify-center flex-shrink-0 transition-all">
+                        <i class="fas fa-times text-xs"></i>
+                      </button>
+                    </div>
+                  }
+                </div>
+                <button type="button" (click)="AjouterInterest()"
+                  class="flex items-center gap-2 text-sm text-[var(--color-primary)] font-semibold hover:bg-[var(--color-primary)]/5 px-4 py-2.5 rounded-xl transition-all duration-200 border-2 border-dashed border-[var(--color-primary)]/20 hover:border-[var(--color-primary)]/40 w-full justify-center bg-white">
+                  <i class="fas fa-plus text-xs"></i> Ajouter un centre d'intérêt
+                </button>
+              </div>
+            }
+          }
+
+          <!-- ===== NAVIGATION BUTTONS ===== -->
+          <div class="flex justify-between items-center px-6 py-4 border-t border-gray-400/15 bg-[var(--color-light)]/30">
+            <button type="button" (click)="precedent()"
+              [disabled]="currentStep() === 0"
+              class="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-gray-400/40 text-sm font-medium text-[var(--color-gray-text)] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white hover:border-gray-400 transition-all duration-200">
+              <i class="fas fa-arrow-left text-xs"></i>
+              Précédent
+            </button>
+
+            @if (currentStep() < derniereEtape) {
+              <button type="button" (click)="suivant()"
+                [disabled]="currentStep() === 0 && templateSelectionne() === null"
+                class="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[var(--color-primary)] text-white text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed hover:opacity-90 transition-all duration-200 shadow-[0_4px_12px_rgba(74,15,24,0.2)]">
+                Suivant
+                <i class="fas fa-arrow-right text-xs"></i>
+              </button>
+            } @else {
+              <button type="button" (click)="finaliser()"
+                [disabled]="chargementApercu()"
+                class="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[var(--color-primary)] text-white text-sm font-semibold disabled:opacity-40 hover:opacity-90 transition-all duration-200 shadow-[0_4px_12px_rgba(74,15,24,0.2)]">
+                @if (chargementApercu()) {
+                  <i class="fas fa-spinner fa-spin text-xs"></i>
+                  Génération...
+                } @else {
+                  <i class="fas fa-magic text-xs"></i>
+                  Générer mon CV
+                }
+              </button>
+            }
+          </div>
+
+        </form>
+      </div>
+    }
+
+
+    @if (apercuHtmlRaw()) {
+      <div class="space-y-5">
+
+        <div class="bg-white border border-gray-400/20 rounded-2xl px-6 py-4 shadow-sm flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div>
+              <h2 class="text-2xl font-bold text-[var(--color-black)]">Aperçu de votre CV</h2>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white border border-gray-400/20 rounded-2xl overflow-hidden shadow-sm">
+          <div class="overflow-hidden h-[500px] md:h-[900px]">
+            <iframe
+              [srcdoc]="apercuHtmlSafe()"
+              class="border-0 origin-top-left w-[800px] h-[1000px] scale-[0.4] md:w-full md:h-full md:scale-100">
+            </iframe>
+          </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="bg-white border border-gray-400/20 rounded-2xl px-6 py-4 shadow-sm">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[var(--color-gray-text)]/40 mb-3">Actions</p>
+          <div class="flex flex-wrap gap-3">
+            <button (click)="telecharger()"
+              class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[var(--color-primary)] text-white text-sm font-semibold hover:opacity-90 transition-all shadow-[0_4px_12px_rgba(74,15,24,0.2)]">
+              <i class="fas fa-download text-xs"></i>
+              Télécharger le PDF
+            </button>
+            <button (click)="modifier()"
+              class="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-gray-400/40 text-sm font-medium text-[var(--color-gray-text)] hover:bg-[var(--color-light)] hover:border-gray-400 transition-all">
+              <i class="fas fa-edit text-xs"></i>
+              Modifier
+            </button>
+            @if (estConnecte()) {
+              <button (click)="SauvegarderCv()"
+                class="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[var(--color-primary)]/30 text-sm font-semibold text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 transition-all">
+                <i class="fas fa-save text-xs"></i>
+                Sauvegarder dans mon espace
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+    }
+
+  </div>
 </div>
