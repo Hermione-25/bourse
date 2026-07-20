@@ -17,7 +17,7 @@ export class DashboardService {
 
   private getNombreNouvellesBourses(): Observable<number> {
 
-    return this.apiService.get<{ count: number }>('scholarships/recent/count')
+    return this.apiService.get<{ count: number }>('user/dashboard')
       .pipe(map(res => res.count));
   }
 

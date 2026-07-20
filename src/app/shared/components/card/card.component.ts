@@ -1,16 +1,21 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FundingType, Scholarship } from '../../../features/scholarships/scholarships.models';
+import { AuthService } from '../../../core/auth/auth.service';
+import { AsyncPipe } from '@angular/common';
+import { take } from 'rxjs/operators';
+
 
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, AsyncPipe],
   templateUrl: './card.component.html'
 })
 export class ScholarshipCard {
+  authService = inject(AuthService);
   FundingType = FundingType;
 
   scholarship = input.required<Scholarship>();
@@ -18,11 +23,23 @@ export class ScholarshipCard {
 
   toggleFavori = output<string>();
 
-  onToggleFavori(event: Event): void {
-    event.stopPropagation();
-    event.preventDefault();
-    this.toggleFavori.emit(this.scholarship().id);
-  }
+
+
+onToggleFavori(event: Event): void {
+  event.stopPropagation();
+  event.preventDefault();
+
+  this.authService.isAuthenticated$
+    .pipe(take(1))
+    .subscribe((isAuthenticated) => {
+      if (!isAuthenticated) {
+        alert('Veuillez vous connecter pour ajouter une bourse aux favoris.');
+        return;
+      }
+
+      this.toggleFavori.emit(this.scholarship().id);
+    });
+}
 
   get urgent(): boolean {
     const jours = this.scholarship().days_remaining;
@@ -52,4 +69,6 @@ export class ScholarshipCard {
     if (jours <= 30) return 'text-amber-600';        // Bientôt (moins d'un mois)
     return 'text-emerald-500';                       // Tranquille
   }
+
+  
 }
