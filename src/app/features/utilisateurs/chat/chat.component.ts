@@ -1,7 +1,9 @@
 import { Component, ElementRef, ViewChild, AfterViewChecked, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChatService } from './chat.service';
-
+import { AuthService } from '../../../core/auth/auth.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -13,6 +15,7 @@ import { ChatService } from './chat.service';
 export class ChatComponent implements AfterViewChecked {
 
   private chatService = inject(ChatService);
+  authService = inject(AuthService);
 
   texteSaisi = signal('');
   historiqueOuvert = signal(false); // overlay historique, fermé par défaut
@@ -37,6 +40,11 @@ export class ChatComponent implements AfterViewChecked {
   toggleHistorique() {
     this.historiqueOuvert.update(v => !v);
   }
+
+  estConnecte = toSignal(
+  this.authService.authState$.pipe(map((auth) => !!auth)),
+  { initialValue: false }
+);
 
   envoyer() {
     const text = this.texteSaisi();

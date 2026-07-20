@@ -60,7 +60,7 @@ export class DestinationComponent implements OnInit {
       },
       error: (err) => {
         console.error('Erreur chargement pays :', err);
-        this.pays.set(PAYS_MOCK); // fallback : affichage avec count à 0
+        this.pays.set(PAYS_MOCK); 
         this.erreur.set("Les compteurs de bourses n'ont pas pu être chargés.");
         this.chargement.set(false);
       },

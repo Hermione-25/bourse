@@ -12,7 +12,7 @@
     </a>
   </div>
 
-  <!-- Chargement -->
+
   @if (chargement()) {
     <div class="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border border-[--color-border-color]/20 card-shadow">
       <div class="w-10 h-10 border-4 border-[--color-primary]/20 border-t-[--color-primary] rounded-full animate-spin mb-4"></div>
@@ -20,7 +20,7 @@
     </div>
   }
 
-  <!-- Aucun CV -->
+
   @else if (mesCvs().length === 0) {
     <div class="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border-2 border-dashed border-[--color-border-color]/30 card-shadow text-center px-6">
       <div class="w-16 h-16 bg-[--color-light] rounded-full flex items-center justify-center mb-5 text-[--color-primary]">
@@ -35,7 +35,7 @@
     </div>
   }
 
-  <!-- Liste des CV -->
+
   @else {
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       @for (cv of mesCvs(); track cv.id) {
@@ -56,7 +56,6 @@
               </div>
             </div>
 
-            <!-- CV Meta Details -->
             <div class="space-y-2 border-t border-[--color-border-color]/10 pt-4 pb-2">
               <div class="flex justify-between items-center text-xs text-[--color-gray-text]/60">
                 <span>Modèle</span>
@@ -65,7 +64,7 @@
               @if (cv.personal_info?.phone) {
                 <div class="flex justify-between items-center text-xs text-[--color-gray-text]/60">
                   <span>Téléphone</span>
-                  <span class="font-medium text-[--color-black]">{{ cv.personal_info?.phone }}</span>
+                  <span class="font-medium text-[--color-black]">{{ cv.personal_info!.phone }}</span>
                 </div>
               }
             </div>

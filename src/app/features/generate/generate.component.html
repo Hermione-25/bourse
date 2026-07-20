@@ -30,20 +30,19 @@
       </div>
     }
 
-    <!-- ===== FORM ===== -->
-     <div class="flex items-center mb-6 gap-3 mb-1">
-                  
-        <h1 class="text-4xl font-bold text-[var(--color-black)]">Choisissez un modèle</h1>
-      </div>  
+     
     @if (!apercuHtmlRaw()) {
-      <div class="bg-white rounded-2xl border border-gray-400/20 shadow-[0_4px_24px_rgba(74,15,24,0.06)] overflow-hidden">
+      
 
         <form [formGroup]="formulaire">
-
-          
+          <div class="bg-white rounded-2xl border border-gray-400/20 shadow-[0_4px_24px_rgba(74,15,24,0.06)] overflow-hidden">
+              <div class="flex items-center mb-6 gap-3 mb-1">
+                  
+        <h1 class="text-2xl md:text-4xl font-bold text-[var(--color-black)]">Choisissez un modèle</h1>
+      </div>  
           @switch (currentStep()) {
 
-            <!-- ── ÉTAPE 0 : Modèle ── -->
+
              
             @case (0) {
               
@@ -78,7 +77,6 @@
                   }
                 </div>
 
-                <!-- CV Name -->
                 <div>
                   <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-color-gray-text/45 mb-2">
                     Nom du CV
@@ -93,7 +91,6 @@
               </div>
             }
 
-            <!-- ── ÉTAPE 1 : Infos personnelles ── -->
             @case (1) {
               <div class="px-6 pt-7 pb-3 border-b border-gray-400/15">
                 <div class="flex items-center gap-3 mb-1">
@@ -462,9 +459,9 @@
               </button>
             }
           </div>
-
+          </div>
         </form>
-      </div>
+      
     }
 
 

@@ -12,10 +12,11 @@
       Pas d'image
     </div>
 
-    <!-- Badges (financement + score de compatibilité) -->
     <div class="absolute top-3 left-3 flex flex-col items-start gap-1.5">
       @if(scholarship().funding_type && scholarship().funding_type !== FundingType.UNFUNDED){
-        <span class="text-xs font-semibold bg-[var(--color-primary)] text-white px-3 py-1">
+        <span class="text-xs font-semibold text-white px-3 py-1" 
+              [class.bg-green-800]="scholarship().funding_type === FundingType.FULL"
+              [class.bg-orange-800]="scholarship().funding_type === FundingType.PARTIAL">
           {{ scholarship().funding_type === FundingType.FULL ? 'Entièrement financée' : 'Partiellement financée' }}
         </span>
       }
@@ -30,7 +31,7 @@
       }
     </div>
 
-    <!-- Bouton favori -->
+
     <button
       type="button"
       (click)="onToggleFavori($event)"
@@ -62,21 +63,18 @@
         Deadline : {{ scholarship().deadline | date: 'dd/MM/yyyy' }}
       </span>
 
-      @if (scholarship().days_remaining !== undefined) {
-
-        @if (scholarship().days_remaining! < 0) {
-          <span class="font-semibold rounded-full px-2.5 py-1 text-red-600">
+      @if (getJoursRestants(scholarship().deadline); as jours) {
+        @if (jours < 0) {
+          <span class="font-semibold rounded-full px-2.5 py-1 text-red-600 bg-red-50">
             Bourse expirée
           </span>
         } @else {
-          <span
-            class="font-semibold rounded-full px-2.5 py-1"
-            [ngClass]="urgent ? 'text-red-600' : 'text-green-600'">
-            {{ scholarship().days_remaining }}j restants
+          <span class="font-semibold rounded-full px-2.5 py-1 {{ getCouleurDeadline(jours) }}">
+            {{ jours }} jours restants
           </span>
         }
-
       }
+
     </div>
 
     <span class="inline-block mt-3 text-xs font-semibold text-red-500 group-hover:underline">

@@ -1,10 +1,10 @@
 
-@if (!isOpen()) {
+@if (!isOpen() && estConnecte()) {
   <button
     (click)="toggleChat()"
-    class="fixed bottom-6 right-6 w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition-opacity z-110 bg-black"
+    class="fixed bottom-6 right-6 w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition-opacity z-110 bg-primary"
   >
-    <i class="fa-solid fa-comment text-white text-xl"></i>
+<i class="fa-solid fa-robot text-white text-xl"></i>
   </button>
 }
 
@@ -24,7 +24,7 @@
         <button (click)="toggleHistorique()" class="text-white hover:opacity-70 transition-opacity">
           <i class="fa-solid fa-bars text-sm"></i>
         </button>
-        <i class="fa-solid fa-graduation-cap text-white text-sm"></i>
+        <i class="fa-solid fa-robot text-white text-xl"></i>
         <span class="text-white font-medium text-sm">Assistant IA</span>
       </div>
       <button (click)="toggleChat()" class="text-white hover:opacity-70 transition-opacity">

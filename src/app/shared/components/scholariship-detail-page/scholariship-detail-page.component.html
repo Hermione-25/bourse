@@ -34,7 +34,14 @@
 
       <div class="p-6">
 
-       
+      @if (scholarship(); as s) {
+        @let jours = getJoursRestants(s.deadline);
+        @if (jours !== null) {
+          <div class="mb-3 px-3 py-1.5 rounded-lg bg-red-600 text-white font-semibold text-sm inline-block">
+            {{ jours }} jours restants
+          </div>
+        }
+}
 
         <h1 class="text-2xl font-bold text-[var(--color-gray-text)] mb-2">
           {{ bourse.title }}
@@ -63,16 +70,11 @@
               <p class="font-medium">{{ bourse.deadline | date: 'dd/MM/yyyy' }}</p>
             </div>
           }
-          @if (bourse.amount) {
+
+          @if (bourse.required_documents) {
             <div>
-              <p class="text-[var(--color-gray-text)]/60">Montant</p>
-              <p class="font-medium">{{ bourse.amount }}</p>
-            </div>
-          }
-          @if (bourse.source) {
-            <div>
-              <p class="text-[var(--color-gray-text)]/60">Source</p>
-              <p class="font-medium">{{ bourse.source }}</p>
+              <p class="text-[var(--color-gray-text)]/60">Documents Requis</p>
+              <p class="font-medium">{{ bourse.required_documents }}</p>
             </div>
           }
         </div>

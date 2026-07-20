@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ScholarshipsService } from '../../scholarships.service';
@@ -25,14 +25,31 @@ export class ScholarshipsListComponent implements OnInit {
 
   filtres = { country: '', level: '', domain: '' };
 
+  search = computed(() => {
+    const terme = this.recherche().trim().toLowerCase()
+
+    return this.scholarships().filter((s) => {
+      if (!terme) return true;
+
+        return(
+          s.title?.toLowerCase().includes(terme) ||
+          s.university?.toLowerCase().includes(terme) ||
+          s.country?.toLowerCase().includes(terme) ||
+          s.domain?.toLowerCase().includes(terme) ||
+          s.description?.toLowerCase().includes(terme) ||
+          s.funding_type?.toLowerCase().includes(terme)
+        )
+    });
+  });
+
   ngOnInit(): void {
-    // Charger les favoris existants de l'utilisateur
+
     this.favorisService.getFavoris().subscribe({
       next: (liste) => {
         this.favoris.set(new Set(liste.map(s => s.id)));
       },
       error: () => {
-        // On peut ignorer silencieusement, ou logger
+
       }
     });
 
@@ -74,7 +91,7 @@ export class ScholarshipsListComponent implements OnInit {
   onToggleFavori(id: string): void {
     const dejaFavori = this.favoris().has(id);
 
-    // Mise à jour optimiste de l'UI
+
     this.favoris.update(set => {
       const nouveau = new Set(set);
       dejaFavori ? nouveau.delete(id) : nouveau.add(id);
@@ -87,7 +104,6 @@ export class ScholarshipsListComponent implements OnInit {
 
     appel$.subscribe({
       error: () => {
-        // Rollback en cas d'échec
         this.favoris.update(set => {
           const nouveau = new Set(set);
           dejaFavori ? nouveau.add(id) : nouveau.delete(id);
@@ -97,6 +113,8 @@ export class ScholarshipsListComponent implements OnInit {
       }
     });
   }
+
+
 
    recherche = signal<string>('');
 

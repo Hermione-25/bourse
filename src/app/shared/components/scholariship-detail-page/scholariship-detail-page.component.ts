@@ -56,6 +56,14 @@ export class ScholarshipDetailComponent implements OnInit {
     }
   }
 
+getJoursRestants(deadline: string | undefined): number | null {
+  if (!deadline) return null;
+  const aujourdHui = new Date();
+  const dateDeadline = new Date(deadline);
+  const diffMs = dateDeadline.getTime() - aujourdHui.getTime();
+  return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+}
+
   demanderResumer() {
   this.chatService.demanderResume(
     Number(this.scholarship()!.id),

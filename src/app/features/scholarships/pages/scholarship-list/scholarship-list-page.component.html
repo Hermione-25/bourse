@@ -3,7 +3,7 @@
      
     </div>
   <div class="mb-10">
-    <h1 class=" flex justify-center text-5xl font-bold text-dark">Toutes les bourses</h1>
+    <h1 class=" flex justify-center text-3xl md:text-5xl font-bold text-dark">Toutes les bourses</h1>
 
      <div class="flex justify-center m-10">
         <input
@@ -46,7 +46,7 @@
     </div>
   } @else {
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        @for (scholarship of scholarships(); track scholarship.id) {
+        @for (scholarship of search(); track scholarship.id) {
           <app-card
             [scholarship]="scholarship"
             [estFavori]="isFavori(scholarship.id)"

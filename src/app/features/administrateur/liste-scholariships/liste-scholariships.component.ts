@@ -59,7 +59,6 @@ export class ListeScholarishipsComponent implements OnInit {
         s.university.toLowerCase().includes(term) ||
         s.description.toLowerCase().includes(term) ||
         (s.country && s.country.toLowerCase().includes(term)) ||
-        (s.region && s.region.toLowerCase().includes(term)) ||
         (s.domain && s.domain.toLowerCase().includes(term)) ||
         (s.source && s.source.toLowerCase().includes(term))
     );
@@ -116,10 +115,8 @@ export class ListeScholarishipsComponent implements OnInit {
       title: s.title ?? '',
       description: s.description ?? '',
       country: s.country ?? '',
-      region: s.region ?? '',
       domain: s.domain ?? '',
       funding_type: s.funding_type ?? FundingType.UNFUNDED,
-      amount: s.amount != null ? String(s.amount) : '',
       benefits: s.benefits ?? '',
       requirement: s.requirement ?? '',
       image: s.image ?? '',

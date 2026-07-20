@@ -142,12 +142,10 @@
         <p><strong>Titre :</strong> {{ selectedScholarship?.title }}</p>
         <p><strong>Université :</strong> {{ selectedScholarship?.university }}</p>
         <p><strong>Pays :</strong> {{ selectedScholarship?.country }}</p>
-        <p><strong>Région :</strong> {{ selectedScholarship?.region }}</p>
         <p><strong>Domaine :</strong> {{ selectedScholarship?.domain }}</p>
         <p><strong>Description :</strong> {{ selectedScholarship?.description }}</p>
         <p><strong>Date limite :</strong> {{ selectedScholarship?.deadline | date:'dd/MM/yyyy' }}</p>
         <p><strong>Source :</strong> {{ selectedScholarship?.source }}</p>
-        <p><strong>Montant :</strong> {{ selectedScholarship?.amount || '-' }}</p>
         <p><strong>Financement :</strong> {{ fundingLabel }}</p>
         <p><strong>Avantages :</strong> {{ selectedScholarship?.benefits || '-' }}</p>
         <p><strong>Conditions :</strong> {{ selectedScholarship?.requirement || '-' }}</p>
@@ -221,12 +219,7 @@
                 <p class="text-xs text-gray-400 mt-0.5 line-clamp-1">{{ s.description }}</p>
               </td>
               <td class="px-6 py-4 text-gray-600">{{ s.university }}</td>
-              <td class="px-6 py-4">
-                <span class="inline-flex items-center gap-1.5 text-gray-500">
-                  <i class="fas fa-location-dot text-xs text-primary/60"></i>
-                  {{ s.region || 'En ligne' }}
-                </span>
-              </td>
+              <td class="px-6 py-4 text-gray-600">{{ s.country }}</td>
               <td class="px-6 py-4">
                 <span class="inline-flex items-center gap-1.5 text-gray-600">
                   <i class="fas fa-calendar text-xs text-primary/60"></i>
