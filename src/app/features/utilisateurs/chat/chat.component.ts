@@ -4,6 +4,9 @@ import { ChatService } from './chat.service';
 import { AuthService } from '../../../core/auth/auth.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
+import { marked } from 'marked';
+
+
 
 @Component({
   selector: 'app-chat',
@@ -90,4 +93,8 @@ export class ChatComponent implements AfterViewChecked {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
     }
   }
+
+  renderMarkdown(content: string) {
+  return marked.parse(content);
+}
 }

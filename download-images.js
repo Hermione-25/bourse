@@ -71,12 +71,47 @@ function telechargerImage(url, nom) {
 async function test() {
 
 const pays = [
-  // ===== AFRIQUE =====
-  { name: 'algerie.jpg', search: 'Alger Algeria city landscape' },
-  { name: 'angola.jpg', search: 'Luanda Angola city coast' },
-  { name: 'benin.jpg', search: 'Cotonou Benin city landscape' },
-  { name: 'botswana.jpg', search: 'Botswana safari landscape' },
+  // Afrique
+  { name: 'afrique-du-sud.jpg', search: 'South Africa Cape Town university' },
+  { name: 'algerie.jpg', search: 'Algeria university city' },
+  { name: 'egypte.jpg', search: 'Egypt Cairo university' },
+  { name: 'maroc.jpg', search: 'Morocco university city' },
+  { name: 'tunisie.jpg', search: 'Tunisia university city' },
+  { name: 'rwanda.jpg', search: 'Rwanda Kigali city' },
+  { name: 'senegal.jpg', search: 'Senegal Dakar university' },
 
+  // Europe
+  { name: 'allemagne.jpg', search: 'Germany Berlin university' },
+  { name: 'autriche.jpg', search: 'Austria Vienna university' },
+  { name: 'belgique.jpg', search: 'Belgium Brussels university' },
+  { name: 'espagne.jpg', search: 'Spain Barcelona university' },
+  { name: 'france.jpg', search: 'France Paris university' },
+  { name: 'italie.jpg', search: 'Italy Rome university' },
+  { name: 'norvege.jpg', search: 'Norway Oslo university' },
+  { name: 'pays-bas.jpg', search: 'Netherlands Amsterdam university' },
+  { name: 'suede.jpg', search: 'Sweden Stockholm university' },
+  { name: 'suisse.jpg', search: 'Switzerland Zurich university' },
+  { name: 'royaume-uni.jpg', search: 'United Kingdom London university' },
+  { name: 'danemark.jpg', search: 'Denmark Copenhagen university' },
+  { name: 'republique-tcheque.jpg', search: 'Czech Republic Prague university' },
+  { name: 'suede.jpg', search: 'Sweden Stockholm university' },
+  { name: 'qatar.jpg', search: 'Qatar Doha university' },
+
+  // Amérique du Nord
+  { name: 'canada.jpg', search: 'Canada Toronto university' },
+  { name: 'etats-unis.jpg', search: 'United States university campus' },
+
+  // Asie
+  { name: 'chine.jpg', search: 'China Beijing university' },
+  { name: 'coree-du-sud.jpg', search: 'South Korea Seoul university' },
+  { name: 'japon.jpg', search: 'Japan Tokyo university' },
+  { name: 'inde.jpg', search: 'India university campus' },
+  { name: 'turquie.jpg', search: 'Turkey Istanbul university' },
+  { name: 'singapour.jpg', search: 'Singapore university campus' },
+
+  // Océanie
+  { name: 'australie.jpg', search: 'Australia Sydney university' },
+  { name: 'nouvelle-zelande.jpg', search: 'New Zealand university campus' }
 ];
 
 

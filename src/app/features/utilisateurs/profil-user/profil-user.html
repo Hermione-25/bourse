@@ -77,38 +77,8 @@
           <dt class="text-[#8a7d8a] mb-0.5">Domaine</dt>
           <dd class="text-[#2e2530] font-medium">{{ profileForm.value.study_domain || '_' }}</dd>
         </div>
-        <div>
-          <dt class="text-[#8a7d8a] mb-0.5">Moyenne</dt>
-          <dd class="text-[#2e2530] font-medium">
-            {{ profileForm.value.average !== null && profileForm.value.average !== undefined ? (profileForm.value.average + '/20') : '_' }}
-          </dd>
-        </div>
-        <div class="sm:col-span-2">
-          <dt class="text-[#8a7d8a] mb-1">Langues</dt>
-           @if((profileForm.value.languages?.length ?? 0) === 0){
-            <dd class="text-[#2e2530] font-medium">_</dd>
-           }
-           @if((profileForm.value.languages?.length ?? 0) > 0){
-            <dd class="flex flex-wrap gap-2">
-              @for(l of profileForm.value.languages; track $index){
-                <span class="text-xs font-medium bg-[#f4e9f1] text-[#4f2144] rounded-full px-3 py-1">{{ l }}</span>
-              }
-            </dd>
-           }
-        </div>
-        <div class="sm:col-span-2">
-          <dt class="text-[#8a7d8a] mb-1">Compétences</dt>
-           @if(competences().length === 0){
-            <dd class="text-[#2e2530] font-medium">_</dd>
-           }
-           @if(competences().length > 0){
-            <dd class="flex flex-wrap gap-2">
-              @for(c of competences(); track $index){
-                <span class="text-xs font-medium bg-[#f4e9f1] text-[#4f2144] rounded-full px-3 py-1">{{ c }}</span>
-              }
-            </dd>
-           }
-        </div>
+        
+      
       </dl>
     </div>
   </div>

@@ -59,6 +59,11 @@
       {{ scholarship().university }}@if (scholarship().country) { · {{ scholarship().country }} }
     </p>
 
+    <div class="mb-6">
+          <h2 class="font-bold text-lg text-black">Description</h2>
+          <p class="text-sm text-[var(--color-gray-text)]/80 whitespace-pre-line">{{ scholarship().description }}</p>
+        </div>
+
     <div class="flex items-center justify-between text-xs">
       <span class="text-[var(--color-gray-text)]/70">
         Deadline : {{ scholarship().deadline | date: 'dd/MM/yyyy' }}

@@ -7,131 +7,286 @@
         <p class="text-sm text-gray-500">Chargement...</p>
       </div>
     </div>
+
   } @else if (erreur()) {
+
     <div class="flex items-center gap-3 bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3 text-sm">
-      <i class="fas fa-circle-exclamation text-red-500"></i>{{ erreur() }}
+      <i class="fas fa-circle-exclamation text-red-500"></i>
+      {{ erreur() }}
     </div>
+
     <button
       type="button"
       (click)="onRetour()"
       class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-primary)]">
-       Retour
+      Retour
     </button>
+
   } @else if (scholarship(); as bourse) {
 
-    <div class="flex items-center gap-2 justify-between">
-    <button
-      type="button"
-      (click)="onRetour()"
-      class="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-gray-text)] hover:text-[var(--color-primary)] transition">
-       Retour
-    </button>
+    <div class="flex items-center justify-between mb-6">
 
-    <button (click)="demanderResumer()" class=" bg-primary text-white px-2 py-1 rounded-md">
-      Demander un résumé IA
-    </button>
+      <button
+        type="button"
+        (click)="onRetour()"
+        class="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-gray-text)] hover:text-[var(--color-primary)] transition">
+        Retour
+      </button>
+
+      <button
+        (click)="demanderResumer()"
+        class="bg-[var(--color-primary)] text-white px-3 py-2 rounded-md text-sm font-semibold hover:opacity-90 transition">
+        Demander un résumé IA
+      </button>
 
     </div>
 
-    <div class="bg-white border-light shadow-[0_0_20px_rgba(0,0,0,0.15)] rounded-2xl overflow-hidden shadow-lg">
+
+    <div class="bg-white border border-[var(--color-border-color)] shadow-[0_0_20px_rgba(0,0,0,0.15)] rounded-2xl overflow-hidden">
 
       @if (bourse.image) {
-        <img [src]="bourse.image" [alt]="bourse.title" class="w-full h-56 object-cover" />
+        <img 
+          [src]="bourse.image"
+          [alt]="bourse.title"
+          class="w-full h-56 object-cover" />
       }
+
 
       <div class="p-6">
 
+
         @let jours = getJoursRestants(bourse.deadline);
+
         @if (jours !== null) {
-          <div class="mb-3 px-3 py-1.5 rounded-lg bg-red-600 text-white font-semibold text-sm inline-block">
+          <div class="mb-4 px-3 py-1.5 rounded-lg bg-red-600 text-white font-semibold text-sm inline-block">
             {{ jours }} jours restants
           </div>
         }
 
-        <h1 class="text-2xl font-bold text-2xl text-black mb-2">
+
+        <h1 class="text-2xl font-bold text-black mb-2">
           {{ bourse.title }}
         </h1>
 
-        <p class="text-sm text-[var(--color-gray-text)]/70 mb-6">
-          {{ bourse.university }}
-          @if (bourse.country)   {
-            <div class="mt-2">
-              <p class="text-black font-bold text-lg">Pays</p> 
-              <p class="font-medium">{{ bourse.country }}</p> 
-            </div>
-          } 
-        </p>
-         @if (bourse.funding_type && bourse.funding_type !== FundingType.UNFUNDED) {
-            <span class="inline-block text-xs font-semibold bg-[var(--color-primary)] text-white  px-3 py-1 mb-3">
-              {{ bourse.funding_type === FundingType.FULL ? 'Entièrement financée' : 'Partiellement financée' }}
-            </span>
+
+        <div class="text-sm text-[var(--color-gray-text)]/70 mb-6">
+
+          @if (bourse.university) {
+            <p>{{ bourse.university }}</p>
           }
-        <div class="grid grid-cols gap-4 text-sm mb-6">
+
+
+          @if (bourse.country) {
+
+            <div class="mt-3">
+              <p class="text-black font-bold text-lg">
+                Pays
+              </p>
+
+              <p class="font-medium">
+                {{ bourse.country }}
+              </p>
+            </div>
+
+          }
+
+        </div>
+
+
+
+        @if (bourse.details) {
+
+          <div class="mb-6">
+
+            <p class="font-bold text-lg text-black">
+              Description
+            </p>
+
+            <p class="font-medium text-[var(--color-gray-text)]">
+              {{ bourse.details }}
+            </p>
+
+          </div>
+
+        }
+
+
+
+        @if (bourse.funding_type && bourse.funding_type !== FundingType.UNFUNDED) {
+
+          <span class="inline-block text-xs font-semibold bg-[var(--color-primary)] text-white px-3 py-1 rounded-md mb-5">
+
+            {{
+              bourse.funding_type === FundingType.FULL
+                ? 'Entièrement financée'
+                : 'Partiellement financée'
+            }}
+
+          </span>
+
+        }
+
+
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-6">
+
+
           @if (bourse.domain) {
+
             <div>
-              <p class="font-bold text-lg text-black">Domaine</p>
-              <p class="font-medium">{{ bourse.domain }}</p>
+
+              <p class="font-bold text-lg text-black">
+                Domaine
+              </p>
+
+              <p class="font-medium">
+                {{ bourse.domain }}
+              </p>
+
             </div>
+
           }
+
+
 
           @if (bourse.deadline) {
+
             <div>
-              <p class="font-bold text-lg text-black">Date limite</p>
-              <p class="font-medium">{{ bourse.deadline | date: 'dd/MM/yyyy' }}</p>
+
+              <p class="font-bold text-lg text-black">
+                Date limite
+              </p>
+
+              <p class="font-medium">
+                {{ bourse.deadline | date:'dd/MM/yyyy' }}
+              </p>
+
             </div>
+
           }
+
+
 
           @if (bourse.required_documents) {
+
             <div>
-              <p class="font-bold text-lg text-black">Documents Requis</p>
-              <p class="font-medium">{{ bourse.required_documents }}</p>
+
+              <p class="font-bold text-lg text-black">
+                Documents requis
+              </p>
+
+              <p class="font-medium">
+                {{ bourse.required_documents }}
+              </p>
+
             </div>
+
           }
+
+
         </div>
 
-        <div class="mb-6">
-          <h2 class="font-bold text-lg text-black">Description</h2>
-          <p class="text-sm text-[var(--color-gray-text)]/80 whitespace-pre-line">{{ bourse.description }}</p>
-        </div>
+
+
 
         @if (bourse.benefits) {
+
           <div class="mb-6">
-            <h2 class="font-bold text-lg text-black">Avantages</h2>
-            <p class="text-sm text-[var(--color-gray-text)]/80 whitespace-pre-line">{{ bourse.benefits }}</p>
+
+            <h2 class="font-bold text-lg text-black">
+              Avantages
+            </h2>
+
+            <p class="text-sm text-[var(--color-gray-text)]/80 whitespace-pre-line">
+              {{ bourse.benefits }}
+            </p>
+
           </div>
+
         }
+
+
+
 
         @if (bourse.requirement) {
+
           <div class="mb-8">
-            <h2 class="font-bold text-lg text-black mb-1">Conditions d'éligibilité</h2>
-            <p class="text-sm text-[var(--color-gray-text)]/80 whitespace-pre-line">{{ bourse.requirement }}</p>
+
+            <h2 class="font-bold text-lg text-black mb-1">
+              Conditions d'éligibilité
+            </h2>
+
+            <p class="text-sm text-[var(--color-gray-text)]/80 whitespace-pre-line">
+              {{ bourse.requirement }}
+            </p>
+
           </div>
+
         }
 
-        @if(bourse.official_website){
+
+
+
+
+        @if (bourse.official_website) {
+
           <div class="mb-6">
-            <h2 class="font-bold text-lg text-black">Site officiel de l'université</h2>
-            <p class="text-sm text-blue-500 underline whitespace-pre-line">{{ bourse.official_website }}</p>
+
+            <h2 class="font-bold text-lg text-black">
+              Site officiel de l'université
+            </h2>
+
+
+            <a
+              [href]="bourse.official_website"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm text-blue-500 underline break-all">
+
+              {{ bourse.official_website }}
+
+            </a>
+
+
           </div>
+
         }
+
+
+
+
 
         <div class="flex gap-3">
+
           <button
             type="button"
             (click)="onRetour()"
             class="flex-1 border border-[var(--color-border-color)] text-[var(--color-gray-text)] font-semibold rounded-xl py-3 hover:bg-gray-50 transition">
+
             Retour
+
           </button>
+
+
+
           <button
             type="button"
             [disabled]="!bourse.link && !bourse.apply_link"
             (click)="onPostuler()"
             class="flex-1 bg-[var(--color-primary)] text-white font-semibold rounded-xl py-3 hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed">
+
             Postuler
+
           </button>
+
+
         </div>
 
+
       </div>
+
     </div>
+
   }
+
 </div>

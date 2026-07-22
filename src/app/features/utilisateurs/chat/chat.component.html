@@ -91,8 +91,9 @@
         <div class="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center shrink-0 mt-0.5">
           <i class="fa-solid fa-graduation-cap text-[10px] text-gray-600"></i>
         </div>
-        <div class="text-sm text-gray-800 leading-relaxed pt-0.5">
-          {{ message.content }}
+        <div
+            class="msg-bubble-ai markdown"
+            [innerHTML]="renderMarkdown(message.content)">
         </div>
       </div>
       }
