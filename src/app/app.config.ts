@@ -1,6 +1,7 @@
-import { ApplicationConfig, ErrorHandler, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, ErrorHandler, inject, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 import { routes } from './app.routes';
 import { API_CONFIG } from './core/api/api.config';
@@ -9,6 +10,12 @@ import { httpErrorInterceptor } from './core/api/http-error.interceptor';
 import { ErrorHandlerService } from './core/errors/error-handler.service';
 import { environment } from '../environments/environment';
 import { ChatService } from './features/utilisateurs/chat/chat.service';
+import { AuthService } from './core/auth/auth.service';
+
+function initializeAuth(): () => Promise<unknown> {
+  const authService = inject(AuthService);
+  return () => firstValueFrom(authService.initAuth(), { defaultValue: null });
+}
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,6 +33,11 @@ export const appConfig: ApplicationConfig = {
     {
       provide: ErrorHandler,
       useClass: ErrorHandlerService,
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeAuth,
+      multi: true,
     },
     ChatService
   ],

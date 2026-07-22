@@ -2,15 +2,16 @@
   class="group block bg-white border shadow-lg border-none rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
 
   <div class="relative h-40 w-full bg-[var(--color-light)]">
-    <img
-      *ngIf="scholarship().image"
-      [src]="scholarship().image"
-      [alt]="scholarship().title"
-      class="h-full w-full object-cover" />
-
-    <div *ngIf="!scholarship().image" class="bg-white transition-all duration-300 hover:-translate-y-[3px] hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)] group h-36 shadow-lg h-full w-full flex items-center justify-center text-[var(--color-border-color)] text-sm">
-      Pas d'image
-    </div>
+    @if (scholarship().image) {
+      <img
+        [src]="scholarship().image"
+        [alt]="scholarship().title"
+        class="h-full w-full object-cover" />
+    } @else {
+      <div class="bg-white transition-all duration-300 hover:-translate-y-[3px] hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)] group h-36 shadow-lg h-full w-full flex items-center justify-center text-[var(--color-border-color)] text-sm">
+        Pas d'image
+      </div>
+    }
 
     <div class="absolute top-3 left-3 flex flex-col items-start gap-1.5">
       @if(scholarship().funding_type && scholarship().funding_type !== FundingType.UNFUNDED){
@@ -55,7 +56,7 @@
     </h3>
 
     <p class="text-xs text-[var(--color-gray-text)]/70 mb-3">
-      {{ scholarship().university }}<span *ngIf="scholarship().country"> · {{ scholarship().country }}</span>
+      {{ scholarship().university }}@if (scholarship().country) { · {{ scholarship().country }} }
     </p>
 
     <div class="flex items-center justify-between text-xs">

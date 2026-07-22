@@ -18,7 +18,7 @@ export class ChatComponent implements AfterViewChecked {
   authService = inject(AuthService);
 
   texteSaisi = signal('');
-  historiqueOuvert = signal(false); // overlay historique, fermé par défaut
+  historiqueOuvert = signal(false);
 
   isOpen = this.chatService.isOpen;
   messages = this.chatService.messages;
@@ -42,9 +42,9 @@ export class ChatComponent implements AfterViewChecked {
   }
 
   estConnecte = toSignal(
-  this.authService.authState$.pipe(map((auth) => !!auth)),
-  { initialValue: false }
-);
+    this.authService.authState$.pipe(map((auth) => !!auth)),
+    { initialValue: false }
+  );
 
   envoyer() {
     const text = this.texteSaisi();

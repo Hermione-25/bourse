@@ -23,7 +23,8 @@ export const jwtInterceptor: HttpInterceptorFn = (
       if (
         error.status === 401 &&
         !req.url.endsWith('/login') &&
-        !req.url.endsWith('/refresh')
+        !req.url.endsWith('/refresh') &&
+        !req.url.endsWith('/me')
       ) {
         return handle401Error(req, next, tokenService, refreshTokenService);
       }

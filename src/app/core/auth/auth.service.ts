@@ -4,6 +4,7 @@ import { ApiService } from '../api/api.service';
 import { TokenService } from './token.service';
 import { AuthToken, LoginDto, RefreshTokenResponse, RegisterDto, ForgotPasswordDto } from './auth.models';
 import { User } from '../../shared/models/user.models';
+import { ApiResponse } from '../../shared/models/interfaces/api-response.interface';
 
 
 @Injectable({ providedIn: 'root' })
@@ -16,22 +17,36 @@ export class AuthService {
   readonly isAuthenticated$ = this.authState$.pipe(map(Boolean));
 
 
-  initAuth(): Observable<AuthToken | null> {
+  initAuth(): Observable<ApiResponse<User> | null> {
     const token = this.tokenService.getAccessToken();
 
     if (!token) {
+      console.log('[AuthService] initAuth: aucun token trouvé, utilisateur non connecté.');
       this.currentUserSubject.next(null);
       return of(null);
     }
 
-    return this.apiService.get<AuthToken>('me').pipe(
-      tap((res) => this.currentUserSubject.next(res.data.user)),
-      catchError(() => {
-        this.logout();
+    console.log('[AuthService] initAuth: token trouvé, vérification avec le serveur...');
+
+    return this.apiService.get<ApiResponse<User>>('me').pipe(
+      tap((res) => {
+        const user = res?.data ?? null;
+        console.log('[AuthService] initAuth: utilisateur restauré →', user);
+        this.currentUserSubject.next(user);
+      }),
+      catchError((err) => {
+        const status = err?.status;
+        console.warn('[AuthService] initAuth: erreur lors de la vérification →', err);
+        if (status === 401) {
+          this.logout();
+        } else {
+          this.currentUserSubject.next(null);
+        }
         return of(null);
       })
     );
   }
+
 
   login(dto: LoginDto): Observable<AuthToken> {
     return this.apiService.post<AuthToken>('login', dto).pipe(

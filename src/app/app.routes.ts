@@ -49,7 +49,7 @@ export const routes: Routes = [
   children: [
     {
       path: ':id',
-      loadComponent: () => import('./shared/components/scholariship-detail-page/scholariship-detail-page.component').then((m) => m.ScholarshipDetailComponent),
+      loadComponent: () => import('./shared/components/scholarship-detail-page/scholarship-detail-page.component').then((m) => m.ScholarshipDetailComponent),
     },
   ],
 },
@@ -136,7 +136,7 @@ export const routes: Routes = [
       },
       {
         path: 'liste-scholarite',
-        loadComponent: () => import('./features/administrateur/liste-scholariships/liste-scholariships.component').then((m) => m.ListeScholarishipsComponent),
+        loadComponent: () => import('./features/administrateur/liste-scholarships/liste-scholarships.component').then((m) => m.ListeScholarshipsComponent),
       },
       {
         path: 'profil',

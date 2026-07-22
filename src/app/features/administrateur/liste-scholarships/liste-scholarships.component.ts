@@ -5,13 +5,13 @@ import { ScholarshipsService } from '../../../features/scholarships/scholarships
 import { FundingType, Scholarship, ScholarshipDto } from '../../../features/scholarships/scholarships.models';
 
 @Component({
-  selector: 'app-liste-scholariships',
+  selector: 'app-liste-scholarships',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './liste-scholariships.component.html',
-  styleUrls: ['./liste-scholariships.component.css'],
+  templateUrl: './liste-scholarships.component.html',
+  styleUrl: './liste-scholarships.component.css',
 })
-export class ListeScholarishipsComponent implements OnInit {
+export class ListeScholarshipsComponent implements OnInit {
   private scholarshipsService = inject(ScholarshipsService);
   private fb = inject(FormBuilder);
 

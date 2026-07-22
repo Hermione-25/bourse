@@ -10,7 +10,8 @@ import { ChatService } from '../../../features/utilisateurs/chat/chat.service';
   selector: 'app-scholarship-detail',
   standalone: true,
   imports: [DatePipe],
-  templateUrl: './scholariship-detail-page.component.html',
+  templateUrl: './scholarship-detail-page.component.html',
+  styleUrl: './scholarship-detail-page.component.css',
 })
 export class ScholarshipDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -50,7 +51,7 @@ export class ScholarshipDetailComponent implements OnInit {
   }
 
   onPostuler(): void {
-    const lien = this.scholarship()?.link;
+    const lien = this.scholarship()?.apply_link || this.scholarship()?.link;
     if (lien) {
       window.open(lien, '_blank', 'noopener,noreferrer');
     }
