@@ -339,5 +339,41 @@
 
     </div>
 
+    @if (totalPages() > 1) {
+<div class="flex items-center justify-between px-6 py-4 border-t border-gray-100">
+  <p class="text-xs text-gray-500">
+    Page {{ currentPage() }} sur {{ totalPages() }}
+  </p>
+
+  <div class="flex items-center gap-1">
+    <button
+      (click)="prevPage()"
+      [disabled]="currentPage() === 1"
+      class="w-8 h-8 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center text-sm transition-colors">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+
+    @for (page of pageNumbers(); track page) {
+      <button
+        (click)="goToPage(page)"
+        class="w-8 h-8 rounded-lg text-sm font-medium flex items-center justify-center transition-colors"
+        [class.bg-primary]="page === currentPage()"
+        [class.text-white]="page === currentPage()"
+        [class.text-gray-600]="page !== currentPage()"
+        [class.hover:bg-gray-100]="page !== currentPage()">
+        {{ page }}
+      </button>
+    }
+
+    <button
+      (click)="nextPage()"
+      [disabled]="currentPage() === totalPages()"
+      class="w-8 h-8 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center text-sm transition-colors">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+</div>
+}
+
   </div>
 </div>

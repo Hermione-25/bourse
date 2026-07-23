@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ScholarshipsService } from '../../../features/scholarships/scholarships.service';
@@ -15,7 +15,7 @@ export class ListeScholarshipsComponent implements OnInit {
   private scholarshipsService = inject(ScholarshipsService);
   private fb = inject(FormBuilder);
 
-  // Expose l'enum au template (utilisé dans le <select> et pour les comparaisons)
+
   FundingType = FundingType;
 
   scholarships: Scholarship[] = [];
@@ -27,6 +27,10 @@ export class ListeScholarshipsComponent implements OnInit {
   editingId: string | null = null;
   submitting = false;
   confirmDeleteId: string | null = null;
+
+  // --- Pagination ---
+  itemsPerPage = 10;
+  currentPage = signal(1);
 
   form = this.fb.group({
     title: ['', Validators.required],
@@ -48,21 +52,45 @@ export class ListeScholarshipsComponent implements OnInit {
   onSearch(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.searchTerm = value;
+    this.currentPage.set(1); // on revient à la page 1 à chaque nouvelle recherche
   }
 
   get filteredScholarships(): Scholarship[] {
     if (!this.searchTerm) return this.scholarships;
     const term = this.searchTerm.toLowerCase();
-    return this.scholarships.filter(
-      (s) =>
-        s.title.toLowerCase().includes(term) ||
-        s.university.toLowerCase().includes(term) ||
-        s.description.toLowerCase().includes(term) ||
-        (s.country && s.country.toLowerCase().includes(term)) ||
-        (s.domain && s.domain.toLowerCase().includes(term)) ||
-        (s.source && s.source.toLowerCase().includes(term))
+    const fields: (keyof Scholarship)[] = ['title', 'university', 'description', 'country', 'domain', 'source'];
+
+    return this.scholarships.filter((s) =>
+      fields.some((field) => (s[field] as string)?.toLowerCase().includes(term))
     );
   }
+
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.filteredScholarships.length / this.itemsPerPage));
+  }
+
+  get paginatedScholarships(): Scholarship[] {
+    const start = (this.currentPage() - 1) * this.itemsPerPage;
+    return this.filteredScholarships.slice(start, start + this.itemsPerPage);
+  }
+
+  get pageNumbers(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage.set(page);
+  }
+
+  nextPage(): void {
+    this.goToPage(this.currentPage() + 1);
+  }
+
+  prevPage(): void {
+    this.goToPage(this.currentPage() - 1);
+  }
+  // --- Fin pagination ---
 
   ngOnInit(): void {
     this.loadScholarships();

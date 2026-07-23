@@ -1,9 +1,10 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
+
 import { ApiService } from '../../../core/api/api.service';
 import { ApiResponse } from '../../../shared/models/interfaces/api-response.interface';
 import { User, UserDto } from '../../../shared/models/user.models';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-liste-user',
@@ -19,6 +20,7 @@ export class ListeUserComponent implements OnInit {
   users = signal<User[]>([]);
   loading = signal(false);
   errorMessage = signal<string | null>(null);
+
   searchTerm = signal('');
 
   confirmDeleteId = signal<number | null>(null);
@@ -30,6 +32,10 @@ export class ListeUserComponent implements OnInit {
   selectedUser = signal<User | null>(null);
   showDetails = signal(false);
 
+  // Pagination
+  itemsPerPage = 10;
+  currentPage = signal(1);
+
   form = this.fb.group({
     first_name: [''],
     last_name: [''],
@@ -39,63 +45,136 @@ export class ListeUserComponent implements OnInit {
     role: [''],
   });
 
+  // ==========================
+  // Recherche
+  // ==========================
   filteredUsers = computed(() => {
-    const term = this.searchTerm().toLowerCase();
-    const list = this.users();
+    const term = this.searchTerm().trim().toLowerCase();
 
-    if (!term) return list;
+    if (!term) {
+      return this.users();
+    }
 
-    return list.filter((u) =>
-      (u.first_name || '').toLowerCase().includes(term) ||
-      (u.last_name || '').toLowerCase().includes(term) ||
-      (u.email || '').toLowerCase().includes(term) ||
-      (u.country || '').toLowerCase().includes(term)
+    const fields: (keyof User)[] = [
+      'first_name',
+      'last_name',
+      'email',
+      'country',
+    ];
+
+    return this.users().filter((user) =>
+      fields.some((field) =>
+        String(user[field] ?? '')
+          .toLowerCase()
+          .includes(term)
+      )
     );
   });
 
-  onSearch(event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
-    this.searchTerm.set(value);
-  }
+  // ==========================
+  // Pagination
+  // ==========================
+  totalPages = computed(() =>
+    Math.max(
+      1,
+      Math.ceil(this.filteredUsers().length / this.itemsPerPage)
+    )
+  );
+
+  paginatedUsers = computed(() => {
+    const start = (this.currentPage() - 1) * this.itemsPerPage;
+
+    return this.filteredUsers().slice(
+      start,
+      start + this.itemsPerPage
+    );
+  });
+
+  pageNumbers = computed(() =>
+    Array.from(
+      { length: this.totalPages() },
+      (_, i) => i + 1
+    )
+  );
 
   ngOnInit(): void {
     this.loadUsers();
   }
 
+  // ==========================
+  // Recherche
+  // ==========================
+  onSearch(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+
+    this.searchTerm.set(value);
+    this.currentPage.set(1);
+  }
+
+  // ==========================
+  // Pagination
+  // ==========================
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages()) return;
+
+    this.currentPage.set(page);
+  }
+
+  nextPage(): void {
+    this.goToPage(this.currentPage() + 1);
+  }
+
+  prevPage(): void {
+    this.goToPage(this.currentPage() - 1);
+  }
+
+  // ==========================
+  // Chargement
+  // ==========================
   loadUsers(): void {
     this.loading.set(true);
 
-    this.apiService.get<ApiResponse<User[]>>('admin/users').subscribe({
-      next: (res) => {
-        this.users.set(Array.isArray(res.data) ? res.data : []);
-        this.loading.set(false);
-      },
-      error: (err) => {
-        this.errorMessage.set(err.message);
-        this.loading.set(false);
-      }
-    });
+    this.apiService
+      .get<ApiResponse<User[]>>('admin/users')
+      .subscribe({
+        next: (res) => {
+          this.users.set(Array.isArray(res.data) ? res.data : []);
+          this.loading.set(false);
+        },
+        error: (err) => {
+          this.errorMessage.set(err.message);
+          this.loading.set(false);
+        },
+      });
   }
 
+  // ==========================
+  // Création
+  // ==========================
   OpenCreate(): void {
     this.showForm.set(true);
     this.editingId.set(null);
     this.form.reset();
   }
 
+  // ==========================
+  // Edition
+  // ==========================
   editUser(id: number): void {
+    const user = this.users().find((u) => u.id === id);
+
+    if (!user) return;
+
     this.editingId.set(id);
     this.showForm.set(true);
 
-    const user = this.users().find((u) => u.id === id);
-
     this.form.patchValue({
-      first_name: user?.first_name ?? '',
-      last_name: user?.last_name ?? '',
-      email: user?.email ?? '',
-      country: user?.country ?? '',
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+      country: user.country,
       password: '',
-      role: user?.role ?? '',
+      role: user.role,
     });
   }
 
@@ -105,44 +184,63 @@ export class ListeUserComponent implements OnInit {
     this.form.reset();
   }
 
+  // ==========================
+  // Création / Modification
+  // ==========================
   submitForm(): void {
     if (this.form.invalid) return;
 
-    const dto: UserDto = this.form.value as UserDto;
-    const editingId = this.editingId();
+    this.submitting.set(true);
 
-    if (editingId) {
-      this.apiService.put<User>(`admin/users/${editingId}`, dto).subscribe({
-        next: (updatedUser) => {
-          this.users.update((list) => {
-            const index = list.findIndex((u) => u.id === editingId);
-            if (index === -1) return list;
-            const copy = [...list];
-            copy[index] = updatedUser;
-            return copy;
-          });
-          this.closeEdit();
-        },
-        error: (err) => {
-          this.errorMessage.set(err.message || 'Erreur update utilisateur');
-        },
-      });
+    const dto = this.form.getRawValue() as UserDto;
+    const id = this.editingId();
 
+    if (id) {
+      this.apiService
+        .put<User>(`admin/users/${id}`, dto)
+        .subscribe({
+          next: (updatedUser) => {
+            this.users.update((list) =>
+              list.map((u) => (u.id === id ? updatedUser : u))
+            );
+
+            this.submitting.set(false);
+            this.closeEdit();
+          },
+          error: (err) => {
+            this.submitting.set(false);
+            this.errorMessage.set(
+              err.message || 'Erreur lors de la modification.'
+            );
+          },
+        });
     } else {
-      this.apiService.post<User>('admin/users', dto).subscribe({
-        next: (newUser) => {
-          this.users.update((list) => [...list, newUser]);
-          this.closeEdit();
-        },
-        error: (err) => {
-          this.errorMessage.set(err.message || 'Erreur création utilisateur');
-        },
-      });
+      this.apiService
+        .post<User>('admin/users', dto)
+        .subscribe({
+          next: (newUser) => {
+            this.users.update((list) => [...list, newUser]);
+
+            this.submitting.set(false);
+            this.closeEdit();
+          },
+          error: (err) => {
+            this.submitting.set(false);
+            this.errorMessage.set(
+              err.message || 'Erreur lors de la création.'
+            );
+          },
+        });
     }
   }
 
+  // ==========================
+  // Détails
+  // ==========================
   detailUser(id: number): void {
-    this.selectedUser.set(this.users().find((u) => u.id === id) ?? null);
+    const user = this.users().find((u) => u.id === id) ?? null;
+
+    this.selectedUser.set(user);
     this.showDetails.set(true);
   }
 
@@ -151,6 +249,9 @@ export class ListeUserComponent implements OnInit {
     this.showDetails.set(false);
   }
 
+  // ==========================
+  // Suppression
+  // ==========================
   askDelete(id: number): void {
     this.confirmDeleteId.set(id);
   }
@@ -161,17 +262,24 @@ export class ListeUserComponent implements OnInit {
 
   confirmDelete(): void {
     const id = this.confirmDeleteId();
+
     if (!id) return;
 
     this.confirmDeleteId.set(null);
 
-    this.apiService.delete<void>(`admin/users/${id}`).subscribe({
-      next: () => {
-        this.users.update((list) => list.filter((u) => u.id !== id));
-      },
-      error: (err) => {
-        this.errorMessage.set(err.message || 'Erreur suppression');
-      },
-    });
+    this.apiService
+      .delete<void>(`admin/users/${id}`)
+      .subscribe({
+        next: () => {
+          this.users.update((list) =>
+            list.filter((u) => u.id !== id)
+          );
+        },
+        error: (err) => {
+          this.errorMessage.set(
+            err.message || 'Erreur lors de la suppression.'
+          );
+        },
+      });
   }
 }
