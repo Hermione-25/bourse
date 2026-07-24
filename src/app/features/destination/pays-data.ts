@@ -25,7 +25,6 @@ export const PAYS_MOCK: Pays[] = [
   { country: 'Switzerland', total: 0, url_image: 'images/suisse.jpg' },
   { country: 'United Kingdom', total: 0, url_image: 'images/royaume-uni.jpg' },
   { country: 'Czech Republic', total: 0, url_image: 'images/republique-tcheque.jpg' },
-  { country: 'Sweden', total: 0, url_image: 'images/suede.jpg' },
   { country: 'Qatar', total: 0, url_image: 'images/qatar.jpg' },
 
   // ===== AMÉRIQUE DU NORD =====
