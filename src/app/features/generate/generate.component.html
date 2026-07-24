@@ -5,7 +5,7 @@
     @if (!apercuHtmlRaw()) {
       <div class="mb-10">
         <!-- Step labels -->
-        <div class="flex justify-between text-[10px] font-semibold text-[var(--color-gray-text)]/40 uppercase tracking-wider mb-3 px-0.5">
+        <div class="flex justify-between text-[5px] mb:text-[10px] font-semibold text-[var(--color-gray-text)]/40 uppercase tracking-wider mb-3 px-0.5">
           <span [class.text-[var(--color-primary)]]="currentStep() >= 0">Modèle</span>
           <span [class.text-[var(--color-primary)]]="currentStep() >= 1">Profil</span>
           <span [class.text-[var(--color-primary)]]="currentStep() >= 2">Formations</span>
@@ -15,7 +15,6 @@
           <span [class.text-[var(--color-primary)]]="currentStep() >= 6">Intérêts</span>
         </div>
 
-        <!-- Progress track -->
         <div class="flex items-center gap-1.5">
           @for (etape of [0,1,2,3,4,5,6]; track etape) {
             <div class="flex-1 h-1.5 rounded-full transition-all duration-500"
@@ -52,7 +51,7 @@
               </div>
 
               <div class="p-6 space-y-6">
-                <!-- Templates grid -->
+
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                   @for (template of templates(); track template.id) {
                     <div (click)="selectionnerTemplate(template.id)"
@@ -102,7 +101,6 @@
               <div class="p-6">
                 <div [formGroup]="personalInfoGroup" class="space-y-5">
 
-                  <!-- Photo -->
                   <div>
                     <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-color-gray-text/45 mb-2">Photo de profil</label>
                     <label class="flex flex-col items-center justify-center gap-3 w-full border-2 border-dashed border-gray-400/40 rounded-xl px-4 py-6 text-sm text-[var(--color-gray-text)]/50 cursor-pointer hover:border-[var(--color-primary)]/50 hover:bg-[var(--color-primary)]/3 transition-all duration-200 group bg-white">
@@ -119,7 +117,6 @@
                     </label>
                   </div>
 
-                  <!-- Prénom + Nom -->
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Prénom</label>
@@ -153,7 +150,7 @@
                     </div>
                   </div>
 
-                  <!-- Adresse -->
+                   <!-- Adresse  -->
                   <div>
                     <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Adresse</label>
                     <div class="relative">
@@ -195,7 +192,7 @@
             }
 
 
-            <!-- ── ÉTAPE 2 : Formations ── -->
+            <!--  ÉTAPE 2 : Formations -->
             @case (2) {
               <div class="px-6 pt-7 pb-3 border-b border-gray-400/15">
                 <div class="flex items-center gap-3 mb-1">
