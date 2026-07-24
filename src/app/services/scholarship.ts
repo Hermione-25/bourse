@@ -7,7 +7,7 @@ import { ScholarshipDto } from '../features/scholarships/scholarships.models';
 })
 export class ScholarshipService {
 
-  private apiUrl = 'http://127.0.0.1:8000/api';
+  private apiUrl = 'https://next-cnb4.onrender.com';
 
   constructor(private http: HttpClient) {}
 
