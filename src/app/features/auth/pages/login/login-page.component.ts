@@ -28,7 +28,7 @@ export class LoginPageComponent {
 
     google.accounts.id.renderButton(
       document.getElementById('google-btn'),
-      { theme: 'filled_black', size: 'large', width: '300' }
+      { theme: 'filled_black', size: 'large', width: '360' }
     );
   }
 
