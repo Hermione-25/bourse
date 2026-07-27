@@ -4,7 +4,9 @@ import { map, Observable } from "rxjs";
 import { ApiResponse } from "../../shared";
 import { Cv, CvPayload, CvTemplate } from "./generate.models";
 import { HttpClient } from '@angular/common/http';
-import { environment } from "../../../main";
+import { environment } from "../../../environments/environment";
+
+
 
 @Injectable({ providedIn: 'root' })
 export class GenerateService {
