@@ -51,7 +51,7 @@ export class ScholarshipDetailComponent implements OnInit {
   }
 
   onPostuler(): void {
-    this.ouvrirLien(this.scholarship()?.apply_link || this.scholarship()?.link);
+    this.ouvrirLien(this.scholarship()?.apply_link);
   }
 
   onOfficial(): void {
