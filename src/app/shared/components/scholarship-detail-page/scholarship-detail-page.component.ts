@@ -1,8 +1,8 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ScholarshipsService } from '../../../features/scholarships/scholarships.service';
 import { FundingType, Scholarship } from '../../../features/scholarships/scholarships.models';
-import { DatePipe } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { ChatService } from '../../../features/utilisateurs/chat/chat.service';
 
 
@@ -15,7 +15,7 @@ import { ChatService } from '../../../features/utilisateurs/chat/chat.service';
 })
 export class ScholarshipDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
+  private location = inject(Location);
   private scholarshipsService = inject(ScholarshipsService);
   private chatService = inject(ChatService);
 
@@ -47,13 +47,20 @@ export class ScholarshipDetailComponent implements OnInit {
   }
 
   onRetour(): void {
-    this.router.navigate(['/scholarships']);
+    this.location.back();
   }
 
   onPostuler(): void {
     const lien = this.scholarship()?.apply_link || this.scholarship()?.link;
     if (lien) {
       window.open(lien, '_blank', 'noopener,noreferrer');
+    }
+  }
+
+  onOfficialWebsite(): void {
+    const lien =  this.scholarship()?.official_website;
+    if (lien) {
+      window.open(lien, '_blank');
     }
   }
 

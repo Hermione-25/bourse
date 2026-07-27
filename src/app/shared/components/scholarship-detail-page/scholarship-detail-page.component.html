@@ -225,46 +225,13 @@
         }
 
 
-
-
-
-        @if (bourse.official_website) {
-
-          <div class="mb-6">
-
-            <h2 class="font-bold text-lg text-black">
-              Site officiel de l'université
-            </h2>
-
-
-            <a
-              [href]="bourse.official_website"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-sm text-blue-500 underline break-all">
-
-              {{ bourse.official_website }}
-
-            </a>
-
-
-          </div>
-
-        }
-
-
-
-
-
         <div class="flex gap-3">
 
           <button
             type="button"
-            (click)="onRetour()"
+            (click)="onOfficialWebsite()"
             class="flex-1 border border-[var(--color-border-color)] text-[var(--color-gray-text)] font-semibold rounded-xl py-3 hover:bg-gray-50 transition">
-
-            Retour
-
+            Site officiel
           </button>
 
 

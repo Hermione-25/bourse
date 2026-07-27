@@ -20,8 +20,6 @@ export class FavorisService {
   }
 
   retirerFavori(scholarshipId: string): Observable<void> {
-    // Le backend n'expose qu'un endpoint toggle : un même POST ajoute ou retire
-    // selon l'état actuel côté serveur. L'UI gère déjà l'état optimiste avant l'appel.
     return this.apiService.post<void>(`user/favorites/${scholarshipId}`, {});
   }
 }
