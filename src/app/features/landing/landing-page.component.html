@@ -287,25 +287,26 @@
 </section>
 
   <div class="relative z-30 -mt-[50px] mb-10 w-full max-w-[1200px] mx-auto px-6">
-    <div
-      class="bg-primary rounded-2xl grid grid-cols-2 md:grid-cols-4 py-7 px-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.15)] text-center text-white gap-5 md:gap-0">
-      <div class="md:border-r border-white/10 last:border-r-0">
-        <i class="fas fa-graduation-cap text-2xl text-light mb-2.5"></i>
-        <div class="text-[28px] font-bold">{{ stats()?.total_scholarships ?? '0' }}+</div>
-        <div class="text-xs text-border-color mt-1">Bourses disponibles</div>
-      </div>
-      <div class="md:border-r border-white/10 last:border-r-0">
-        <i class="fas fa-globe text-2xl text-light mb-2.5"></i>
-        <div class="text-[28px] font-bold">{{ stats()?.total_countries ?? '0' }}+</div>
-        <div class="text-xs text-border-color mt-1">Pays couverts</div>
-      </div>
-      <div class="md:border-r border-white/10 last:border-r-0">
-        <i class="fas fa-university text-2xl text-light mb-2.5"></i>
-        <div class="text-[28px] font-bold">{{ stats()?.total_universities ?? '0' }}+</div>
-        <div class="text-xs text-border-color mt-1">Universités </div>
-      </div>
+    <div class="relative z-30 -mt-[50px] mb-10 w-full max-w-[1200px] mx-auto px-6">
+  <div
+    class="bg-primary rounded-2xl grid grid-cols-3 py-7 px-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.15)] text-center text-white gap-3 md:gap-0">
+    <div class="border-r border-white/10 last:border-r-0">
+      <i class="fas fa-graduation-cap text-xl md:text-2xl text-light mb-2 md:mb-2.5"></i>
+      <div class="text-lg md:text-[28px] font-bold">{{ stats()?.total_scholarships ?? '0' }}+</div>
+      <div class="text-[10px] md:text-xs text-border-color mt-1">Bourses disponibles</div>
+    </div>
+    <div class="border-r border-white/10 last:border-r-0">
+      <i class="fas fa-globe text-xl md:text-2xl text-light mb-2 md:mb-2.5"></i>
+      <div class="text-lg md:text-[28px] font-bold">{{ stats()?.total_countries ?? '0' }}+</div>
+      <div class="text-[10px] md:text-xs text-border-color mt-1">Pays couverts</div>
+    </div>
+    <div class="border-r border-white/10 last:border-r-0">
+      <i class="fas fa-university text-xl md:text-2xl text-light mb-2 md:mb-2.5"></i>
+      <div class="text-lg md:text-[28px] font-bold">{{ stats()?.total_universities ?? '0' }}+</div>
+      <div class="text-[10px] md:text-xs text-border-color mt-1">Universités</div>
     </div>
   </div>
+</div>
 
   <section class="bg-white py-20">
     <div class="w-full max-w-[1200px] mx-auto px-6">
