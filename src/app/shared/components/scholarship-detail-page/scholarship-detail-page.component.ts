@@ -51,17 +51,16 @@ export class ScholarshipDetailComponent implements OnInit {
   }
 
   onPostuler(): void {
-    const lien = this.scholarship()?.apply_link || this.scholarship()?.link;
-    if (lien) {
-      window.open(lien, '_blank', 'noopener,noreferrer');
-    }
+    this.ouvrirLien(this.scholarship()?.apply_link || this.scholarship()?.link);
   }
 
-  onOfficialWebsite(): void {
-    const lien =  this.scholarship()?.official_website;
-    if (lien) {
-      window.open(lien, '_blank');
-    }
+  onOfficial(): void {
+    this.ouvrirLien(this.scholarship()?.official_website);
+  }
+
+  private ouvrirLien(lien: string | undefined): void {
+    if (!lien) return;
+    window.open(lien, '_blank', 'noopener,noreferrer');
   }
 
 getJoursRestants(deadline: string | undefined): number | null {
