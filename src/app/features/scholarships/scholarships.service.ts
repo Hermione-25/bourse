@@ -5,6 +5,13 @@ import { ApiService } from '../../core/api/api.service';
 import { ApiResponse } from '../../shared/models/interfaces/api-response.interface';
 import { Scholarship, ScholarshipDto } from './scholarships.models';
 
+
+export interface Stats {
+  total_scholarships: number;
+  total_countries: number;
+  total_universities: number;
+
+}
 @Injectable({ providedIn: 'root' })
 export class ScholarshipsService {
   private apiService = inject(ApiService);
@@ -59,6 +66,12 @@ getPublicById(id: string): Observable<Scholarship> {
   update(id: string, dto: ScholarshipDto): Observable<Scholarship> {
     return this.apiService
       .put<ApiResponse<Scholarship>>(`admin/scholarships/${id}`, dto)
+      .pipe(map((response) => response.data));
+  }
+
+  getStats(): Observable<Stats> {
+    return this.apiService
+      .get<ApiResponse<Stats>>(`statistics/`)
       .pipe(map((response) => response.data));
   }
 }

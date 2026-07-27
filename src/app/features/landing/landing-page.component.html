@@ -291,23 +291,18 @@
       class="bg-primary rounded-2xl grid grid-cols-2 md:grid-cols-4 py-7 px-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.15)] text-center text-white gap-5 md:gap-0">
       <div class="md:border-r border-white/10 last:border-r-0">
         <i class="fas fa-graduation-cap text-2xl text-light mb-2.5"></i>
-        <div class="text-[28px] font-bold">2 000+</div>
+        <div class="text-[28px] font-bold">{{ stats()?.total_scholarships ?? '0' }}+</div>
         <div class="text-xs text-border-color mt-1">Bourses disponibles</div>
       </div>
       <div class="md:border-r border-white/10 last:border-r-0">
         <i class="fas fa-globe text-2xl text-light mb-2.5"></i>
-        <div class="text-[28px] font-bold">160+</div>
+        <div class="text-[28px] font-bold">{{ stats()?.total_countries ?? '0' }}+</div>
         <div class="text-xs text-border-color mt-1">Pays couverts</div>
       </div>
       <div class="md:border-r border-white/10 last:border-r-0">
         <i class="fas fa-university text-2xl text-light mb-2.5"></i>
-        <div class="text-[28px] font-bold">200+</div>
+        <div class="text-[28px] font-bold">{{ stats()?.total_universities ?? '0' }}+</div>
         <div class="text-xs text-border-color mt-1">Universités </div>
-      </div>
-      <div class="md:border-r border-white/10 last:border-r-0">
-        <i class="fas fa-shield-alt text-2xl text-light mb-2.5"></i>
-        <div class="text-[28px] font-bold">10 000+</div>
-        <div class="text-xs text-border-color mt-1">Opportunités offerts</div>
       </div>
     </div>
   </div>
@@ -547,17 +542,6 @@
         </ul>
       </div>
 
-      <div>
-        <h4 class="text-[13px] font-bold uppercase tracking-[1px] text-dark mb-5">Restez informé</h4>
-        <p class="text-xs text-gray-text mb-4">Abonnez-vous à notre newsletter pour recevoir en priorité les alertes bourses.
-        </p>
-        <div class="bg-light border border-border-color rounded-xl p-1 flex">
-          <input type="email" placeholder="Votre adresse email"
-            class=" border-none outline-none px-3 text-xs w-full text-dark">
-          <button
-            class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-90 hover:-translate-y-[1px] !px-4 !py-2 whitespace-nowrap">S'abonner</button>
-        </div>
-      </div>
     </div>
 
     <div class="bg-primary text-white/60 text-[11px] py-6 border-t border-dark">

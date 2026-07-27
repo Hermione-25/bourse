@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { ScholarshipsService } from '../../features/scholarships/scholarships.service';
+import { ScholarshipsService, Stats } from '../../features/scholarships/scholarships.service';
 import { Scholarship } from '../../features/scholarships/scholarships.models';
 import { AuthService } from '../../core/auth/auth.service';
 import { ScholarshipCard } from '../../shared';
@@ -31,6 +31,8 @@ export class LandingPageComponent implements OnInit {
   niveau = '';
   domaine = '';
 
+  stats = signal<Stats | null>(null);
+
   ngOnInit(): void {
     
     this.scholarshipsService.getPublic().subscribe({
@@ -42,6 +44,11 @@ export class LandingPageComponent implements OnInit {
         console.error('Error fetching scholarships', err);
         this.loading.set(false);
       }
+    });
+
+    this.scholarshipsService.getStats().subscribe({
+      next: (data) => this.stats.set(data),
+      error: () => {},
     });
 
     this.favorisService.getFavoris().subscribe({
