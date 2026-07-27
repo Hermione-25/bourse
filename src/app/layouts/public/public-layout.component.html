@@ -1,7 +1,7 @@
 
  <nav class="bg-light sticky top-0 z-[100] shadow-[0_1px_10px_rgba(0,0,0,0.02)]">
     <div class="w-full max-w-[1200px] mx-auto px-6 flex justify-between items-center py-4">
-      <div class="flex items-center gap-2.5">
+      <a href="/"><div class="flex items-center gap-2.5">
         <img src="next.png" class="w-10" alt="">
         <div>
           <h1 class="text-[20px] font-bold text-black leading-none">Next
@@ -9,6 +9,7 @@
           <p class="text-[10px] text-gray-text tracking-[1px]">Étudiez. Rêvez. Réalisez.</p>
         </div>
       </div>
+      </a>
 
       <button type="button" class="inline-flex items-center justify-center rounded-lg border border-gray-200 p-2 text-gray-700 md:hidden" (click)="toggleMenu()" aria-label="Ouvrir le menu">
         <i class="fas" [class.fa-bars]="!isMenuOpen" [class.fa-times]="isMenuOpen"></i>
