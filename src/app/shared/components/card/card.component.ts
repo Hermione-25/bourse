@@ -64,10 +64,10 @@ onToggleFavori(event: Event): void {
 
   getCouleurDeadline(jours: number | null): string {
     if (jours === null) return 'text-gray-500';
-    if (jours < 0) return 'text-red-600';           // Expirée
-    if (jours <= 7) return 'text-red-600';           // Urgent (moins d'une semaine)
-    if (jours <= 30) return 'text-amber-600';        // Bientôt (moins d'un mois)
-    return 'text-emerald-500';                       // Tranquille
+    if (jours < 0) return 'text-red-600';           
+    if (jours <= 7) return 'text-red-600';           
+    if (jours <= 30) return 'text-amber-600';        
+    return 'text-emerald-500';                       
   }
 
   
