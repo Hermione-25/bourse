@@ -240,8 +240,12 @@
                       <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-[var(--color-gray-text)]/45 mb-2">Genre</label>
                       <div class="relative">
                         <i class="fas fa-venus-mars absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                        <input type="text" formControlName="gender" placeholder="Homme / Femme"
+                        <select formControlName="gender"
                           class="w-full rounded-xl border border-gray-400/40 bg-white pl-10 pr-4 py-2.5 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all">
+                          <option value="">Sélectionner...</option>
+                          <option value="Homme">Homme</option>
+                          <option value="Femme">Femme</option>
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -406,8 +410,14 @@
                       </div>
                       <input type="text" formControlName="name" placeholder="Compétence (ex : JavaScript)"
                         class="flex-1 rounded-lg border border-gray-400/40 bg-white px-3 py-2 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all min-w-0">
-                      <input type="text" formControlName="level" placeholder="Niveau"
+                      <select formControlName="level" 
                         class="w-32 rounded-lg border border-gray-400/40 bg-white px-3 py-2 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all flex-shrink-0">
+                        <option value="">Sélectionner...</option>
+                        <option value="Débutant">Débutant</option>
+                        <option value="Intermédiaire">Intermédiaire</option>
+                        <option value="Avancé">Avancé</option>
+                        <option value="Expert">Expert</option>
+                      </select>
                       <button type="button" (click)="SupprimerSkill(i)"
                         class="w-8 h-8 rounded-lg text-red-400 hover:text-red-600 hover:bg-red-50 flex items-center justify-center flex-shrink-0 transition-all">
                         <i class="fas fa-times text-xs"></i>
@@ -442,8 +452,13 @@
                       </div>
                       <input type="text" formControlName="language_name" placeholder="Langue (ex : Français)"
                         class="flex-1 rounded-lg border border-gray-400/40 bg-white px-3 py-2 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all min-w-0">
-                      <input type="text" formControlName="language_level" placeholder="Niveau"
+                      <select  formControlName="language_level" placeholder="Niveau"
                         class="w-32 rounded-lg border border-gray-400/40 bg-white px-3 py-2 text-sm text-[var(--color-black)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all flex-shrink-0">
+                        <option value="">Sélectionner...</option>
+                        <option value="Débutant">Passable</option>
+                        <option value="Intermédiaire">Bon</option>
+                        <option value="Avancé">Très Bon</option>
+                      </select>
                       <button type="button" (click)="SupprimerLanguage(i)"
                         class="w-8 h-8 rounded-lg text-red-400 hover:text-red-600 hover:bg-red-50 flex items-center justify-center flex-shrink-0 transition-all">
                         <i class="fas fa-times text-xs"></i>
