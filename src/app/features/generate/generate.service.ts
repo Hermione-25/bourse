@@ -39,7 +39,7 @@ export class GenerateService {
 
     saveCv(payload: CvPayload): Observable<Cv> {
         return this.apiService
-            .post<ApiResponse<Cv>>('cv/store', payload)
+            .post<ApiResponse<Cv>>('cv/mycvs', payload)
             .pipe(map((response) => response.data));
     }
 
