@@ -53,28 +53,94 @@
               <div class="p-6 space-y-6">
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                  @for (template of templates(); track template.id) {
-                    <div (click)="selectionnerTemplate(template.id)"
-                         class="relative cursor-pointer rounded-xl overflow-hidden transition-all duration-200 hover:shadow-md border-2 bg-white"
-                         [class]="templateSelectionne() === template.id
-                           ? 'border-[var(--color-primary)] shadow-[0_4px_16px_rgba(74,15,24,0.15)]'
-                           : 'border-transparent shadow-sm hover:border-gray-400/50'">
 
-                      @if (templateSelectionne() === template.id) {
-                        <div class="absolute top-2 right-2 w-6 h-6 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center text-xs font-bold z-10 shadow-md">
-                          <i class="fas fa-check text-[9px]"></i>
+                    @for (template of templates(); track template.id) {
+
+                      <div 
+                        (click)="selectionnerTemplate(template.id)"
+                        class="relative cursor-pointer rounded-xl overflow-hidden transition-all duration-200 hover:shadow-md border-2 bg-white"
+                        [class]="templateSelectionne() === template.id
+                          ? 'border-[var(--color-primary)] shadow-[0_4px_16px_rgba(74,15,24,0.15)]'
+                          : 'border-transparent shadow-sm hover:border-gray-400/50'">
+
+                        
+                        <!-- Bouton aperçu -->
+                        <button
+                          (click)="$event.stopPropagation(); ouvrirApercu(template)"
+                          class="absolute top-2 left-2 w-6 h-6 bg-white flex items-center justify-center text-xs font-bold z-10 shadow-md">
+                          <i class="fas fa-search text-[9px]"></i>
+                        </button>
+
+
+                        <!-- Modèle sélectionné -->
+                        @if (templateSelectionne() === template.id) {
+
+                          <div class="absolute top-2 right-2 w-6 h-6 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center text-xs font-bold z-10 shadow-md">
+                            <i class="fas fa-check text-[9px]"></i>
+                          </div>
+
+                        }
+
+
+                        <!-- Image -->
+                        <img 
+                          [src]="'https://next-cnb4.onrender.com/images/cv-templates/' + template.preview_image"
+                          class="w-full h-40 object-cover"
+                          [alt]="template.name">
+
+
+                        <!-- Nom -->
+                        <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 to-transparent p-2">
+                          <p class="text-white text-[10px] font-semibold truncate">
+                            {{ template.name }}
+                          </p>
                         </div>
-                      }
 
-                      <img [src]="'https://next-cnb4.onrender.com/images/cv-templates/' + template.preview_image"
-                           class="w-full h-40 object-cover" [alt]="template.name">
 
-                      <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 to-transparent p-2">
-                        <p class="text-white text-[10px] font-semibold truncate">{{ template.name }}</p>
                       </div>
+
+                    }
+
+                  </div>
+
+
+
+
+                  @if (apercuTemplate()) {
+
+                    <div 
+                      class="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+                      (click)="fermerApercu()">
+
+
+                      <div 
+                        class="relative bg-white rounded-xl p-4 max-w-5xl max-h-[90vh]"
+                        (click)="$event.stopPropagation()">
+
+
+
+                        <!-- Bouton X -->
+                        <button
+                          (click)="fermerApercu()"
+                          class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center z-10">
+
+                          <i class="fas fa-times text-gray-700"></i>
+
+                        </button>
+
+
+
+                        <!-- Image en grand -->
+                        <img
+                          [src]="'https://next-cnb4.onrender.com/images/cv-templates/' + apercuTemplate()!.preview_image"
+                          [alt]="apercuTemplate()!.name"
+                          class="max-h-[80vh] max-w-full object-contain rounded-lg">
+
+                      </div>
+
                     </div>
+
                   }
-                </div>
 
                 <div>
                   <label class="block text-[10px] font-bold uppercase tracking-[1.5px] text-color-gray-text/45 mb-2">

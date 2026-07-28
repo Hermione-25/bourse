@@ -30,6 +30,16 @@ export class GenerateComponent implements OnInit {
   apercuHtmlRaw = signal<string>('');
   apercuHtmlSafe = signal<SafeHtml>('');
 
+  apercuTemplate = signal<CvTemplate | null>(null);
+
+  ouvrirApercu(template: CvTemplate) {
+    this.apercuTemplate.set(template);
+  }
+
+  fermerApercu() {
+    this.apercuTemplate.set(null);
+  }
+
 estConnecte = toSignal(
   this.authService.authState$.pipe(map((auth) => !!auth)),
   { initialValue: false }
