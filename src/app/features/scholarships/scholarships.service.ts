@@ -7,9 +7,9 @@ import { Scholarship, ScholarshipDto } from './scholarships.models';
 
 
 export interface Stats {
-  total_scholarships: number;
-  total_countries: number;
-  total_universities: number;
+  scholarships: number;
+  countries: number;
+  universities: number;
 
 }
 @Injectable({ providedIn: 'root' })
@@ -22,20 +22,17 @@ export class ScholarshipsService {
       .pipe(map((response) => response.data));
   }
 
-  // Route publique — liste des bourses visibles sans authentification
   getPublic(): Observable<Scholarship[]> {
     return this.apiService
       .get<ApiResponse<Scholarship[]>>('scholarships')
       .pipe(map((response) => response.data));
   }
 
-  // Route publique — détail d'une bourse, accessible sans authentification
 getPublicById(id: string): Observable<Scholarship> {
   return this.apiService
     .get<ApiResponse<Scholarship>>(`scholarships/${id}`)
     .pipe(map((response) => response.data));
 }
-  // Route publique — recherche filtrée (utilisée par la landing page et la liste)
   search(filters: { country?: string; level?: string; domain?: string }): Observable<Scholarship[]> {
     const params: Record<string, string> = {};
     if (filters.country) params['country'] = filters.country;
