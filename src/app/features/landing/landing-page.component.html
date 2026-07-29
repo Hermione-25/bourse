@@ -1,16 +1,17 @@
 <nav class="bg-light sticky top-0 z-[100] shadow-[0_1px_10px_rgba(0,0,0,0.02)]">
     <div class="w-full max-w-[2000px] mx-auto px-6 flex justify-between items-center py-4">
-      <a href="/"><div class="flex items-center gap-2.5">
-        <img src="next.png" alt="" class="w-10">
-        <div>
-          <h1 class="text-[20px] font-bold text-black leading-none">Next</h1>
-          <p class="text-[10px] text-gray-text tracking-[1px]">Étudiez. Rêvez. Réalisez.</p>
+      <a href="/">
+        <div class="flex items-center gap-2.5">
+          <img src="next.png" alt="" class="w-10">
+          <div>
+            <h1 class="text-[20px] font-bold text-black leading-none">Next</h1>
+            <p class="text-[10px] text-gray-text tracking-[1px]">Étudiez. Rêvez. Réalisez.</p>
+          </div>
         </div>
-      </div>
-    </a>
+      </a>
 
       <button type="button" class="flex rounded-lg border border-gray-300 p-2 text-gray-700 md:hidden" (click)="toggleMenu()" aria-label="Ouvrir le menu">
-        <i class="fas " [class.fa-bars]="!isMenuOpen" [class.fa-times]="isMenuOpen"></i>
+        <i class="fas " [class.fa-bars]="!isMenuOpen" ></i>
       </button>
 
       <ul class="hidden md:flex gap-6 list-none m-0 p-0">
@@ -50,8 +51,21 @@
     </div>
 
     @if (isMenuOpen) {
-      <div class="border-t border-gray-200 bg-white px-6 py-4 md:hidden">
-        <ul class="flex flex-col gap-3 list-none m-0 p-0">
+      <div class="fixed inset-0 bg-black/70 z-[190] md:hidden" (click)="closeMenu()"></div>
+
+      <div class="fixed top-0 left-0 h-screen w-[70%] max-w-[250px] bg-white shadow-2xl z-[200] px-6 py-6 md:hidden">
+        <a href="/">
+        <div class="flex items-center gap-2.5 mb-6">
+          <img src="next.png" alt="" class="w-10">
+          <div class="flex justify-between w-full">
+            <h1 class="text-[20px] font-bold text-black leading-none">Next</h1>
+
+            <button class="rounded-lg border border-gray-300 p-2 text-gray-700 w-10 h-8 flex items-center justify-center" (click)="closeMenu()"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+      </a>
+      <div class="w-50  border-t border-primary"></div>
+        <ul class="flex flex-col gap-3 space-y-7 mt-8 list-none m-0 p-0">
           <li><a routerLink="/" class="relative text-primary/20 text-sm font-medium transition-all duration-300 hover:text-primary hover:z-20 hover:font-semibold" (click)="closeMenu()">Accueil</a></li>
           <li><a routerLink="/scholarships" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">Bourses</a></li>
           <li><a routerLink="/pays" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">pays</a></li>
