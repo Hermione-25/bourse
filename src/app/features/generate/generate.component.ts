@@ -305,5 +305,3 @@ estConnecte = toSignal(
     });
   }
 }
-
-   
