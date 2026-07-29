@@ -65,11 +65,11 @@
       </a>
       <div class="w-38  border-t border-primary/50"></div>
         <ul class="flex flex-col gap-3 space-y-7 mt-8 list-none m-0 p-0">
-          <li><a routerLink="/" class="relative text-primary/20 text-sm font-medium transition-all duration-300 hover:text-primary hover:z-20 hover:font-semibold" (click)="closeMenu()">Accueil</a></li>
-          <li><a routerLink="/scholarships" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">Bourses</a></li>
-          <li><a routerLink="/pays" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">pays</a></li>
-          <li><a routerLink="/faq" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">FAQ</a></li>
-          <li><a routerLink="/contact" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">Contact</a></li>
+          <li class="flex items-center gap-3 "><i class="fas fa-home"></i><a routerLink="/" class="relative text-primary/20 text-sm font-medium transition-all duration-300 hover:text-primary hover:z-20 hover:font-semibold" (click)="closeMenu()">Accueil</a></li>
+          <li class="flex items-center gap-3 "><i class="fas fa-book"></i><a routerLink="/scholarships" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">Bourses</a></li>
+          <li class="flex items-center gap-3 "><i class="fas fa-map-marker-alt"></i><a routerLink="/pays" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">pays</a></li>
+          <li class="flex items-center gap-3 "><i class="fas fa-question-circle"></i><a routerLink="/faq" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">FAQ</a></li>
+          <li class="flex items-center gap-3 "><i class="fas fa-envelope"></i><a routerLink="/contact" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">Contact</a></li>
           
           <div class="w-38 mt-10 border-t border-primary/50"></div>
           <li><a routerLink="/generate" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Générer un CV</a></li>
