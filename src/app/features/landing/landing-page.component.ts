@@ -8,11 +8,12 @@ import { AuthService } from '../../core/auth/auth.service';
 import { ScholarshipCard } from '../../shared';
 import { DropdownSelectComponent } from '../../shared';
 import { FavorisService } from '../../services/utilisateur/favoris.service';
+import { FooterComponent } from "../../layouts/footer/footer.component";
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, ScholarshipCard, DropdownSelectComponent],
+  imports: [CommonModule, FormsModule, RouterModule, ScholarshipCard, DropdownSelectComponent, FooterComponent],
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css'],
 })

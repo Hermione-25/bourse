@@ -5,11 +5,12 @@ import { ScholarshipsService } from '../../scholarships.service';
 import { FavorisService } from '../../../../services/utilisateur/favoris.service';
 import { Scholarship } from '../../scholarships.models';
 import { ScholarshipCard } from "../../../../shared";
+import { FooterComponent } from '../../../../layouts/footer/footer.component';
 
 @Component({
   selector: 'app-scholarships-list',
   standalone: true,
-  imports: [CommonModule, ScholarshipCard],
+  imports: [CommonModule, ScholarshipCard, FooterComponent],
   templateUrl: './scholarship-list-page.component.html',
 })
 export class ScholarshipsListComponent implements OnInit {

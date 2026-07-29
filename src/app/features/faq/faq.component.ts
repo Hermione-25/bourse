@@ -1,9 +1,10 @@
 import { Component, signal, computed } from '@angular/core';
+import { FooterComponent } from "../../layouts/footer/footer.component";
 
 @Component({
   selector: 'app-faq',
   standalone: true,
-  imports: [],
+  imports: [FooterComponent],
   templateUrl: './faq.component.html',
 })
 export class FaqComponent {

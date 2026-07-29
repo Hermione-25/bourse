@@ -7,10 +7,11 @@ import { AuthService } from '../../core/auth/auth.service';
 import { take } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
+import { FooterComponent } from "../../layouts/footer/footer.component";
 
 @Component({
   selector: 'app-generate',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FooterComponent],
   templateUrl: 'generate.component.html',
 })
 export class GenerateComponent implements OnInit {

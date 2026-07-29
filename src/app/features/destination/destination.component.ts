@@ -5,11 +5,12 @@ import { PaysService } from './pays.service';
 import { Pays } from '../../shared/models/pays.models';
 import { PAYS_MOCK } from './pays-data';
 import { FormsModule } from '@angular/forms';
+import { FooterComponent } from "../../layouts/footer/footer.component";
 
 @Component({
   selector: 'app-destination',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, FooterComponent],
   templateUrl: './destination.component.html',
 })
 export class DestinationComponent implements OnInit {
