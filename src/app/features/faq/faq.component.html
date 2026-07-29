@@ -19,7 +19,7 @@
         <button
           type="button"
           (click)="onSelectCategorie(cat.id)"
-          class="flex items-center gap-3 h-30 bg-white shadow-lg rounded-xl px-5 py-4 hover:border-[var(--color-primary)] hover:shadow-md transition text-left">
+          class="flex items-center gap-3 h-30 bg-white border border-gray-300 shadow-lg shadow-[0_4px_20px_rgba(0,0,0,0.08)] rounded-xl px-5 py-4 hover:border-[var(--color-primary)] hover:shadow-md transition text-left">
           <i class="fas {{ cat.icon }} text-xl text-[var(--color-primary)]"></i>
           <span class="font-medium text-[var(--color-gray-text)]">{{ cat.label }}</span>
         </button>
@@ -32,7 +32,7 @@
 
       <!-- Sidebar catégories -->
       <div class="md:col-span-1">
-        <div class="bg-white shadow-lg h-110 rounded-xl p-3">
+        <div class="bg-white border border-gray-300 shadow-lg shadow-[0_4px_20px_rgba(0,0,0,0.08)] h-110 rounded-xl p-3">
           @for (cat of categories; track cat.id) {
             <button
               type="button"
@@ -58,7 +58,7 @@
       </div>
 
       <!-- Liste des questions -->
-      <div class="md:col-span-3 bg-white">
+      <div class="md:col-span-3 bg-white border border-gray-300 shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
         <h2 class="text-lg font-bold text-[var(--color-black)] mb-4">
           {{ categorieActuelle()?.label }}
         </h2>
