@@ -53,10 +53,9 @@
     @if (isMenuOpen) {
       <div class="fixed inset-0 bg-black/70 z-[190] md:hidden" (click)="closeMenu()"></div>
 
-      <div class="fixed top-0 left-0 h-screen w-[70%] max-w-[250px] bg-white shadow-2xl z-[200] px-6 py-6 md:hidden">
+      <div class="fixed top-0 left-0 h-screen w-[65%] max-w-[190px] bg-white shadow-2xl z-[200] px-6 py-6 md:hidden">
         <a href="/">
         <div class="flex items-center gap-2.5 mb-6">
-          <img src="next.png" alt="" class="w-10">
           <div class="flex justify-between w-full">
             <h1 class="text-[20px] font-bold text-black leading-none">Next</h1>
 
@@ -64,13 +63,15 @@
           </div>
         </div>
       </a>
-      <div class="w-50  border-t border-primary"></div>
+      <div class="w-38  border-t border-primary/50"></div>
         <ul class="flex flex-col gap-3 space-y-7 mt-8 list-none m-0 p-0">
           <li><a routerLink="/" class="relative text-primary/20 text-sm font-medium transition-all duration-300 hover:text-primary hover:z-20 hover:font-semibold" (click)="closeMenu()">Accueil</a></li>
           <li><a routerLink="/scholarships" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">Bourses</a></li>
           <li><a routerLink="/pays" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">pays</a></li>
           <li><a routerLink="/faq" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">FAQ</a></li>
           <li><a routerLink="/contact" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">Contact</a></li>
+          
+          <div class="w-38 mt-10 border-t border-primary/50"></div>
           <li><a routerLink="/generate" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Générer un CV</a></li>
           @if(authService.isAuthenticated$ | async) {
             <li><a routerLink="/user" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Mon Espace</a></li>
