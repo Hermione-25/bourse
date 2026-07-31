@@ -5,6 +5,7 @@ import { FundingType, Scholarship } from '../../../features/scholarships/scholar
 import { DatePipe, Location } from '@angular/common';
 import { ChatService } from '../../../features/utilisateurs/chat/chat.service';
 import { AuthService } from '../../../core/auth/auth.service';
+import { take } from 'rxjs';
 
 
 @Component({
@@ -73,16 +74,19 @@ export class ScholarshipDetailComponent implements OnInit {
     return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
   }
 
-  demanderResumer() {
-    if (this.authService.isAuthenticated$) {
-      this.chatService.demanderResume(
-        Number(this.scholarship()!.id),
-        this.scholarship()!.title
-      );
-    }
-    else {
-      alert('Veuillez vous connecter pour demander un résumé');
-    }
 
-  }
+demanderResumer() {
+  this.authService.isAuthenticated$
+    .pipe(take(1))
+    .subscribe((isAuthenticated) => {
+      if (isAuthenticated) {
+        this.chatService.demanderResume(
+          Number(this.scholarship()!.id),
+          this.scholarship()!.title
+        );
+      } else {
+        alert('Veuillez vous connecter pour demander un résumé');
+      }
+    });
+}
 }
