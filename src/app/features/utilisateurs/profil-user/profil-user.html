@@ -19,19 +19,19 @@
       <dl class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
         <div>
           <dt class="text-[#8a7d8a] mb-0.5">Nom</dt>
-          <dd class="text-[#2e2530] font-medium">{{ utilisateur().last_name || 'Non renseigné' }}</dd>
+          <dd class="text-[#2e2530] font-medium">{{ utilisateur().last_name || '_' }}</dd>
         </div>
         <div>
           <dt class="text-[#8a7d8a] mb-0.5">Prénom</dt>
-          <dd class="text-[#2e2530] font-medium">{{ utilisateur().first_name || 'Non renseigné' }}</dd>
+          <dd class="text-[#2e2530] font-medium">{{ utilisateur().first_name || '_' }}</dd>
         </div>
         <div>
           <dt class="text-[#8a7d8a] mb-0.5">Email</dt>
-          <dd class="text-[#2e2530] font-medium">{{ utilisateur().email || 'Non renseigné' }}</dd>
+          <dd class="text-[#2e2530] font-medium">{{ utilisateur().email || '_' }}</dd>
         </div>
         <div>
           <dt class="text-[#8a7d8a] mb-0.5">Pays</dt>
-          <dd class="text-[#2e2530] font-medium">{{ utilisateur().country || 'Non renseigné' }}</dd>
+          <dd class="text-[#2e2530] font-medium">{{ utilisateur().country || '_' }}</dd>
         </div> 
       </dl>
     </div>
@@ -63,7 +63,7 @@
         </div>
         <div>
           <dt class="text-[#8a7d8a] mb-0.5">Date d'anniversaire</dt>
-          <dd class="text-[#2e2530] font-medium">{{ profileForm.value.birth_date || '_' }}</dd>
+          <dd class="text-[#2e2530] font-medium">{{ (profileForm.value.birth_date | date:'dd/MM/yyyy') || '_' }}</dd>
         </div>
         <div>
           <dt class="text-[#8a7d8a] mb-0.5">Genre</dt>

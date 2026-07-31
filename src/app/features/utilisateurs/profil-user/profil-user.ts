@@ -6,8 +6,8 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { EtudiantProfile } from '../../../shared/models/profil-user.models';
 import { User } from '../../../shared/models/user.models';
 import { AuthService } from '../../../core/auth/auth.service';
-import { ProfileService } from '../../../services/utilisateur/profil.service';
 import { calculerCompletionProfil } from '../../../shared/utils/profil-user-utils';
+import { ProfileService } from '../../../services/utilisateur/profil.service';
 
 type VueProfil = 'lecture' | 'formulaire-base' | 'formulaire-complet';
 
@@ -213,7 +213,14 @@ export class ProfilUser implements OnInit {
       .subscribe({
 
         next: profile => {
-          this.profileForm.patchValue(profile);
+
+          this.profileForm.patchValue({
+            ...profile,
+            birth_date: profile.birth_date
+              ? profile.birth_date.substring(0, 10)
+              : ''
+          });
+
         },
 
         error: () => {
