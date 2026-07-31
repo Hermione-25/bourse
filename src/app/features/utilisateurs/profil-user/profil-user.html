@@ -196,8 +196,8 @@
         </div>
 
         <div>
-          <label for="country" class="block text-sm font-semibold text-[#2e2530] mb-1">Pays de rêve</label>
-          <select id="country" formControlName="destination_countries"
+          <label for="destination_countries" class="block text-sm font-semibold text-[#2e2530] mb-1">Pays de rêve</label>
+          <select id="destination_countries" formControlName="destination_countries"
             class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] bg-white text-sm focus:outline-none focus:border-[#6b2d5c]">
             <option value="">Sélectionner </option>
             <option *ngFor="let c of destination_countries" [value]="c">{{ c }}</option>
