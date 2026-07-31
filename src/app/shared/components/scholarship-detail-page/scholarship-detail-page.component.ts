@@ -4,6 +4,7 @@ import { ScholarshipsService } from '../../../features/scholarships/scholarships
 import { FundingType, Scholarship } from '../../../features/scholarships/scholarships.models';
 import { DatePipe, Location } from '@angular/common';
 import { ChatService } from '../../../features/utilisateurs/chat/chat.service';
+import { AuthService } from '../../../core/auth/auth.service';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class ScholarshipDetailComponent implements OnInit {
   private location = inject(Location);
   private scholarshipsService = inject(ScholarshipsService);
   private chatService = inject(ChatService);
+  private authService = inject(AuthService);
 
   FundingType = FundingType;
 
@@ -63,20 +65,24 @@ export class ScholarshipDetailComponent implements OnInit {
     window.open(lien, '_blank', 'noopener,noreferrer');
   }
 
-getJoursRestants(deadline: string | undefined): number | null {
-  if (!deadline) return null;
-  const aujourdHui = new Date();
-  const dateDeadline = new Date(deadline);
-  const diffMs = dateDeadline.getTime() - aujourdHui.getTime();
-  return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-}
+  getJoursRestants(deadline: string | undefined): number | null {
+    if (!deadline) return null;
+    const aujourdHui = new Date();
+    const dateDeadline = new Date(deadline);
+    const diffMs = dateDeadline.getTime() - aujourdHui.getTime();
+    return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+  }
 
   demanderResumer() {
-  this.chatService.demanderResume(
-    Number(this.scholarship()!.id),
-    this.scholarship()!.title
-  );
+    if (this.authService.isAuthenticated$) {
+      this.chatService.demanderResume(
+        Number(this.scholarship()!.id),
+        this.scholarship()!.title
+      );
+    }
+    else {
+      alert('Veuillez vous connecter pour demander un résumé');
+    }
+
+  }
 }
-
-}  
-
