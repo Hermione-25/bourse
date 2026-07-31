@@ -98,13 +98,13 @@
     <form [formGroup]="basicForm" (ngSubmit)="enregistrerBase()" class="bg-[#faf7f2] border border-[#e6ddea] rounded-2xl p-6 space-y-4">
       <div>
         <label for="nom" class="block text-sm font-semibold text-[#2e2530] mb-1">Nom</label>
-        <input id="nom" type="text" formControlName="nom"
+        <input id="nom" type="text" formControlName="last_name"
           class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] bg-white text-sm focus:outline-none focus:border-[#6b2d5c]" />
       </div>
 
       <div>
         <label for="prenom" class="block text-sm font-semibold text-[#2e2530] mb-1">Prénom</label>
-        <input id="prenom" type="text" formControlName="prenom"
+        <input id="prenom" type="text" formControlName="first_name"
           class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] bg-white text-sm focus:outline-none focus:border-[#6b2d5c]" />
       </div>
 
