@@ -141,19 +141,21 @@ export class ProfilUser implements OnInit {
   saving = signal(false);
 
 
+  // Champs facultatifs : pas de Validators.required, cohérent avec le message
+  // "Ces informations sont facultatives" affiché dans le formulaire.
   profileForm = this.fb.group({
 
-    nationality: ['', Validators.required],
+    nationality: [''],
 
-    birth_date: ['', Validators.required],
+    birth_date: [''],
 
-    gender: ['', Validators.required],
+    gender: [''],
 
-    study_level: ['', Validators.required],
+    study_level: [''],
 
-    study_domain: ['', Validators.required],
+    study_domain: [''],
 
-    destination_countries: ['', Validators.required]
+    destination_countries: ['']
 
   });
 
@@ -292,15 +294,6 @@ export class ProfilUser implements OnInit {
 
 
   enregistrer(): void {
-
-    if (this.profileForm.invalid) {
-
-      this.profileForm.markAllAsTouched();
-
-      return;
-
-    }
-
 
     this.saving.set(true);
 
