@@ -41,7 +41,43 @@ export class ProfilUser implements OnInit {
     'Agriculture', 'Autre'
   ];
 
-  readonly languages = ['Français', 'Anglais', 'Espagnol', 'Portugais', 'Arabe'];
+  readonly destination_countries = [
+    'South Africa',
+    'Algeria',
+    'Egypt',
+    'Morocco',
+    'Tunisia',
+    'Rwanda',
+    'Senegal',
+
+    'Germany',
+    'Austria',
+    'Belgium',
+    'Spain',
+    'France',
+    'Italy',
+    'Denmark',
+    'Norway',
+    'Netherlands',
+    'Sweden',
+    'Switzerland',
+    'United Kingdom',
+    'Czechia',
+
+    'Qatar',
+    'China',
+    'South Korea',
+    'Japan',
+    'India',
+    'Turkey',
+    'Singapore',
+
+    'Canada',
+    'United States',
+
+    'Australia',
+    'New Zealand'
+  ];
   readonly gender = ['Homme', 'Femme'];
 
   vue = signal<VueProfil>('lecture');
@@ -55,8 +91,6 @@ export class ProfilUser implements OnInit {
     email: ['', [Validators.email]]
   });
 
-  competences = signal<string[]>([]);
-  nouvelleCompetence = signal('');
   saving = signal(false);
   saved = signal(false);
 
@@ -66,17 +100,13 @@ export class ProfilUser implements OnInit {
     gender: [''],
     study_level: [''],
     study_domain: [''],
-    skills: this.fb.control<string[]>([]),
-    average: this.fb.control<number | null>(null, [Validators.min(0), Validators.max(20)]),
-    languages: this.fb.control<string[]>([])
+    destination_countries: [''],
   });
 
   private formValue = toSignal(this.profileForm.valueChanges, { initialValue: this.profileForm.getRawValue() });
 
   completion = computed(() => calculerCompletionProfil({
     ...this.formValue(),
-    languages: this.formValue().languages ?? [],
-    skills: this.competences()
   } as EtudiantProfile));
 
   isComplete = computed(() => this.completion() === 100);
@@ -111,7 +141,6 @@ export class ProfilUser implements OnInit {
       .subscribe({
         next: (profile) => {
           this.profileForm.patchValue(profile);
-          this.competences.set(profile.skills ?? []);
         },
         error: () => {
           // normal si le profil n'a jamais été créé (404) — on garde le formulaire vide
@@ -132,29 +161,6 @@ export class ProfilUser implements OnInit {
     this.vue.set('lecture');
   }
 
-  toggleLangue(langue: string): void {
-    const current = this.profileForm.value.languages ?? [];
-    const updated = current.includes(langue)
-      ? current.filter(l => l !== langue)
-      : [...current, langue];
-    this.profileForm.patchValue({ languages: updated });
-  }
-
-  isLangueSelected(langue: string): boolean {
-    return (this.profileForm.value.languages ?? []).includes(langue);
-  }
-
-  ajouterCompetence(): void {
-    const val = this.nouvelleCompetence().trim();
-    if (val && !this.competences().includes(val)) {
-      this.competences.update(list => [...list, val]);
-    }
-    this.nouvelleCompetence.set('');
-  }
-
-  supprimerCompetence(competence: string): void {
-    this.competences.update(list => list.filter(c => c !== competence));
-  }
 
   enregistrerBase(): void {
     if (this.basicForm.invalid) {
@@ -184,8 +190,6 @@ export class ProfilUser implements OnInit {
 
     const profile: EtudiantProfile = {
       ...this.profileForm.getRawValue(),
-      languages: this.profileForm.value.languages ?? [],
-      skills: this.competences()
     } as EtudiantProfile;
 
     this.profileService.updateProfile(profile).subscribe({
