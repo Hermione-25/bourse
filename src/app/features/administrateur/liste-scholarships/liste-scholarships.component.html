@@ -63,6 +63,12 @@
             class="w-full border border-gray-200 rounded-xl px-4 py-2 text-sm"></textarea>
         </div>
 
+        <div>
+          <label class="text-xs font-semibold text-gray-600">Détails (markdown) *</label>
+          <textarea formControlName="details" rows="3"
+            class="w-full border border-gray-200 rounded-xl px-4 py-2 text-sm"></textarea>
+        </div>
+
         <div class="grid grid-cols-2 gap-4">
           <label class="text-xs font-semibold text-gray-600">Date limite *</label>
           <input formControlName="deadline" type="date"
@@ -79,8 +85,17 @@
           </select>
         </div>
 
-        <label class="text-xs font-semibold text-gray-600">Lien *</label>
+
+        <label class="text-xs font-semibold text-gray-600">Lien d'information*</label>
         <input formControlName="link" placeholder="Lien"
+          class="w-full border border-gray-200 rounded-xl px-4 py-2 text-sm" />
+        
+        <label class="text-xs font-semibold text-gray-600">Lien de candidature *</label>
+        <input formControlName="apply_link" placeholder="Lien"
+          class="w-full border border-gray-200 rounded-xl px-4 py-2 text-sm" />
+
+        <label class="text-xs font-semibold text-gray-600">Lien du site officiel *</label>
+        <input formControlName="official_website" placeholder="Lien du site officiel"
           class="w-full border border-gray-200 rounded-xl px-4 py-2 text-sm" />
 
         <label class="text-xs font-semibold text-gray-600">Source *</label>
