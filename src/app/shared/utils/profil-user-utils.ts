@@ -10,7 +10,7 @@ export function calculerCompletionProfil(profile: EtudiantProfile | null): numbe
     profile.gender,
     profile.study_level,
     profile.study_domain,
-    profile.destination_countries
+    profile.destination_countries,
   ];
 
   const remplis = champs.filter(c => c !== null && c !== undefined && c !== '').length;
