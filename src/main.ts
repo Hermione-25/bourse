@@ -7,6 +7,6 @@ bootstrapApplication(App, appConfig)
 
   export const environment={
     production: false,
-    apiUrl: 'https://next-api.qcdigitalhub.com/api',
+    apiUrl: 'https://next-api.mameribj.com/api',
     googleClientId:'1080337599273-a7vv9ddqo537lp8cd6agbkcgjv03ojm2.apps.googleusercontent.com'
   }

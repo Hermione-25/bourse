@@ -7,7 +7,7 @@ import { ScholarshipDto } from '../features/scholarships/scholarships.models';
 })
 export class ScholarshipService {
 
-  private apiUrl = 'https://next-api.qcdigitalhub.com/api';
+  private apiUrl = 'https://next-api.mameribj.com/api';
 
   constructor(private http: HttpClient) {}
 
