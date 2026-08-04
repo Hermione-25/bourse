@@ -28,7 +28,7 @@ export class LoginPageComponent {
 
     google.accounts.id.renderButton(
       document.getElementById('google-btn'),
-      { theme: 'filled_black', size: 'large', width: '300', type: 'standard' }
+      { theme: 'filled_black', size: 'large', width: '280', type: 'standard' }
     );
   }
 
@@ -62,12 +62,11 @@ export class LoginPageComponent {
 
     const value = this.form.value as { email: string; password: string };
     this.authService.login(value).subscribe({
- next: (res) => {
-  this.submitting = false;
-  const isAdmin = res.data.user?.role === 'admin';
-  this.router.navigate([isAdmin ? '/admin' : '/user']);
-},
-  error: (error: unknown) => {
+    next: (res) => {
+      this.submitting = false;
+      this.router.navigate([res.data.user?.role === 'admin' ? '/admin' : '/user']);
+    },
+    error: (error: unknown) => {
     const errorMsg =
       typeof error === 'object' && error !== null && 'message' in error
         ? String((error as Record<string, unknown>)['message'])

@@ -9,6 +9,9 @@ import { ScholarshipCard } from '../../shared';
 import { DropdownSelectComponent } from '../../shared';
 import { FavorisService } from '../../services/utilisateur/favoris.service';
 import { FooterComponent } from "../../layouts/footer/footer.component";
+import { ThemeService } from '../../services/theme';
+
+
 
 @Component({
   selector: 'app-landing-page',
@@ -22,6 +25,7 @@ export class LandingPageComponent implements OnInit {
   private scholarshipsService = inject(ScholarshipsService);
   authService = inject(AuthService);
   private favorisService = inject(FavorisService)
+  themeService = inject(ThemeService);
 
   recentScholarships: Scholarship[] = [];
   loading = signal<boolean>(true);
@@ -93,7 +97,7 @@ export class LandingPageComponent implements OnInit {
   onToggleFavori(id: string): void {
     const dejaFavori = this.favoris().has(id);
 
-    // Mise à jour optimiste de l'UI
+
     this.favoris.update(set => {
       const nouveau = new Set(set);
       dejaFavori ? nouveau.delete(id) : nouveau.add(id);
@@ -106,7 +110,6 @@ export class LandingPageComponent implements OnInit {
 
     appel$.subscribe({
       error: () => {
-        // Rollback en cas d'échec
         this.favoris.update(set => {
           const nouveau = new Set(set);
           dejaFavori ? nouveau.add(id) : nouveau.delete(id);
@@ -116,5 +119,16 @@ export class LandingPageComponent implements OnInit {
       }
     });
   }
-  
+
+espace(): void {
+  this.authService.getCurrentUser().subscribe({
+    next: (res) => {
+      const isAdmin = res.data.role === 'admin';
+      this.router.navigate([isAdmin ? '/admin' : '/user']);
+    },
+    error: () => {
+      this.router.navigate(['/login']);
+    }
+  });
 }
+} 

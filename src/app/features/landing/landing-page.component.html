@@ -74,7 +74,7 @@
           <div class="w-38 mt-10 border-t border-primary/50"></div>
           <li><a routerLink="/generate" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Générer un CV</a></li>
           @if(authService.isAuthenticated$ | async) {
-            <li><a routerLink="/user" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Mon Espace</a></li>
+            <li><button (click)="espace()" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Mon Espace</button></li>
           } @else {
             <li><a routerLink="/auth/login" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Se connecter</a></li>
           }

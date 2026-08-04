@@ -16,9 +16,14 @@ export class AuthService {
   readonly authState$ = this.currentUserSubject.asObservable();
   readonly isAuthenticated$ = this.authState$.pipe(map(Boolean));
 
+  getCurrentUser(): Observable<ApiResponse<User>> {
+  return this.apiService.get<ApiResponse<User>>('me');
+}
 
   initAuth(): Observable<ApiResponse<User> | null> {
     const token = this.tokenService.getAccessToken();
+
+    
 
     if (!token) {
       console.log('[AuthService] initAuth: aucun token trouvé, utilisateur non connecté.');

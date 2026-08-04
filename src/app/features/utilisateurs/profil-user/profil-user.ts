@@ -50,26 +50,23 @@ export class ProfilUser implements OnInit {
 
 
   readonly study_level = [
-    'Baccalauréat',
-    'Licence 1',
-    'Licence 2',
-    'Licence 3',
-    'Master 1',
-    'Master 2',
-    'Doctorat'
+    'High School Diploma',
+    "Bachelor's Degree",
+    "Master's Degree",
+    'Doctorate' 
   ];
 
 
   readonly study_domain = [
-    'Informatique',
-    'Gestion / Économie',
-    'Droit',
-    'Médecine / Santé',
-    'Ingénierie',
-    'Sciences',
-    'Lettres / Sciences humaines',
+    'Computer Science',
+    'Business / Economics',
+    'Law',
+    'Medicine / Health',
+    'Engineering',
+    'Science',
+    'Arts / Humanities',
     'Agriculture',
-    'Autre'
+    'Other'
   ];
 
 
@@ -140,9 +137,6 @@ export class ProfilUser implements OnInit {
 
   saving = signal(false);
 
-
-  // Champs facultatifs : pas de Validators.required, cohérent avec le message
-  // "Ces informations sont facultatives" affiché dans le formulaire.
   profileForm = this.fb.group({
 
     nationality: [''],
