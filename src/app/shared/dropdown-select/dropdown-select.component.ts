@@ -16,6 +16,7 @@ import {
 } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ThemeService } from '../../services/theme';
 
 export interface DropdownOption {
   label: string;
@@ -40,6 +41,7 @@ export class DropdownSelectComponent implements ControlValueAccessor, OnDestroy 
   private viewContainerRef = inject(ViewContainerRef);
   private renderer = inject(Renderer2);
   private document = inject(DOCUMENT);
+  themeService = inject(ThemeService);
 
   @ViewChild('dropdownContent') dropdownTemplate!: TemplateRef<unknown>;
   @ViewChild('triggerButton') triggerButton!: ElementRef<HTMLButtonElement>;

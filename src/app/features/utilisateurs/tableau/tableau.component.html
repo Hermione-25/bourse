@@ -13,7 +13,7 @@
 
   @if (!chargement() && resume(); as r) {
   <div class=" w-full gap-5  mb-10">
-    <div class=" bg-white border border-white rounded-2xl p-6 shadow-lg">
+    <div class="bg-white dark:bg-neutral-800 border border-white dark:border-neutral-700 rounded-2xl p-6 shadow-lg transition-colors duration-300">
       <p class="text-sm text-[var(--color-gray-text)]/70 mb-2">Nouvelles bourses ajoutées</p>
       <p class="text-3xl font-bold text-[var(--color-primary)]">{{ r.nombreNouvellesBourses }}</p>
     </div>
@@ -21,20 +21,20 @@
 
 
   <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-    <a routerLink="/user/profil" class="block bg-white border border-white rounded-2xl p-6 shadow-lg">
+    <a routerLink="/user/profil" class="block bg-white dark:bg-neutral-800 border border-white dark:border-neutral-700 rounded-2xl p-6 shadow-lg transition-colors duration-300">
       <p class="text-sm text-[var(--color-gray-text)]/70 mb-2">Profil complet à</p>
       <p class="text-3xl font-bold text-[var(--color-primary)] mb-3">{{ r.pourcentageProfil }}%</p>
-      <div class="h-1.5 rounded-full bg-white overflow-hidden">
+      <div class="h-1.5 rounded-full bg-[var(--color-border-color)] dark:bg-neutral-600 overflow-hidden">
         <div class="h-full bg-[var(--color-primary)] rounded-full" [style.width.%]="r.pourcentageProfil"></div>
       </div>
     </a>
 
-    <a routerLink="/user/recommandations" class="block bg-white border border-white rounded-2xl p-6 shadow-lg">
+    <a routerLink="/user/recommandations" class="block bg-white dark:bg-neutral-800 border border-white dark:border-neutral-700 rounded-2xl p-6 shadow-lg transition-colors duration-300">
       <p class="text-sm text-[var(--color-gray-text)]/70 mb-2">Recommandations disponibles</p>
       <p class="text-3xl font-bold text-[var(--color-primary)]">{{ r.nombreRecommandations }}</p>
     </a>
 
-    <a routerLink="/user/favoris" class="block bg-white border border-white rounded-2xl p-6 shadow-lg">
+    <a routerLink="/user/favoris" class="block bg-white dark:bg-neutral-800 border border-white dark:border-neutral-700 rounded-2xl p-6 shadow-lg transition-colors duration-300">
       <p class="text-sm text-[var(--color-gray-text)]/70 mb-2">Vous avez mis</p>
       <p class="text-3xl font-bold text-[var(--color-primary)] mb-1">{{ r.nombreFavoris }}</p>
       <p class="text-sm text-[var(--color-gray-text)]/70">bourse{{ r.nombreFavoris > 1 ? 's' : '' }} en favoris</p>

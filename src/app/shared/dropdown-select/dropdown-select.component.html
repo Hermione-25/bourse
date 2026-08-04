@@ -4,8 +4,10 @@
     type="button"
     (click)="toggle()"
     class="relative z-50 flex items-center gap-2 bg-transparent border-none text-light outline-none cursor-pointer"
-    [class.text-black]="hasValue()"
-    [class.text-black/70]="!hasValue()"
+    [class.text-black]="hasValue() && !themeService.isDark()"
+    [class.text-white]="hasValue() && themeService.isDark()"
+    [class.text-black/70]="!hasValue() && !themeService.isDark()"
+    [class.text-white/70]="!hasValue() && themeService.isDark()"
   >
     <i class="fas {{ icon() }} text-sm"></i>
     <span class="whitespace-nowrap">{{ selectedLabel() }}</span>
@@ -20,7 +22,7 @@
   <div class="fixed inset-0 bg-black/30  z-40" (click)="toggle()"></div>
 
   <ul
-    class="fixed w-[140px] bg-white rounded-lg shadow-[0_8px_24px_rgba(0,0,0,0.12)] py-2 z-50 max-h-64 overflow-auto"
+    class="fixed w-[140px] bg-white dark:bg-neutral-800 rounded-lg shadow-[0_8px_24px_rgba(0,0,0,0.12)] py-2 z-50 max-h-64 overflow-auto"
     [style.top.px]="menuPosition().top"
     [style.left.px]="menuPosition().left"
   >
@@ -29,8 +31,9 @@
         <button
           type="button"
           (click)="select(option)"
-          class="w-full text-left px-4 py-2 text-sm text-black hover:bg-black/60 hover:text-light transition-colors"
-          [class.text-black]="option.value === value()"
+          class="w-full text-left px-4 py-2 text-sm text-black dark:text-white hover:bg-black/60 hover:text-light transition-colors"
+          [class.text-black]="option.value === value() && !themeService.isDark()"
+          [class.text-white]="option.value === value() && themeService.isDark()"
           [class.font-semibold]="option.value === value()"
           [class.text-red-600]="option.value === 'Deconnexion'"
         >

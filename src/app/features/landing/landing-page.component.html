@@ -1,16 +1,27 @@
-<nav class="bg-light sticky top-0 z-[100] shadow-[0_1px_10px_rgba(0,0,0,0.02)]">
+<nav class="bg-light sticky top-0 z-[100] shadow-[0_1px_10px_rgba(0,0,0,0.02)] transition-colors duration-300">
     <div class="w-full max-w-[2000px] mx-auto px-6 flex justify-between items-center py-4">
       <a href="/">
         <div class="flex items-center gap-2.5">
           <img src="next.png" alt="" class="w-10">
           <div>
-            <h1 class="text-[20px] font-bold text-black leading-none">Next</h1>
+            <h1 class="text-[20px] font-bold text-black dark:text-white leading-none">Next</h1>
             <p class="text-[10px] text-gray-text tracking-[1px]">Étudiez. Rêvez. Réalisez.</p>
           </div>
         </div>
       </a>
+      <button
+            (click)="themeService.toggleTheme()"
+            class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 
+                  bg-white dark:bg-gray-800 
+                  text-gray-800 dark:text-white
+                  transition">
 
-      <button type="button" class="flex rounded-lg border border-gray-300 p-2 text-gray-700 md:hidden" (click)="toggleMenu()" aria-label="Ouvrir le menu">
+        <i 
+          [class]="themeService.isDark() ? 'fas fa-sun' : 'fas fa-moon'">
+        </i>
+
+      </button>
+      <button type="button" class="flex rounded-lg border border-gray-300 dark:border-gray-600 p-2 text-gray-700 dark:text-gray-300 md:hidden" (click)="toggleMenu()" aria-label="Ouvrir le menu">
         <i class="fas " [class.fa-bars]="!isMenuOpen" ></i>
       </button>
 
@@ -39,7 +50,7 @@
 
             <button
                 class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-90 hover:-translate-y-[1px]"
-                routerLink="/user"><i class="fas fa-user"></i></button>
+                (click)="espace()"><i class="fas fa-user"></i></button>
 
 
         } @else {
@@ -53,13 +64,13 @@
     @if (isMenuOpen) {
       <div class="fixed inset-0 bg-black/70 z-[190] md:hidden" (click)="closeMenu()"></div>
 
-      <div class="fixed top-0 left-0 h-screen w-[65%] max-w-[190px] bg-white shadow-2xl z-[200] px-6 py-6 md:hidden">
+      <div class="fixed top-0 left-0 h-screen w-[65%] max-w-[190px] bg-white dark:bg-neutral-800 shadow-2xl z-[200] px-6 py-6 md:hidden">
         <a href="/">
         <div class="flex items-center gap-2.5 mb-6">
           <div class="flex justify-between w-full">
-            <h1 class="text-[20px] font-bold text-black leading-none">Next</h1>
+            <h1 class="text-[20px] font-bold text-black dark:text-white leading-none">Next</h1>
 
-            <button class="rounded-lg border border-gray-300 p-2 text-gray-700 w-10 h-8 flex items-center justify-center" (click)="closeMenu()"><i class="fas fa-times"></i></button>
+            <button class="rounded-lg border border-gray-300 dark:border-gray-600 p-2 text-gray-700 dark:text-gray-300 w-10 h-8 flex items-center justify-center" (click)="closeMenu()"><i class="fas fa-times"></i></button>
           </div>
         </div>
       </a>
@@ -72,6 +83,18 @@
           <li class="flex items-center gap-3 "><i class="fas fa-envelope"></i><a routerLink="/contact" class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold" (click)="closeMenu()">Contact</a></li>
           
           <div class="w-38 mt-10 border-t border-primary/50"></div>
+          <button
+            (click)="themeService.toggleTheme()"
+            class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 
+                  bg-white dark:bg-gray-800 
+                  text-gray-800 dark:text-white
+                  transition">
+
+        <i 
+          [class]="themeService.isDark() ? 'fas fa-sun' : 'fas fa-moon'">
+        </i>
+
+      </button>
           <li><a routerLink="/generate" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Générer un CV</a></li>
           @if(authService.isAuthenticated$ | async) {
             <li><button (click)="espace()" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Mon Espace</button></li>
@@ -324,17 +347,17 @@
 </div>
 </div>
 
-  <section class="bg-white py-20">
+  <section class="bg-white dark:bg-neutral-900 py-20 transition-colors duration-300">
     <div class="w-full max-w-[1200px] mx-auto px-6">
       <div class="text-center mb-12">
         <span class="text-primary text-xs font-bold uppercase tracking-[2px] block mb-2.5">Explorer les
           opportunités</span>
-        <h2 class="text-[32px] text-dark font-bold">Des bourses d'études partout dans le monde</h2>
+        <h2 class="text-[32px] text-dark dark:text-white font-bold">Des bourses d'études partout dans le monde</h2>
         <p class="text-gray-text text-sm max-w-[500px] mt-2.5 mx-auto">Explorez des bourses par pays et trouvez celles qui
           correspondent à votre profil et vos objectifs.</p>
       </div>
 
-      <div class="flex justify-between items-center text-lg text-dark font-bold mb-5">
+      <div class="flex justify-between items-center text-lg text-dark dark:text-white font-bold mb-5">
         <h3>Pays populaires</h3>
         <a routerLink="/pays" class="text-primary text-[13px] no-underline font-semibold hover:underline">Voir
           tout</a>
@@ -439,17 +462,17 @@
     <div class="w-full max-w-[1200px] mx-auto px-6">
       <div class="text-center mb-12">
         <span class="text-primary text-xs font-bold uppercase tracking-[2px] block mb-2.5">Comment ça marche</span>
-        <h2 class="text-[32px] text-black font-bold">5 étapes simples pour atteindre vos objectifs</h2>
+        <h2 class="text-[32px] text-black dark:text-white font-bold">5 étapes simples pour atteindre vos objectifs</h2>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 md:gap-6">
-        <div class="bg-white shadow-md rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+        <div class="bg-white dark:bg-neutral-800 shadow-md rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-colors duration-300">
           <div
             class="w-9 h-9 flex items-center justify-center font-bold text-[13px] mb-4 bg-border-color text-primary">
             01</div>
           <div class="flex items-center gap-2 mb-3">
             <i class="fas fa-search text-sm text-primary"></i>
-            <h4 class="text-base font-bold text-dark">Recherchez</h4>
+            <h4 class="text-base font-bold text-dark dark:text-white">Recherchez</h4>
           </div>
           <p class="text-xs text-gray-text leading-relaxed">Utilisez nos filtres avancés pour trouver des bourses adaptées à
             votre profil et à vos objectifs.</p>
@@ -460,7 +483,7 @@
             02</div>
           <div class="flex items-center gap-2 mb-3">
             <i class="fas fa-file-alt text-sm text-primary"></i>
-            <h4 class="text-base font-bold text-dark">Découvrez</h4>
+            <h4 class="text-base font-bold text-dark dark:text-white">Découvrez</h4>
           </div>
           <p class="text-xs text-gray-text leading-relaxed">Consultez les détails des bourses, les critères d'éligibilité et
             les documents requis.</p>
@@ -472,7 +495,7 @@
             03</div>
           <div class="flex items-center gap-2 mb-3">
             <i class="fas fa-file-alt text-sm text-primary"></i>
-            <h4 class="text-base font-bold text-dark">Générez un CV</h4>
+            <h4 class="text-base font-bold text-dark dark:text-white">Générez un CV</h4>
           </div>
             <p class="text-xs text-gray-text leading-relaxed">Faites-vous générer un CV prêt à être utilisé.</p>
           </div>
@@ -483,7 +506,7 @@
             04</div>
           <div class="flex items-center gap-2 mb-3">
             <i class="fas fa-paper-plane text-sm text-primary"></i>
-            <h4 class="text-base font-bold text-dark">Postulez</h4>
+            <h4 class="text-base font-bold text-dark dark:text-white">Postulez</h4>
           </div>
           <p class="text-xs text-gray-text leading-relaxed">Préparez votre candidature et postulez directement via les liens
             officiels vérifiés.</p>
@@ -494,7 +517,7 @@
             05</div>
           <div class="flex items-center gap-2 mb-3">
             <i class="fas fa-trophy text-sm text-primary"></i>
-            <h4 class="text-base font-bold text-dark">Réalisez vos rêves</h4>
+            <h4 class="text-base font-bold text-dark dark:text-white">Réalisez vos rêves</h4>
           </div>
           <p class="text-xs text-gray-text leading-relaxed">Obtenez la bourse convoitée et concentrez-vous sereinement sur
             vos études et votre avenir.</p>

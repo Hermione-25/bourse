@@ -5,9 +5,9 @@
     <h1 class="text-2xl mb-10  font-bold text-gray-text mb-6">Mon profil</h1>
 
     
-    <div class="bg-white border border-light rounded-2xl p-6 mb-6 shadow-xl">
+    <div class="bg-white dark:bg-neutral-800 border border-light dark:border-neutral-700 rounded-2xl p-6 mb-6 shadow-xl transition-colors duration-300">
       <div class="flex items-start justify-between mb-4">
-        <h2 class="text-lg font-semibold text-[#2e2530]">Informations de base</h2>
+        <h2 class="text-lg font-semibold text-[#2e2530] dark:text-white">Informations de base</h2>
         <button
           type="button"
           (click)="ouvrirModifierBase()"
@@ -37,9 +37,9 @@
     </div>
 
     
-    <div class="bg-white border border-light rounded-2xl p-6 mb-6 shadow-xl">
+    <div class="bg-white dark:bg-neutral-800 border border-light dark:border-neutral-700 rounded-2xl p-6 mb-6 shadow-xl transition-colors duration-300">
       <div class="flex items-start justify-between mb-2">
-        <h2 class="text-lg font-semibold text-[#2e2530]">Profil pour les recommandations</h2>
+        <h2 class="text-lg font-semibold text-[#2e2530] dark:text-white">Profil pour les recommandations</h2>
         <button
           type="button"
           (click)="ouvrirCompleterProfil()"
@@ -93,32 +93,32 @@
       Retour
     </button>
 
-    <h1 class="text-2xl font-bold text-[#4f2144] mb-6">Modifier mes informations</h1>
+    <h1 class="text-2xl font-bold text-[#4f2144] dark:text-white mb-6">Modifier mes informations</h1>
 
-    <form [formGroup]="basicForm" (ngSubmit)="enregistrerBase()" class="bg-[#faf7f2] border border-[#e6ddea] rounded-2xl p-6 space-y-4">
+    <form [formGroup]="basicForm" (ngSubmit)="enregistrerBase()" class="bg-[#faf7f2] dark:bg-neutral-800 border border-[#e6ddea] dark:border-neutral-700 rounded-2xl p-6 space-y-4 transition-colors duration-300">
       <div>
-        <label for="nom" class="block text-sm font-semibold text-[#2e2530] mb-1">Nom</label>
+        <label for="nom" class="block text-sm font-semibold text-[#2e2530] dark:text-white mb-1">Nom</label>
         <input id="nom" type="text" formControlName="last_name"
-          class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] bg-white text-sm focus:outline-none focus:border-[#6b2d5c]" />
+          class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] dark:border-neutral-600 bg-white dark:bg-neutral-700 text-black dark:text-white text-sm focus:outline-none focus:border-[#6b2d5c]" />
       </div>
 
       <div>
-        <label for="prenom" class="block text-sm font-semibold text-[#2e2530] mb-1">Prénom</label>
+        <label for="prenom" class="block text-sm font-semibold text-[#2e2530] dark:text-white mb-1">Prénom</label>
         <input id="prenom" type="text" formControlName="first_name"
-          class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] bg-white text-sm focus:outline-none focus:border-[#6b2d5c]" />
+          class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] dark:border-neutral-600 bg-white dark:bg-neutral-700 text-black dark:text-white text-sm focus:outline-none focus:border-[#6b2d5c]" />
       </div>
 
       <div>
-        <label for="email" class="block text-sm font-semibold text-[#2e2530] mb-1">Email</label>
+        <label for="email" class="block text-sm font-semibold text-[#2e2530] dark:text-white mb-1">Email</label>
         <input id="email" type="email" formControlName="email"
-          class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] bg-white text-sm focus:outline-none focus:border-[#6b2d5c]" />
+          class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] dark:border-neutral-600 bg-white dark:bg-neutral-700 text-black dark:text-white text-sm focus:outline-none focus:border-[#6b2d5c]" />
         <span *ngIf="basicForm.get('email')?.invalid && basicForm.get('email')?.touched" class="text-xs text-[#b3413c]">
           Adresse email invalide.   
         </span>
       </div>
 
       <div>
-        <label for="country" class="block text-sm font-semibold text-[#2e2530] mb-1">Pays</label>
+        <label for="country" class="block text-sm font-semibold text-[#2e2530] dark:text-white mb-1">Pays</label>
         <input id="country" type="text" formControlName="country"
           class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] bg-white text-sm focus:outline-none focus:border-[#6b2d5c]" />
       </div>
@@ -139,7 +139,7 @@
   
   <div >
 
-    <h1 class="text-2xl font-bold text-[#4f2144] mb-1">Compléter mon profil</h1>
+    <h1 class="text-2xl font-bold text-[#4f2144] dark:text-white mb-1">Compléter mon profil</h1>
     <p class="text-sm text-[#8a7d8a] mb-6">
       Ces informations sont facultatives, mais plus ton profil est complet, plus tes recommandations de bourses seront pertinentes.
     </p>
@@ -151,54 +151,54 @@
       <span class="text-xs font-semibold text-[#6b2d5c] whitespace-nowrap">{{ completion() }}% complété</span>
     </div>
 
-    <form [formGroup]="profileForm" (ngSubmit)="enregistrer()" class="bg-white border-light rounded-2xl shadow-lg p-6">
+    <form [formGroup]="profileForm" (ngSubmit)="enregistrer()" class="bg-white dark:bg-neutral-800 border border-light dark:border-neutral-700 rounded-2xl shadow-lg p-6 transition-colors duration-300">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
         <div>
-          <label for="nationalite" class="block text-sm font-semibold text-[#2e2530] mb-1">Nationalité</label>
+          <label for="nationalite" class="block text-sm font-semibold text-[#2e2530] dark:text-white mb-1">Nationalité</label>
           <select id="nationalite" formControlName="nationality"
-            class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] bg-white text-sm focus:outline-none focus:border-[#6b2d5c]">
+            class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] dark:border-neutral-600 bg-white dark:bg-neutral-700 text-black dark:text-white text-sm focus:outline-none focus:border-[#6b2d5c]">
             <option value=""> Sélectionner </option>
             <option *ngFor="let n of nationality" [value]="n">{{ n }}</option>
           </select>
         </div>
 
         <div>
-          <label for="dateNaissance" class="block text-sm font-semibold text-[#2e2530] mb-1">Date d'anniversaire</label>
+          <label for="dateNaissance" class="block text-sm font-semibold text-[#2e2530] dark:text-white mb-1">Date d'anniversaire</label>
           <input id="dateNaissance" type="date" formControlName="birth_date"
-            class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] bg-white text-sm focus:outline-none focus:border-[#6b2d5c]" />
+            class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] dark:border-neutral-600 bg-white dark:bg-neutral-700 text-black dark:text-white text-sm focus:outline-none focus:border-[#6b2d5c]" />
         </div>
 
         <div>
-          <label for="gender" class="block text-sm font-semibold text-[#2e2530] mb-1">Genre</label>
+          <label for="gender" class="block text-sm font-semibold text-[#2e2530] dark:text-white mb-1">Genre</label>
           <select id="gender" formControlName="gender"
-            class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] bg-white text-sm focus:outline-none focus:border-[#6b2d5c]">
+            class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] dark:border-neutral-600 bg-white dark:bg-neutral-700 text-black dark:text-white text-sm focus:outline-none focus:border-[#6b2d5c]">
             <option value="">Sélectionner </option>
             <option *ngFor="let g of gender" [value]="g">{{ g }}</option>
           </select>
         </div>
 
         <div>
-          <label for="study_level" class="block text-sm font-semibold text-[#2e2530] mb-1">Niveau d'étude</label>
+          <label for="study_level" class="block text-sm font-semibold text-[#2e2530] dark:text-white mb-1">Niveau d'étude</label>
           <select id="study_level" formControlName="study_level"
-            class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] bg-white text-sm focus:outline-none focus:border-[#6b2d5c]">
+            class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] dark:border-neutral-600 bg-white dark:bg-neutral-700 text-black dark:text-white text-sm focus:outline-none focus:border-[#6b2d5c]">
             <option value="">Sélectionner </option>
             <option *ngFor="let n of study_level" [value]="n">{{ n }}</option>
           </select>
         </div>
 
         <div>
-          <label for="study_domain" class="block text-sm font-semibold text-[#2e2530] mb-1">Domaine</label>
+          <label for="study_domain" class="block text-sm font-semibold text-[#2e2530] dark:text-white mb-1">Domaine</label>
           <select id="study_domain" formControlName="study_domain"
-            class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] bg-white text-sm focus:outline-none focus:border-[#6b2d5c]">
+            class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] dark:border-neutral-600 bg-white dark:bg-neutral-700 text-black dark:text-white text-sm focus:outline-none focus:border-[#6b2d5c]">
             <option value="">Sélectionner </option>
             <option *ngFor="let d of study_domain" [value]="d">{{ d }}</option>
           </select>
         </div>
 
         <div>
-          <label for="destination_countries" class="block text-sm font-semibold text-[#2e2530] mb-1">Pays de rêve</label>
+          <label for="destination_countries" class="block text-sm font-semibold text-[#2e2530] dark:text-white mb-1">Pays de rêve</label>
           <select id="destination_countries" formControlName="destination_countries"
-            class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] bg-white text-sm focus:outline-none focus:border-[#6b2d5c]">
+            class="w-full px-3 py-2.5 rounded-lg border border-[#e6ddea] dark:border-neutral-600 bg-white dark:bg-neutral-700 text-black dark:text-white text-sm focus:outline-none focus:border-[#6b2d5c]">
             <option value="">Sélectionner </option>
             <option *ngFor="let c of destination_countries" [value]="c">{{ c }}</option>
           </select>

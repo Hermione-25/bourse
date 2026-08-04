@@ -1,19 +1,15 @@
 
- <nav class="bg-light sticky top-0 z-[100] shadow-[0_1px_10px_rgba(0,0,0,0.02)]">
+ <nav class="bg-light sticky top-0 z-[100] shadow-[0_1px_10px_rgba(0,0,0,0.02)] transition-colors duration-300">
     <div class="w-full max-w-[1200px] mx-auto px-6 flex justify-between items-center py-4">
       <a href="/"><div class="flex items-center gap-2.5">
         <img src="next.png" class="w-10" alt="">
         <div>
-          <h1 class="text-[20px] font-bold text-black leading-none">Next
+          <h1 class="text-[20px] font-bold text-black dark:text-white leading-none">Next
           </h1>
           <p class="text-[10px] text-gray-text tracking-[1px]">Étudiez. Rêvez. Réalisez.</p>
         </div>
       </div>
       </a>
-
-      <button type="button" class="inline-flex items-center justify-center rounded-lg border border-gray-200 p-2 text-gray-700 md:hidden" (click)="toggleMenu()" aria-label="Ouvrir le menu">
-        <i class="fas" [class.fa-bars]="!isMenuOpen" ></i>
-      </button>
       <button
             (click)="themeService.toggleTheme()"
             class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 
@@ -26,6 +22,11 @@
         </i>
 
       </button>
+
+      <button type="button" class="inline-flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-600 p-2 text-gray-700 dark:text-gray-300 md:hidden" (click)="toggleMenu()" aria-label="Ouvrir le menu">
+        <i class="fas" [class.fa-bars]="!isMenuOpen" ></i>
+      </button>
+      
       <ul class="hidden md:flex gap-6 list-none m-0 p-0">
         <li><a routerLink="/"
             class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold active:text-primary active:font-semibold">Accueil</a>
@@ -42,15 +43,28 @@
             class="text-gray-text-100 text-sm font-medium transition-all duration-300 hover:text-primary hover:text-xl hover:font-semibold">Contact</a>
         </li>
       </ul>
-      <div class="hidden md:flex items-center gap-2">
+      <div class="hidden md:flex items-center gap-3">
+      <button
+            (click)="themeService.toggleTheme()"
+            class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 
+                  bg-white dark:bg-gray-800 
+                  text-gray-800 dark:text-white
+                  transition">
+
+        <i 
+          [class]="themeService.isDark() ? 'fas fa-sun' : 'fas fa-moon'">
+        </i>
+
+      </button>
       <button
             class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-40 hover:-translate-y-[1px]"
             routerLink="/generate">Générer un CV</button>
+      
       @if(authService.isAuthenticated$ |async){
         
           <button
             class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-40 hover:-translate-y-[1px]"
-            routerLink="/user"><i><i class="fas fa-user"></i></i></button>
+            (click)="espace()"><i><i class="fas fa-user"></i></i></button>
             
         
     } @else {
@@ -64,13 +78,13 @@
 
       <div class="fixed inset-0 bg-black/70 z-[190] md:hidden" (click)="closeMenu()"></div>
 
-      <div class="fixed top-0 left-0 h-screen w-[65%] max-w-[190px] bg-white shadow-2xl z-[200] px-6 py-6 md:hidden">
+      <div class="fixed top-0 left-0 h-screen w-[65%] max-w-[190px] bg-white dark:bg-neutral-800 shadow-2xl z-[200] px-6 py-6 md:hidden">
         <a href="/">
         <div class="flex items-center gap-2.5 mb-6">
           <div class="flex justify-between w-full">
-            <h1 class="text-[20px] font-bold text-black leading-none">Next</h1>
+            <h1 class="text-[20px] font-bold text-black dark:text-white leading-none">Next</h1>
 
-            <button class="rounded-lg border border-gray-300 p-2 text-gray-700 w-10 h-8 flex items-center justify-center" (click)="closeMenu()"><i class="fas fa-times"></i></button>
+            <button class="rounded-lg border border-gray-300 dark:border-gray-600 p-2 text-gray-700 dark:text-gray-300 w-10 h-8 flex items-center justify-center" (click)="closeMenu()"><i class="fas fa-times"></i></button>
           </div>
         </div>
       </a>
@@ -85,7 +99,7 @@
           <div class="w-38 mt-10 border-t border-primary/50"></div>
           <li><a routerLink="/generate" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Générer un CV</a></li>
           @if(authService.isAuthenticated$ | async) {
-            <li><a routerLink="/user" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Mon Espace</a></li>
+            <li><button (click)="espace()" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Mon Espace</button></li>
           } @else {
             <li><a routerLink="/auth/login" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white" (click)="closeMenu()">Se connecter</a></li>
           }
