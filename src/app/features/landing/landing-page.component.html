@@ -9,18 +9,6 @@
           </div>
         </div>
       </a>
-      <button
-            (click)="themeService.toggleTheme()"
-            class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 
-                  bg-white dark:bg-gray-800 
-                  text-gray-800 dark:text-white
-                  transition">
-
-        <i 
-          [class]="themeService.isDark() ? 'fas fa-sun' : 'fas fa-moon'">
-        </i>
-
-      </button>
       <button type="button" class="flex rounded-lg border border-gray-300 dark:border-gray-600 p-2 text-gray-700 dark:text-gray-300 md:hidden" (click)="toggleMenu()" aria-label="Ouvrir le menu">
         <i class="fas " [class.fa-bars]="!isMenuOpen" ></i>
       </button>
@@ -43,6 +31,18 @@
       </ul>
 
       <div class="hidden md:flex items-center gap-2">
+        <button
+            (click)="themeService.toggleTheme()"
+            class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 
+                  bg-white dark:bg-gray-800 
+                  text-gray-800 dark:text-white
+                  transition">
+
+        <i 
+          [class]="themeService.isDark() ? 'fas fa-sun' : 'fas fa-moon'">
+        </i>
+
+      </button>
         <button
                 class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-300 border-none no-underline bg-primary text-white shadow-[0_4px_12px] shadow-primary/20 hover:opacity-90 hover:-translate-y-[1px]"
                 routerLink="/generate">Générer un CV</button>
